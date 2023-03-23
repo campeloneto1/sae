@@ -1,0 +1,43 @@
+<div class="form-group">
+  
+  <label for="{{ id }}">
+    {{ label }}
+    <span *ngIf="control?.errors?.['required']" class="text-danger">*</span>
+  </label>
+
+  <div>
+    <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"> </ngx-editor-menu>
+    <ngx-editor [editor]="editor" [id]="id" [(ngModel)]="inputvalor" (ngModelChange)="change()" [placeholder]="label"></ngx-editor>
+  </div>
+ 
+  <div *ngIf="control.invalid && (control.dirty || control.touched)">
+    <span *ngIf="control?.errors?.['required']" class="text-danger"
+      >{{ label }} é obrigatório</span
+    >
+
+    <span *ngIf="control?.errors?.['minlength']">
+      {{ label }} deve ter no mínimo
+      {{control.errors?.['minlength'].requiredLength}} caracteres
+    </span>
+    <span *ngIf="control?.errors?.['maxlength']">
+      {{ label }} deve ter no máximo
+      {{control.errors?.['maxlength'].requiredLength}} caracteres
+    </span>
+    
+    <span *ngIf="control?.errors?.['email']">
+      O texto informado precisa ser um e-mail.
+    </span>
+
+    <span *ngIf="control?.errors?.['min']">
+      {{ label }} deve ser no mínimo
+      {{control.errors?.['min'].min}}
+    </span>
+    <span *ngIf="control?.errors?.['max']">
+      {{ label }} deve ser no máximo
+      {{control.errors?.['max'].max}} 
+    </span>
+  </div>
+
+
+ 
+</div>
