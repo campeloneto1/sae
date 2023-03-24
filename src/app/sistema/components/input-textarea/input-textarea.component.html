@@ -5,10 +5,12 @@
     <span *ngIf="control?.errors?.['required']" class="text-danger">*</span>
   </label>
 
-  <div>
+  <!--<div>
     <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"> </ngx-editor-menu>
     <ngx-editor [editor]="editor" [id]="id" [(ngModel)]="inputvalor" (ngModelChange)="change()" [placeholder]="label"></ngx-editor>
-  </div>
+  </div>-->
+
+  <angular-editor [config]="editorConfig" (ngModelChange)="change()" [(ngModel)]="inputvalor"></angular-editor>
  
   <div *ngIf="control.invalid && (control.dirty || control.touched)">
     <span *ngIf="control?.errors?.['required']" class="text-danger"

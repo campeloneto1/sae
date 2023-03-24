@@ -5,16 +5,27 @@ import { Observable, Subject, tap } from "rxjs";
 import { TituloComponent } from "../../components/titulo/titulo.component";
 import { SharedModule } from "../../shared/shared.module";
 import { SharedService } from "../../shared/shared.service";
+import { FormularioPessoasRedesSociaisComponent } from "./formulario-pessoas-redes-sociais/formulario-pessoas-redes-sociais.component";
 import { FormularioPessoasComponent } from "./formulario/formulario-pessoas.component";
 import { Pessoa, Pessoas } from "./pessoas";
+import { PessoasRedesSociaisService } from "./pessoas-redes-sociais.service";
 import { PessoasService } from "./pessoas.service";
-
+import { RouterModule } from "@angular/router";
+import { FormularioPessoasVeiculosComponent } from "./formulario-pessoas-veiculos/formulario-pessoas-veiculos.component";
+import { PessoasVeiculosService } from "./pessoas-veiculos.service";
 @Component({
     selector: 'pessoas',
     templateUrl: './pessoas.component.html',
     styleUrls: ['./pessoas.component.css'],
     standalone: true,
-    imports: [CommonModule, SharedModule, TituloComponent, FormularioPessoasComponent]
+    imports: [
+        CommonModule, 
+        RouterModule, 
+        SharedModule, 
+        TituloComponent, 
+        FormularioPessoasComponent, 
+        FormularioPessoasRedesSociaisComponent, 
+        FormularioPessoasVeiculosComponent]
 })
 
 export class PessoasComponent implements OnInit, OnDestroy{
@@ -22,11 +33,15 @@ export class PessoasComponent implements OnInit, OnDestroy{
 
     protected excluir!: Pessoa;
 
+    protected informacoes!: Pessoa;
+
     protected dtOptions: DataTables.Settings = {};    
 
     @ViewChild(DataTableDirective, { static: false })  dtElement!: DataTableDirective;
 
     @ViewChild(FormularioPessoasComponent) formulario!: FormularioPessoasComponent;
+
+    @ViewChild('closeModalPessoa') modalPessoa:any;
 
     // We use this trigger because fetching the list of persons can be quite long,
     // thus we ensure the data is fetched before rendering
@@ -34,12 +49,14 @@ export class PessoasComponent implements OnInit, OnDestroy{
 
     protected subscription: any;
     protected subscription2: any;
+    protected subscription3: any;
 
     constructor(private sharedService: SharedService,
-        private pessoasService: PessoasService){
+        private pessoasService: PessoasService,
+        private pessoasRedesSociaisService: PessoasRedesSociaisService,
+        private pessoasVeiculosService: PessoasVeiculosService){
 
     }
-   
 
     ngOnInit(): void {
         this.dtOptions = this.sharedService.getDtOptions();
@@ -58,6 +75,12 @@ export class PessoasComponent implements OnInit, OnDestroy{
         if(this.subscription){
             this.subscription.unsubscribe();
         }
+        if(this.subscription2){
+            this.subscription2.unsubscribe();
+        }
+        if(this.subscription3){
+            this.subscription3.unsubscribe();
+        }
     }
 
     refresh(){
@@ -71,6 +94,39 @@ export class PessoasComponent implements OnInit, OnDestroy{
               });
             })
           );
+    }
+
+    refresh2(){
+        this.subscription2 = this.pessoasService.show(this.informacoes.id || 0).subscribe({
+            next: (data) => {
+                this.informacoes = data;
+                this.refresh();
+            },
+            error: (error) => {
+                this.sharedService.toast('Error!', error.erro as string, 2);
+            }
+        });        
+    }
+
+    cadastroPessoa(){
+        this.refresh();
+        this.modalPessoa.nativeElement.click();
+    }
+
+    cancelarCadastro(){
+        this.modalPessoa.nativeElement.click();
+    }
+
+    getPessoa(data: number){
+        this.subscription3 = this.pessoasService.show(data).subscribe({
+            next: (data) => {
+                this.informacoes = data;                
+            },
+            error: (error) => {
+                this.sharedService.toast('Error!', error.erro as string, 2);
+            }
+        });
+        
     }
 
     edit(data: Pessoa){
@@ -93,4 +149,39 @@ export class PessoasComponent implements OnInit, OnDestroy{
             }
         });
     }
+
+    showRedesSociais(data: Pessoa){
+        this.informacoes = data;
+    }
+
+    deleteRedeSocial(data: number){
+        this.pessoasRedesSociaisService.destroy(data).subscribe({
+            next: (data) => {
+                this.sharedService.toast("Sucesso", data as string, 3);
+                this.refresh2();
+            },
+            error: (error) => {
+                this.sharedService.toast('Error!', error.erro as string, 2);
+            }
+        });
+    }
+
+    showVeiculos(data: Pessoa){
+        this.informacoes = {} as Pessoa;
+        this.getPessoa(data.id || 0);
+    }
+
+    deleteVeiculo(data: number){
+        this.pessoasVeiculosService.destroy(data).subscribe({
+            next: (data) => {
+                this.sharedService.toast("Sucesso", data as string, 3);
+                this.refresh2();
+            },
+            error: (error) => {
+                this.sharedService.toast('Error!', error.erro as string, 2);
+            }
+        });
+    }
+
+    
 }

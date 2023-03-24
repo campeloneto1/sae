@@ -1,6 +1,6 @@
 import { Component, forwardRef, Input, OnDestroy, OnInit } from "@angular/core";
 import { AbstractControl, ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors } from "@angular/forms";
-import { Editor, Toolbar } from 'ngx-editor';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
 
 @Component({
     selector: 'app-input-textarea',
@@ -21,37 +21,67 @@ import { Editor, Toolbar } from 'ngx-editor';
 
 export class InputTextareaComponent implements ControlValueAccessor, OnInit, OnDestroy{
 
-  protected editor!: Editor;
-  protected html = '';
-  protected toolbar: Toolbar = [
-    ['bold', 'italic'],
-    ['underline', 'strike'],
-    ['code', 'blockquote'],
-    ['ordered_list', 'bullet_list'],
-    [{ heading: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }],
-    ['link', 'image'],
-    ['text_color', 'background_color'],
-    ['align_left', 'align_center', 'align_right', 'align_justify'],
-  ];
-  
   @Input() id!: string;
   @Input() label!: string;
   @Input() tipo!: string;
-  @Input() mascara!: string;
+
+  protected editorConfig: AngularEditorConfig = {
+    editable: true,
+      spellcheck: true,
+      height: '200px',
+      minHeight: '0',
+      maxHeight: 'auto',
+      width: 'auto',
+      minWidth: '0',
+      translate: 'yes',
+      enableToolbar: true,
+      showToolbar: true,
+      placeholder: 'Observação...',
+      defaultParagraphSeparator: '',
+      defaultFontName: '',
+      defaultFontSize: '',
+      fonts: [
+        {class: 'arial', name: 'Arial'},
+        {class: 'times-new-roman', name: 'Times New Roman'},
+        {class: 'calibri', name: 'Calibri'},
+        {class: 'comic-sans-ms', name: 'Comic Sans MS'}
+      ],
+      customClasses: [
+      {
+        name: 'quote',
+        class: 'quote',
+      },
+      {
+        name: 'redText',
+        class: 'redText'
+      },
+      {
+        name: 'titleText',
+        class: 'titleText',
+        tag: 'h1',
+      },
+    ],
+    uploadUrl: 'http://10.9.168.179/apisae/public/api/upload-image',
+    //upload: (file: File) => { console.log(file) },
+    uploadWithCredentials: false,
+    sanitize: true,
+    toolbarPosition: 'top',
+    toolbarHiddenButtons: [
+      ['strikeThrough',
+      'subscript',
+      'superscript',],
+    ]
+};
 
   protected inputvalor!: any;
   protected control!: AbstractControl;
 
   ngOnDestroy(): void {
-    if(this.tipo = 'textarea'){
-       this.editor.destroy();
-    }
+    
   }
 
   ngOnInit(): void {
-    if(this.tipo = 'textarea'){
-      this.editor = new Editor();
-    }    
+      
   }
 
   onChange = (inputvalor:any) => {};
@@ -96,6 +126,10 @@ export class InputTextareaComponent implements ControlValueAccessor, OnInit, OnD
   validate(control: AbstractControl): ValidationErrors | void  {
     this.control = control;
     //console.log(control)
+  }
+
+  teste(){
+
   }
 
 }

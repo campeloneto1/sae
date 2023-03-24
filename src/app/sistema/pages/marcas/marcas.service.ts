@@ -2,6 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { environment } from "src/environments/environments";
+import { Modelos } from "../modelos/modelos";
 import { Marca, Marcas } from "./marcas";
 
 const API = environment.url;
@@ -16,6 +17,10 @@ export class MarcasService{
 
     show(id: number): Observable<Marca> {
       return this.http.get<Marca>(`${API}/marcas/${id}`);
+    }
+
+    where(id: number): Observable<Modelos> {
+      return this.http.get<Modelos>(`${API}/marcas/${id}/modelos`);
     }
   
     store(data: Marca){

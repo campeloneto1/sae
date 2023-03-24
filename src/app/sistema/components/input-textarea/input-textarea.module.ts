@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputTextareaComponent } from './input-textarea.component';
-import { NgxEditorModule } from 'ngx-editor';
+import { AngularEditorModule } from '@kolkov/angular-editor';
 
 @NgModule({
   declarations: [InputTextareaComponent],
@@ -10,7 +10,7 @@ import { NgxEditorModule } from 'ngx-editor';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    NgxEditorModule
+    AngularEditorModule
   ],
   exports: [InputTextareaComponent],
 })

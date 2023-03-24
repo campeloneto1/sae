@@ -21,6 +21,7 @@
                 <th>Nome</th>
                 <th>Alcunha</th>
                 <th>CPF</th>
+                <th>Informações</th>
                 <th>Opções</th>
               </tr>
             </thead>
@@ -28,9 +29,29 @@
             <tbody *ngIf="data$ | async as data; else loading" >
               <tr *ngFor="let row of data" class="optionshover">
                 <td>{{row.id}}</td>
-                <td>{{row.nome}}</td> 
+                <td><a [routerLink]="['/Pessoa', row.id]">{{row.nome}}</a></td> 
                 <td>{{row.alcunha}}</td> 
-                <td>{{row.cpf | mask: '000.000.000-00'}}</td>              
+                <td>{{row.cpf | mask: '000.000.000-00'}}</td>   
+                <td>
+                  <i
+                    (click)="showRedesSociais(row)"
+                    
+                    data-bs-toggle="modal"
+                    data-bs-target="#modalredes"
+                    title="Redes Sociais"
+                    class="fa fa-share-alt-square text-primary point"
+                    aria-hidden="true"
+                  ></i>
+                  <i
+                    (click)="showVeiculos(row)"
+                   
+                    data-bs-toggle="modal"
+                    data-bs-target="#modalveiculos"
+                    title="Veículos"
+                    class="fa fa-car text-primary point ml-2"
+                    aria-hidden="true"
+                  ></i>
+                </td>           
                 <td>                 
                   <a             
                       class="options ml-2"
@@ -86,12 +107,12 @@
           <div class="modal-content">
             <div class="modal-header border-0">
               <h4 class="modal-title">Cadastrar</h4>
-              <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+              <button type="button" #closeModalPessoa class="close" data-bs-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
               </button>
             </div>
             <div class="modal-body">
-                <formulario-pessoas (refresh)="refresh()" />
+                <formulario-pessoas (refresh)="cadastroPessoa()" (cancel)="cancelarCadastro()" />
             </div>           
           </div>        
         </div>        
@@ -120,7 +141,118 @@
         </div>
         
       </div>
-      <!--FIM MODAL EXCLUIR-->     
+      <!--FIM MODAL EXCLUIR-->    
+      
+      <!-- INICIO MODAL REDES SOCIAIS-->
+      <div class="modal fade" id="modalredes" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+          <div class="modal-content">
+            <div class="modal-header border-0">
+              <h4 class="modal-title">Cadastrar Rede Social</h4>
+              <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class="modal-body" *ngIf="informacoes">
+                <formulario-pessoas-redes-sociais [pessoa_id]="informacoes.id" (refresh)="refresh2()" />
+
+                <!--INICIO TABLE-->
+                <table  class="table table-hover table-head-fixed text-nowrap ">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Rede Social</th>    
+                      <th>Link</th>                      
+                      <th>Opções</th>
+                    </tr>
+                  </thead>
+                  <tbody *ngIf="informacoes" >
+                    <tr *ngFor="let row of informacoes.redes_sociais" class="optionshover">
+                      <td>{{row.pivot.id}}</td>
+                      <td>{{row.nome}}</td> 
+                      <td><a [href]="row.pivot.nome" target="_blank">{{row.pivot.nome}}</a></td> 
+                      <td>                                        
+                          <a
+                            class="options ml-2"
+                            (click)="deleteRedeSocial(row.pivot.id)"                           
+                            title="Excluir"
+                          >
+                            <i
+                              class="fas fa-trash text-danger point "
+                              aria-hidden="true"
+                            ></i
+                          ></a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <!--FIM TABLE-->
+            </div>           
+          </div>        
+        </div>        
+      </div>
+      <!--FIM MODAL REDES SOCIAIS-->
+
+      <!-- INICIO MODAL VEICULOS-->
+      <div class="modal fade" id="modalveiculos" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+          <div class="modal-content">
+            <div class="modal-header border-0">
+              <h4 class="modal-title">Cadastrar Veículo</h4>
+              <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class="modal-body" *ngIf="informacoes">
+                <formulario-pessoas-veiculos [pessoa_id]="informacoes.id" (refresh)="refresh2()" />
+
+                <!--INICIO TABLE-->
+                <table  class="table table-hover table-head-fixed text-nowrap ">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Tipo</th> 
+                      <th>Marca - Modelo</th>    
+                      <th>Placa</th>    
+                      <th>Chassi</th>   
+                      <th>Renavam</th>   
+                      <th>Pessoa / Organização</th>                      
+                      <th>Opções</th>
+                    </tr>
+                  </thead>
+                  <tbody *ngIf="informacoes" >
+                    <tr *ngFor="let row of informacoes.veiculos" class="optionshover">
+                      <td>{{row.pivot.id}}</td>
+                      <td>{{row.veiculo_tipo.nome}}</td> 
+                      <td>{{row.modelo?.marca?.nome}} - {{row.modelo?.nome}}</td> 
+                      <td>{{row.placa}}</td> 
+                      <td>{{row.chassi}}</td> 
+                      <td>{{row.renavam}}</td> 
+                      <td>
+                        <span *ngIf="row.pessoa">{{row.pessoa.nome}}</span>
+                        <span *ngIf="row.organizacao">{{row.organizacao.nome}}</span>
+                      </td> 
+                      <td>                                        
+                          <a
+                            class="options ml-2"
+                            (click)="deleteVeiculo(row.pivot.id)"                           
+                            title="Excluir"
+                          >
+                            <i
+                              class="fas fa-trash text-danger point "
+                              aria-hidden="true"
+                            ></i
+                          ></a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <!--FIM TABLE-->
+            </div>           
+          </div>        
+        </div>        
+      </div>
+      <!--FIM MODAL VEICULOS-->
       
     </section>
     <!--FIM SECTION content-->

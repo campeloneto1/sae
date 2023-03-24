@@ -44,8 +44,16 @@ const routes: Routes = [
                 loadComponent: () => import('./pages/perfis/perfis.component').then((c) => c.PerfisComponent)
             },
             {
+                path: 'Pessoa/:id',
+                loadComponent: () => import('./pages/pessoas/pessoa/pessoa.component').then((c) => c.PessoaComponent)
+            },
+            {
                 path: 'Pessoas',
                 loadComponent: () => import('./pages/pessoas/pessoas.component').then((c) => c.PessoasComponent)
+            },
+            {
+                path: 'RedesSociais',
+                loadComponent: () => import('./pages/redes-sociais/redes-sociais.component').then((c) => c.RedesSociaisComponent)
             },
             {
                 path: 'Sexos',

@@ -37,6 +37,7 @@ export class FormularioPessoasComponent{
     protected subscription: any;
    
     @Output('refresh') refresh: EventEmitter<Pessoa> = new EventEmitter();
+    @Output('cancel') cancel: EventEmitter<Pessoa> = new EventEmitter();
 
     constructor(
         private formBuilder: FormBuilder,
@@ -150,40 +151,51 @@ export class FormularioPessoasComponent{
     getEstados(){
         if(this.form.value.pais_id){
             this.estados$ = this.sharedService.getEstados(this.form.value.pais_id);
+        }else{
+            this.form.get('estado_id')?.patchValue('');
+            this.form.get('cidade_id')?.patchValue('');
         }
     }
 
     getCidades(){
         if(this.form.value.estado_id){
             this.cidades$ = this.sharedService.getCidades(this.form.value.estado_id);
+        }else{
+            this.form.get('cidade_id')?.patchValue('');
         }
     }
 
     cadastrar(){
-        if(this.form.value.id){
-            this.subscription = this.pessoasService.update(this.form.value).subscribe({
-                next: (data) => {
-                    this.sharedService.toast("Sucesso", data as string, 3);
-                    this.form.reset();
-                    this.refresh.emit();
-                },
-                error: (error) =>{
-                    this.sharedService.toast('Error!', error.erro as string, 2);
-                }
-            });
-        }else{
-            this.subscription = this.pessoasService.store(this.form.value).subscribe({
-                next: (data) => {
-                    this.sharedService.toast("Sucesso", data as string, 1);
-                    this.form.reset();
-                    this.refresh.emit();
-                },
-                error: (error) =>{
-                    this.sharedService.toast('Error!', error.erro as string, 2);
-                }
-            });
+        if(this.form.valid){
+            if(this.form.value.id){
+                this.subscription = this.pessoasService.update(this.form.value).subscribe({
+                    next: (data) => {
+                        this.sharedService.toast("Sucesso", data as string, 3);
+                        this.form.reset();
+                        this.refresh.emit();
+                    },
+                    error: (error) =>{
+                        this.sharedService.toast('Error!', error.erro as string, 2);
+                    }
+                });
+            }else{
+                this.subscription = this.pessoasService.store(this.form.value).subscribe({
+                    next: (data) => {
+                        this.sharedService.toast("Sucesso", data as string, 1);
+                        this.form.reset();
+                        this.refresh.emit();
+                    },
+                    error: (error) =>{
+                        this.sharedService.toast('Error!', error.erro as string, 2);
+                    }
+                });
+            }
         }
-       
+    }
+
+    cancelCad(){
+        this.form.reset();
+        this.cancel.emit();
     }
 
     editar(data: Pessoa){

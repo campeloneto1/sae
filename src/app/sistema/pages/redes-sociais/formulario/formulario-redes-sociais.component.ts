@@ -1,39 +1,30 @@
 import { CommonModule } from "@angular/common";
 import { Component, EventEmitter, Output } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { Observable, timeout } from "rxjs";
 import { SharedModule } from "src/app/sistema/shared/shared.module";
 import { SharedService } from "src/app/sistema/shared/shared.service";
-import { Estados } from "../../estados/estados";
-import { Paises } from "../../paises/paises";
-import { PaisesService } from "../../paises/paises.service";
-import { Cidade } from "../cidades";
-import { CidadesService } from "../cidades.service";
+import { RedeSocial } from "../redes-sociais";
+import { RedesSociaisService } from "../redes-sociais.service";
 
 @Component({
-    selector: 'formulario-cidades',
-    templateUrl: './formulario-cidades.component.html',
-    styleUrls: ['./formulario-cidades.component.css'],
+    selector: 'formulario-redes-sociais',
+    templateUrl: './formulario-redes-sociais.component.html',
+    styleUrls: ['./formulario-redes-sociais.component.css'],
     standalone: true,
     imports: [CommonModule, SharedModule]
 })
 
-export class FormularioCidadesComponent{
-
+export class FormularioRedesSociaisComponent{
     protected form!: FormGroup;
-
-    protected estados$!: Observable<Estados>;
-    protected paises$!: Observable<Paises>;
 
     protected subscription: any;
    
-    @Output('refresh') refresh: EventEmitter<Cidade> = new EventEmitter();
+    @Output('refresh') refresh: EventEmitter<RedeSocial> = new EventEmitter();
 
     constructor(
         private formBuilder: FormBuilder,
         private sharedService: SharedService,
-        private paisesService: PaisesService,
-        private cidadesService: CidadesService
+        private redesSociaisService: RedesSociaisService,
     ){}
    
     ngOnInit(): void {
@@ -41,18 +32,11 @@ export class FormularioCidadesComponent{
             'id': [''],
             'nome': ['', Validators.compose([
                 Validators.required,
-                Validators.minLength(4),
+                Validators.minLength(5),
                 Validators.maxLength(150)
-            ])],
-            'estado_id': ['', Validators.compose([
-                Validators.required,
-            ])],
-            'pais_id': ['', Validators.compose([
-                Validators.required,
-            ])],
+            ])],            
         });
-
-        this.paises$ = this.paisesService.index();
+    
     }
 
     ngOnDestroy(): void {
@@ -62,21 +46,9 @@ export class FormularioCidadesComponent{
         
     }
 
-    getEstados(){
-        if(this.form.value.pais_id){
-            this.estados$ = this.paisesService.where(this.form.value.pais_id);
-        }else{
-            this.form.get('estato_id')?.patchValue('');
-        }
-        
-    }
-
     cadastrar(){
-        if(this.subscription){
-            this.subscription.unsubscribe();
-        }
         if(this.form.value.id){
-            this.subscription = this.cidadesService.update(this.form.value).subscribe({
+            this.subscription = this.redesSociaisService.update(this.form.value).subscribe({
                 next: (data) => {
                     this.sharedService.toast("Sucesso", data as string, 3);
                     this.form.reset();
@@ -87,7 +59,7 @@ export class FormularioCidadesComponent{
                 }
             });
         }else{
-            this.subscription = this.cidadesService.store(this.form.value).subscribe({
+            this.subscription = this.redesSociaisService.store(this.form.value).subscribe({
                 next: (data) => {
                     this.sharedService.toast("Sucesso", data as string, 1);
                     this.form.reset();
@@ -101,11 +73,7 @@ export class FormularioCidadesComponent{
        
     }
 
-    editar(data: Cidade){
+    editar(data: RedeSocial){
         this.form.patchValue(data);
-        
-        this.form.get('pais_id')?.patchValue(data.estado.pais_id);
-        this.getEstados();
     }
-
 }

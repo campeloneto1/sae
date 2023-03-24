@@ -2,7 +2,9 @@ import { Cidade } from "../cidades/cidades";
 import { Estado } from "../estados/estados";
 import { Influencia } from "../influencias/influencias";
 import { Pais } from "../paises/paises";
+import { RedesSociais } from "../redes-sociais/redes-sociais";
 import { Sexo } from "../sexos/sexos";
+import { Veiculos } from "../veiculos/veiculos";
 
 export interface Pessoa{
     id?: number,
@@ -30,6 +32,9 @@ export interface Pessoa{
     estado?: Estado,
     cidade_id?: number,
     cidade?: Cidade,
+    redes_sociais?: RedesSociais,
+    veiculos?: Veiculos,
+
 
     observacao?: string,
     foto?: string,

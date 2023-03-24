@@ -5,7 +5,6 @@ import { DataTablesModule } from "angular-datatables";
 import { InputSelectModule } from "../components/input-select/input-select.module";
 import { InputTextModule } from "../components/input-text/input-text.module";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgxEditorModule } from 'ngx-editor';
 import { InputTextareaModule } from "../components/input-textarea/input-textarea.module";
 
 @NgModule({
@@ -20,7 +19,6 @@ import { InputTextareaModule } from "../components/input-textarea/input-textarea
         InputSelectModule,
         InputTextModule,
         InputTextareaModule,
-        NgxEditorModule
     ],
     providers: [provideNgxMask()],
     exports: [ 
@@ -32,7 +30,6 @@ import { InputTextareaModule } from "../components/input-textarea/input-textarea
         InputSelectModule,
         InputTextModule,
         InputTextareaModule,
-        NgxEditorModule
     ]
 })
 
