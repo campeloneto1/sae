@@ -1,0 +1,35 @@
+<form  [formGroup]="form" (ngSubmit)="cadastrar()" >
+    
+    <div class="row">   
+        <app-input-select class="col-sm-2" (ngModelChange)="getCategoria()" formControlName="analise_categoria_id" label="Categoria" id="analise_categoria_id" [data$]="analisescategorias$" /> 
+        <app-input-select class="col-sm-2" *ngIf="analisecategoria?.tipo" formControlName="analise_tipo_id" label="Tipo" id="analise_tipo_id" [data$]="analisestipos$" />    
+        <app-input-text class="col-sm-4" formControlName="nome" label="Nome" id="nome" tipo="text" />
+        <app-input-text class="col-sm-2" formControlName="data" label="Data" id="data" tipo="date" />
+        <app-input-text class="col-sm-2" formControlName="hora" label="Hora" id="hora" tipo="time" />
+    </div>
+
+    <div class="row" *ngIf="analisecategoria?.endereco">
+        <app-input-select (ngModelChange)="getEstados()" class="col-sm-2" formControlName="pais_id" label="País" id="pais_id" [data$]="paises$" />
+        <app-input-select (ngModelChange)="getCidades()" class="col-sm-2" formControlName="estado_id" label="Estado" id="estado_id" [data$]="estados$" />
+        <app-input-select class="col-sm-2" formControlName="cidade_id" label="Cidade" id="cidade_id" [data$]="cidades$" />
+        <app-input-text class="col-sm-2" formControlName="cep" label="CEP" id="cep" tipo="text" mascara="00.000-00" />
+    </div>
+    <div class="row" *ngIf="analisecategoria?.endereco">
+        <app-input-text class="col-sm-4" formControlName="rua" label="Rua" id="rua" tipo="text" />
+        <app-input-text class="col-sm-2" formControlName="numero" label="Número" id="numero" tipo="text" />
+        <app-input-text class="col-sm-2" formControlName="bairro" label="Bairro" id="bairro" tipo="text" />
+        <app-input-text class="col-sm-4" formControlName="complemento" label="Complemento" id="complemento" tipo="text" />
+    </div>
+    <div class="row">
+        <app-input-textarea class="col-sm-12" formControlName="observacao" label="Observação" id="observacao" tipo="textarea" />
+        <app-input-textarea class="col-sm-12" *ngIf="analisecategoria?.previa" formControlName="previa" label="Prévia" id="previa" tipo="textarea" />
+        <app-input-textarea class="col-sm-12" *ngIf="analisecategoria?.sintese" formControlName="sintese" label="Síntese" id="sintese" tipo="textarea" />
+    </div>
+    <div class="d-flex justify-content-end">
+      
+        <!--<a (click)="form.reset()" data-bs-dismiss="modal" class="btn btn-link text-danger">Cancelar</a>
+        <button [disabled]="form.invalid" data-bs-dismiss="modal" type="submit" class="btn btn-primary">Cadastrar</button>-->
+        <a (click)="cancelCad()" class="btn btn-link text-danger">Cancelar</a>
+        <button [disabled]="form.invalid"  type="submit" class="btn btn-primary">Cadastrar</button>
+    </div>
+</form>

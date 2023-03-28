@@ -1,7 +1,7 @@
 import { CommonModule } from "@angular/common";
 import { Component, EventEmitter, Output } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { Observable } from "rxjs";
+import { Observable, of } from "rxjs";
 import { SharedModule } from "src/app/sistema/shared/shared.module";
 import { SharedService } from "src/app/sistema/shared/shared.service";
 import { Cores } from "../../cores/cores";
@@ -10,6 +10,9 @@ import { Marcas } from "../../marcas/marcas";
 import { MarcasService } from "../../marcas/marcas.service";
 import { Modelos } from "../../modelos/modelos";
 import { ModelosService } from "../../modelos/modelos.service";
+import { Pessoas } from "../../pessoas/pessoas";
+import { PessoasService } from "../../pessoas/pessoas.service";
+import { VeiculosTiposService } from "../../veiculos-tipos/veiculos-tipos.service";
 import { Veiculo } from "../veiculos";
 import { VeiculosService } from "../veiculos.service";
 
@@ -31,8 +34,10 @@ export class FormularioVeiculosComponent{
     protected marcas$!: Observable<Marcas>;
     protected modelos$!: Observable<Modelos>;
     protected cores$!: Observable<Cores>;
+    protected pessoas$!: Observable<Pessoas>;
 
     protected subscription: any;
+    protected subscription2: any;
    
     @Output('refresh') refresh: EventEmitter<Veiculo> = new EventEmitter();
     @Output('cancel') cancel: EventEmitter<Veiculo> = new EventEmitter();
@@ -42,8 +47,9 @@ export class FormularioVeiculosComponent{
         private sharedService: SharedService,
         private coresService: CoresService,
         private marcasService: MarcasService,
-        private modelosService: ModelosService,
-        private veiculosService: VeiculosService
+        private veiculosService: VeiculosService,
+        private veiculosTiposService: VeiculosTiposService,
+        private pessoasService: PessoasService
     ){}
    
     ngOnInit(): void {
@@ -65,19 +71,33 @@ export class FormularioVeiculosComponent{
                 Validators.maxLength(150)
             ])],
             'cor_id': [''],
+            'marca_id': ['', Validators.compose([
+                Validators.required,
+            ])],
             'modelo_id': ['', Validators.compose([
                 Validators.required,
             ])],
             'veiculo_tipo_id': ['', Validators.compose([
                 Validators.required,
             ])],
+            'pessoa_id': [''],
             'observacao': [''],
             'key': [''],
            
         });
 
+        this.tipos$ = this.veiculosTiposService.index();
         this.cores$ = this.coresService.index();
-        this.marcas$ = this.marcasService.index();
+        this.marcas$ = this.marcasService.index();        
+
+        this.subscription2 = this.pessoasService.index().subscribe({
+            next: (data) => {
+                data.forEach((element:any) => {
+                    element.nome = `${element.nome } (${element.cpf})`
+                });
+                this.pessoas$ = of(data);
+            }
+        });
     }
 
     ngOnDestroy(): void {
@@ -85,7 +105,14 @@ export class FormularioVeiculosComponent{
         if(this.subscription){
             this.subscription.unsubscribe();
         }
-    }    
+        if(this.subscription2){
+            this.subscription2.unsubscribe();
+        }
+    }  
+    
+    getModelos(){
+        this.modelos$ = this.marcasService.where(this.form.value.marca_id);
+    }
    
     cadastrar(){
         if(this.form.valid){
@@ -123,6 +150,7 @@ export class FormularioVeiculosComponent{
     editar(data: Veiculo){
         this.form.patchValue(data);
         this.form.get('marca_id')?.patchValue(data.modelo?.marca_id);
+        this.getModelos();
         
     }
 }

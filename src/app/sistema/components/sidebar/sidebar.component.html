@@ -26,6 +26,26 @@
             <p>Início</p>
           </a>
         </li>
+        <li class="nav-item" *ngIf="perfil.analises">
+          <a
+            [routerLink]="['Analises']"
+            routerLinkActive="active"
+            class="nav-link"
+          >
+            <i class="nav-icon fa fa-warning"></i>
+            <p>Análises</p>
+          </a>
+        </li>
+        <li class="nav-item" *ngIf="perfil.organizacoes">
+          <a
+            [routerLink]="['Organizacoes']"
+            routerLinkActive="active"
+            class="nav-link"
+          >
+            <i class="nav-icon fa fa-building"></i>
+            <p>Organizações</p>
+          </a>
+        </li>
         <li class="nav-item" *ngIf="perfil.pessoas">
           <a
             [routerLink]="['Pessoas']"
@@ -36,7 +56,7 @@
             <p>Pessoas</p>
           </a>
         </li>
-        <li class="nav-item" *ngIf="perfil.gestor">
+        <!--<li class="nav-item" *ngIf="perfil.gestor">
           <a
             [routerLink]="['Usuarios']"
             routerLinkActive="active"
@@ -44,6 +64,16 @@
           >
             <i class="nav-icon fa fa-users"></i>
             <p>Usuários</p>
+          </a>
+        </li>-->
+        <li class="nav-item" *ngIf="perfil.veiculos">
+          <a
+            [routerLink]="['Veiculos']"
+            routerLinkActive="active"
+            class="nav-link"
+          >
+            <i class="nav-icon fa fa-car"></i>
+            <p>Veículos</p>
           </a>
         </li>
         <li class="nav-item" *ngIf="perfil.administrador">
@@ -55,6 +85,16 @@
             </p>
           </a>
           <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a
+                [routerLink]="['Analises/Categorias']"
+                routerLinkActive="active"
+                class="nav-link"
+              >
+                <i class="far fa-circle nav-icon"></i>
+                <p>Categorias de Análises</p>
+              </a>
+            </li>
             <li class="nav-item">
               <a
                 [routerLink]="['Cidades']"
@@ -145,6 +185,46 @@
                 <p>Sexos</p>
               </a>
             </li>
+            <li class="nav-item">
+              <a
+                [routerLink]="['Arquivos/Tipos']"
+                routerLinkActive="active"
+                class="nav-link"
+              >
+                <i class="far fa-circle nav-icon"></i>
+                <p>Tipos de Arquivos</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a
+                [routerLink]="['Analises/Tipos']"
+                routerLinkActive="active"
+                class="nav-link"
+              >
+                <i class="far fa-circle nav-icon"></i>
+                <p>Tipos de Análises</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a
+                [routerLink]="['Organizacoes/Tipos']"
+                routerLinkActive="active"
+                class="nav-link"
+              >
+                <i class="far fa-circle nav-icon"></i>
+                <p>Tipos de Organizações</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a
+                [routerLink]="['Veiculos/Tipos']"
+                routerLinkActive="active"
+                class="nav-link"
+              >
+                <i class="far fa-circle nav-icon"></i>
+                <p>Tipos de Veículos</p>
+              </a>
+            </li>
           </ul>
         </li>
         <li class="nav-item" *ngIf="perfil.gestor">
@@ -174,6 +254,16 @@
               >
                 <i class="far fa-circle nav-icon"></i>
                 <p>Redes Sociais</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a
+                [routerLink]="['Usuarios']"
+                routerLinkActive="active"
+                class="nav-link"
+              >
+                <i class="far fa-circle nav-icon"></i>
+                <p>Usuários</p>
               </a>
             </li>
           </ul>

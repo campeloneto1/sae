@@ -1,0 +1,24 @@
+<form  [formGroup]="form" (ngSubmit)="cadastrar()" >
+    <div class="row">
+        <app-input-select class="col-sm-2" formControlName="veiculo_tipo_id" label="Tipo de Veículo" id="veiculo_tipo_id" [data$]="tipos$" />
+        <app-input-select class="col-sm-3" (ngModelChange)="getModelos()" formControlName="marca_id" label="Marca" id="marca_id" [data$]="marcas$" />
+        <app-input-select class="col-sm-3" formControlName="modelo_id" label="Modelo" id="modelo_id" [data$]="modelos$" />
+        <app-input-text class="col-sm-2" mascara="SSS0A00" formControlName="placa" label="Placa" id="placa" tipo="text" />
+        <app-input-select class="col-sm-2" formControlName="cor_id" label="Cor" id="cor_id" [data$]="cores$" />
+    </div>
+    <div class="row">
+        <app-input-text class="col-sm-2" formControlName="chassi" label="Chassi" id="chassi" tipo="text" />
+        <app-input-text class="col-sm-2" formControlName="renavam" label="Renavam" id="renavam" tipo="text" />
+    </div>
+    <div class="row">
+        <app-input-select class="col-sm-6" formControlName="pessoa_id" label="Pessoa" id="pessoa_id" [data$]="pessoas$" />
+    </div>
+    <div class="row">
+        <app-input-textarea class="col-sm-12" formControlName="observacao" label="Observação" id="observacao" tipo="textarea" />
+    </div>
+    <div class="d-flex justify-content-end">
+      
+        <a (click)="cancelCad()" class="btn btn-link text-danger">Cancelar</a>
+        <button [disabled]="form.invalid" type="submit" class="btn btn-primary">Cadastrar</button>
+    </div>
+</form>

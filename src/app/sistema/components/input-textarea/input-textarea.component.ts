@@ -1,6 +1,7 @@
 import { Component, forwardRef, Input, OnDestroy, OnInit } from "@angular/core";
 import { AbstractControl, ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors } from "@angular/forms";
 import { AngularEditorConfig } from '@kolkov/angular-editor';
+import { environment } from "src/environments/environments";
 
 @Component({
     selector: 'app-input-textarea',
@@ -61,7 +62,7 @@ export class InputTextareaComponent implements ControlValueAccessor, OnInit, OnD
         tag: 'h1',
       },
     ],
-    uploadUrl: 'http://10.9.168.179/apisae/public/api/upload-image',
+    uploadUrl: environment.url+'/upload-image',
     //upload: (file: File) => { console.log(file) },
     uploadWithCredentials: false,
     sanitize: true,

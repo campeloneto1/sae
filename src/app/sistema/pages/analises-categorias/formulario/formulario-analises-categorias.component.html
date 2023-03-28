@@ -1,0 +1,44 @@
+<form  [formGroup]="form" (ngSubmit)="cadastrar()" >
+    <div class="row">
+        <app-input-text class="col-sm-4" formControlName="nome" label="Nome" id="nome" tipo="text" />
+           
+    </div>
+    <div class="row">
+        <div class="col-sm-2">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox"  id="gestor" formControlName="gestor">
+                <label class="form-check-label" for="gestor">Gestor</label>
+            </div>
+        </div> 
+        <div class="col-sm-2">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox"  id="tipo" formControlName="tipo">
+                <label class="form-check-label" for="tipo">Tipo de Análise</label>
+            </div>
+        </div> 
+        <div class="col-sm-2">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox"  id="previa" formControlName="previa">
+                <label class="form-check-label" for="previa">Prévia</label>
+            </div>
+        </div> 
+        <div class="col-sm-2">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox"  id="sintese" formControlName="sintese">
+                <label class="form-check-label" for="sintese">Síntese</label>
+            </div>
+        </div> 
+        <div class="col-sm-2">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox"  id="endereco" formControlName="endereco">
+                <label class="form-check-label" for="endereco">Endereço</label>
+            </div>
+        </div> 
+    </div>
+    
+    <div class="d-flex justify-content-end">
+      
+        <a (click)="form.reset()" data-bs-dismiss="modal" class="btn btn-link text-danger">Cancelar</a>
+        <button [disabled]="form.invalid" data-bs-dismiss="modal" type="submit" class="btn btn-primary">Cadastrar</button>
+    </div>
+</form>

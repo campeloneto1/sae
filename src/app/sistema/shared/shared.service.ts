@@ -7,11 +7,60 @@ import { Estados } from '../pages/estados/estados';
 import { EstadosService } from '../pages/estados/estados.service';
 import { Paises } from '../pages/paises/paises';
 import { PaisesService } from '../pages/paises/paises.service';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
 
 const API = environment.url;
 
 @Injectable({providedIn: 'root'})
 export class SharedService{
+
+  protected editorConfig: AngularEditorConfig = {
+    editable: true,
+      spellcheck: true,
+      height: '200px',
+      minHeight: '0',
+      maxHeight: 'auto',
+      width: 'auto',
+      minWidth: '0',
+      translate: 'yes',
+      enableToolbar: true,
+      showToolbar: true,
+      placeholder: 'Observação...',
+      defaultParagraphSeparator: '',
+      defaultFontName: '',
+      defaultFontSize: '',
+      fonts: [
+        {class: 'arial', name: 'Arial'},
+        {class: 'times-new-roman', name: 'Times New Roman'},
+        {class: 'calibri', name: 'Calibri'},
+        {class: 'comic-sans-ms', name: 'Comic Sans MS'}
+      ],
+      customClasses: [
+      {
+        name: 'quote',
+        class: 'quote',
+      },
+      {
+        name: 'redText',
+        class: 'redText'
+      },
+      {
+        name: 'titleText',
+        class: 'titleText',
+        tag: 'h1',
+      },
+    ],
+    uploadUrl: environment.url+'/upload-image',
+    //upload: (file: File) => { console.log(file) },
+    uploadWithCredentials: false,
+    sanitize: true,
+    toolbarPosition: 'top',
+    toolbarHiddenButtons: [
+      ['strikeThrough',
+      'subscript',
+      'superscript',],
+    ]
+};
 
       private dtOptions: DataTables.Settings = {
         pagingType: 'full_numbers',

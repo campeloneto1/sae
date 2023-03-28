@@ -6,8 +6,8 @@ import { SharedModule } from "src/app/sistema/shared/shared.module";
 import { SharedService } from "src/app/sistema/shared/shared.service";
 import { RedesSociais } from "../../redes-sociais/redes-sociais";
 import { RedesSociaisService } from "../../redes-sociais/redes-sociais.service";
-import { PessoaRedeSocial } from "../pessoas-redes-sociais";
-import { PessoasRedesSociaisService } from "../pessoas-redes-sociais.service";
+import { PessoaRedeSocial } from "./pessoas-redes-sociais";
+import { PessoasRedesSociaisService } from "./pessoas-redes-sociais.service";
 
 @Component({
     selector: 'formulario-pessoas-redes-sociais',

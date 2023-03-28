@@ -6,8 +6,8 @@ import { SharedModule } from "src/app/sistema/shared/shared.module";
 import { SharedService } from "src/app/sistema/shared/shared.service";
 import { Veiculos } from "../../veiculos/veiculos";
 import { VeiculosService } from "../../veiculos/veiculos.service";
-import { PessoaVeiculo } from "../pessoas-veiculos";
-import { PessoasVeiculosService } from "../pessoas-veiculos.service";
+import { PessoaVeiculo } from "./pessoas-veiculos";
+import { PessoasVeiculosService } from "./pessoas-veiculos.service";
 
 @Component({
     selector: 'formulario-pessoas-veiculos',
@@ -24,6 +24,7 @@ export class FormularioPessoasVeiculosComponent{
     protected veiculos$!: Observable<Veiculos>;
 
     protected subscription: any;
+    protected subscription2: any;
 
     @Input() pessoa_id?: number = 0;
    
@@ -46,10 +47,10 @@ export class FormularioPessoasVeiculosComponent{
             ])],
         });
         this.form.get('pessoa_id')?.patchValue(this.pessoa_id);
-        this.veiculosService.index().subscribe({
+        this.subscription2 = this.veiculosService.index().subscribe({
             next: (data) => {
                 data.forEach((element:any) => {
-                    element.nome = `${element.placa } (${element.modelo.nome} / ${element.modelo.marca.nome})`
+                    element.nome = `${element.placa } (${element.modelo.nome} - ${element.modelo.marca.nome})`
                 });
                 this.veiculos$ = of(data);
             }
@@ -60,7 +61,9 @@ export class FormularioPessoasVeiculosComponent{
         if(this.subscription){
             this.subscription.unsubscribe();
         }
-        
+        if(this.subscription2){
+            this.subscription2.unsubscribe();
+        }
     }
 
     cadastrar(){

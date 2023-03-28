@@ -33,4 +33,6 @@ export class PessoasService{
     checkCpf(id: number) {
       return this.http.get(`${API}/pessoas/${id}/checkCpf`);
     } 
+
+   
 }

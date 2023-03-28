@@ -12,6 +12,22 @@ const routes: Routes = [
                 loadComponent: () => import('./pages/inicio/inicio.component').then((c) => c.InicioComponent)
             },
             {
+                path: 'Analises',
+                loadComponent: () => import('./pages/analises/analises.component').then((c) => c.AnalisesComponent)
+            },
+            {
+                path: 'Analises/Tipos',
+                loadComponent: () => import('./pages/analises-tipos/analises-tipos.component').then((c) => c.AnalisesTiposComponent)
+            },
+            {
+                path: 'Analises/Categorias',
+                loadComponent: () => import('./pages/analises-categorias/analises-categorias.component').then((c) => c.AnalisesCategoriasComponent)
+            },
+            {
+                path: 'Arquivos/Tipos',
+                loadComponent: () => import('./pages/arquivos-tipos/arquivos-tipos.component').then((c) => c.ArquivosTiposComponent)
+            },
+            {
                 path: 'Cidades',
                 loadComponent: () => import('./pages/cidades/cidades.component').then((c) => c.CidadesComponent)
             },
@@ -36,6 +52,14 @@ const routes: Routes = [
                 loadComponent: () => import('./pages/modelos/modelos.component').then((c) => c.ModelosComponent)
             },
             {
+                path: 'Organizacoes',
+                loadComponent: () => import('./pages/organizacoes/organizacoes.component').then((c) => c.OrganizacoesComponent)
+            },
+            {
+                path: 'Organizacoes/Tipos',
+                loadComponent: () => import('./pages/organizacoes-tipos/organizacoes-tipos.component').then((c) => c.OrganizacoesTiposComponent)
+            },
+            {
                 path: 'Paises',
                 loadComponent: () => import('./pages/paises/paises.component').then((c) => c.PaisesComponent)
             },
@@ -46,6 +70,10 @@ const routes: Routes = [
             {
                 path: 'Pessoa/:id',
                 loadComponent: () => import('./pages/pessoas/pessoa/pessoa.component').then((c) => c.PessoaComponent)
+            },
+            {
+                path: 'Pessoa/:id/Imprimir',
+                loadComponent: () => import('./pages/pessoas/imprimir-pessoa/imprimir-pessoa.component').then((c) => c.ImprimirPessoaComponent)
             },
             {
                 path: 'Pessoas',
@@ -62,6 +90,14 @@ const routes: Routes = [
             {
                 path: 'Usuarios',
                 loadComponent: () => import('./pages/usuarios/usuarios.component').then((c) => c.UsuariosComponent)
+            },
+            {
+                path: 'Veiculos',
+                loadComponent: () => import('./pages/veiculos/veiculos.component').then((c) => c.VeiculosComponent)
+            },
+            {
+                path: 'Veiculos/Tipos',
+                loadComponent: () => import('./pages/veiculos-tipos/veiculos-tipos.component').then((c) => c.VeiculosTiposComponent)
             },
             {
                 path: '',

@@ -7,7 +7,17 @@
     <div class="row" *ngIf="pessoa$ | async as pessoa; else loading">
       <div class="col-sm-3">
         <div class="card ">
-          <div class="card-body box-profile">
+          <div class="card-body box-profile ">
+            <div class="text-center">
+              <img
+              
+                style="height: 200px; width: 200px;"
+                *ngIf="pessoa.foto"
+                class="profile-user-img img-fluid img-circle"
+                [src]="urlfoto(pessoa)"
+                alt="User profile picture"
+              />
+            </div>
             
             <h3 class="profile-username text-center">{{pessoa.nome}}</h3>
             <p *ngIf="pessoa.alcunha" class="text-muted text-center">{{pessoa.alcunha}}</p>
@@ -45,7 +55,7 @@
               
 
             </ul>      
-            <a target="_blank" class="btn btn-primary btn-block"><i class="fa fa-print" aria-hidden="true"></i> Imprimir</a>     
+            <a [routerLink]="['Imprimir']" target="_blank" class="btn btn-primary btn-block"><i class="fa fa-print" aria-hidden="true"></i> Imprimir</a>     
           </div>
 
           
@@ -69,8 +79,9 @@
             <ul class="nav nav-pills">
                 <!--<li class="nav-item"><a class="nav-link active" href="#informacoes" data-bs-toggle="tab">Informações</a></li>-->
                 <li class="nav-item"><a class="nav-link active" href="#observacao" data-bs-toggle="tab">Observação</a></li>
-                <li class="nav-item"><a class="nav-link" href="#veiculos" data-bs-toggle="tab">Veículos</a></li>
                 <li class="nav-item"><a class="nav-link" href="#analises" data-bs-toggle="tab">Análises</a></li>
+                <li class="nav-item"><a class="nav-link" href="#veiculos" data-bs-toggle="tab">Veículos</a></li>
+                
                 <li class="nav-item"><a class="nav-link" href="#organizacoes" data-bs-toggle="tab">Organizações</a></li>
                 <li class="nav-item"><a class="nav-link" href="#arquivos" data-bs-toggle="tab">Arquivos</a></li>
             </ul>
@@ -87,6 +98,71 @@
                     <div [innerHTML]="pessoa.observacao"></div>
                 </div>
                 <!--FIM TAB OBSERVACAO-->
+                <!--INICIO TAB ANALISES-->
+                <div class="tab-pane" id="analises">
+                  <button class="btn btn-outline-primary mb-2" data-bs-toggle="modal" data-bs-target="#modalanalises" title="Cadastrar"><i class="fa fa-plus"></i></button>
+                  <!-- INICIO MODAL ANALISES-->
+                  <div class="modal fade" id="modalanalises" style="display: none;" aria-hidden="true">
+                    <div class="modal-dialog modal-xl">
+                      <div class="modal-content">
+                        <div class="modal-header border-0">
+                          <h4 class="modal-title">
+                            Cadastrar Análise
+                          </h4>
+                          <button type="button" class="close" #fecharmodalanalises id="fecharmodal" data-bs-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">×</span>
+                          </button>
+                        </div>
+                        <div class="modal-body" >                            
+                            <formulario-pessoas-analises [pessoa_id]="pessoa.id" (refresh)="sudmitAnalise()" />
+                        </div>           
+                      </div>        
+                    </div>        
+                  </div>
+                  <!--FIM MODAL ANALISES-->
+                  <!--INICIO TABLE-->
+                   <table  class="table table-hover table-head-fixed text-nowrap mt-2">
+                     <thead>
+                       <tr>
+                         <th>#</th>
+                         <th>Categoria</th> 
+                         <th>Tipo</th>    
+                         <th>Nome</th>    
+                         <th>Data</th>   
+                         <th>Hora</th>   
+                         <th>Líder</th> 
+                         <th>Opções</th>
+                       </tr>
+                     </thead>
+                     <tbody  >
+                       <tr *ngFor="let row of pessoa.analises" class="optionshover">
+                         <td>{{row.pivot.id}}</td>
+                         <td>{{row.analise_categoria.nome}}</td> 
+                         <td>{{row.analise_tipo?.nome}}</td> 
+                         <td>{{row.nome}}</td> 
+                         <td>{{row.data | date: 'dd/MM/yyyy'}}</td> 
+                         <td>{{row.hora}}</td> 
+                         <td>
+                            <span *ngIf="row.pivot.lider">Sim</span>
+                          </td>
+                         <td>                                        
+                             <a
+                               class="options ml-2"
+                               (click)="deleteAnalise(row.pivot.id)"                           
+                               title="Excluir"
+                             >
+                               <i
+                                 class="fas fa-trash text-danger point "
+                                 aria-hidden="true"
+                               ></i
+                             ></a>
+                         </td>
+                       </tr>
+                     </tbody>
+                   </table>
+                   <!--FIM TABLE-->
+                 </div>
+                 <!--FIM TAB ANALISES-->
                 <!--INICIO TAB VEICULOS-->
                 <div class="tab-pane" id="veiculos">
 
@@ -96,13 +172,17 @@
                     <div class="modal-dialog modal-xl">
                       <div class="modal-content">
                         <div class="modal-header border-0">
-                          <h4 class="modal-title">Cadastrar Veículo</h4>
+                          <h4 class="modal-title">
+                            Cadastrar Veículo
+                            <button (click)="cadveiculo = true;" class="btn btn-outline-primary" title="Cadastrar"><i class="fa fa-plus"></i></button>
+                          </h4>
                           <button type="button" class="close" #fecharmodalveiculo id="fecharmodal" data-bs-dismiss="modal" aria-label="Close">
                           <span aria-hidden="true">×</span>
                           </button>
                         </div>
-                        <div class="modal-body" >
-                            <formulario-pessoas-veiculos [pessoa_id]="pessoa.id" (refresh)="refresh()" />
+                        <div class="modal-body" >                            
+                            <formulario-veiculos *ngIf="cadveiculo" (refresh)="cadastroVeiculo()" (cancel)="cancelVeiculo()"/>
+                            <formulario-pessoas-veiculos *ngIf="!cadveiculo" [pessoa_id]="pessoa.id" (refresh)="sudmitOrganizacao()" />
                         </div>           
                       </div>        
                     </div>        
@@ -153,14 +233,154 @@
                   <!--FIM TABLE-->
                 </div>
                 <!--FIM TAB VEICULOS-->
-                <!--INICIO TAB ANALISES-->
-                <div class="tab-pane" id="analises">C</div>
-                <!--FIM TAB ANALISES-->
+                
                 <!--INICIO TAB ORGANIZACOES-->
-                <div class="tab-pane" id="organizacoes">D</div>
+                <div class="tab-pane" id="organizacoes">
+                  <button class="btn btn-outline-primary mb-2" data-bs-toggle="modal" data-bs-target="#modalorganizacoes" title="Cadastrar"><i class="fa fa-plus"></i></button>
+                  <!-- INICIO MODAL ORGANIZACAO-->
+                  <div class="modal fade" id="modalorganizacoes" style="display: none;" aria-hidden="true">
+                    <div class="modal-dialog modal-xl">
+                      <div class="modal-content">
+                        <div class="modal-header border-0">
+                          <h4 class="modal-title">
+                            Cadastrar Organização
+                          </h4>
+                          <button type="button" class="close" #fecharmodalorganizacoes id="fecharmodal" data-bs-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">×</span>
+                          </button>
+                        </div>
+                        <div class="modal-body" >                            
+                            <formulario-pessoas-organizacoes  [pessoa_id]="pessoa.id" (refresh)="sudmitVeiculo()" />
+                        </div>           
+                      </div>        
+                    </div>        
+                  </div>
+                  <!--FIM MODAL ORGANIZACAO-->
+                  <!--INICIO TABLE-->
+                  <table  class="table table-hover table-head-fixed text-nowrap mt-2">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Tipo</th> 
+                        <th>Nome</th>    
+                        <th>Telefone 1</th>    
+                        <th>E-mail</th>   
+                        <th>Líder</th>   
+                        <th>Opções</th>
+                      </tr>
+                    </thead>
+                    <tbody  >
+                      <tr *ngFor="let row of pessoa.organizacoes" class="optionshover">
+                        <td>{{row.pivot.id}}</td>
+                        <td>{{row.organizacao_tipo.nome}}</td> 
+                        <td>{{row.nome}}</td> 
+                        <td>{{row?.telefone1}} </td> 
+                        <td>{{row?.email}}</td> 
+                        <td>
+                          <span *ngIf="row.pivot.lider">Sim</span>
+                        </td>
+                      
+                        <td>                                        
+                            <a
+                              class="options ml-2"
+                              (click)="deleteOrganizacao(row.pivot.id)"                           
+                              title="Excluir"
+                            >
+                              <i
+                                class="fas fa-trash text-danger point "
+                                aria-hidden="true"
+                              ></i
+                            ></a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <!--FIM TABLE-->
+                </div>
                 <!--FIM TAB ORGANIZACOES-->
                 <!--INICIO TAB ARQUIVOS-->
-                <div class="tab-pane" id="arquivos">E</div>
+                <div class="tab-pane" id="arquivos">
+                  <button class="btn btn-outline-primary mb-2" data-bs-toggle="modal" data-bs-target="#modalarquivos" title="Cadastrar"><i class="fa fa-plus"></i></button>
+                  <!-- INICIO MODAL ARQUIVOS-->
+                  <div class="modal fade" id="modalarquivos" style="display: none;" aria-hidden="true">
+                    <div class="modal-dialog modal-xl">
+                      <div class="modal-content">
+                        <div class="modal-header border-0">
+                          <h4 class="modal-title">
+                            Cadastrar Arquivo
+                          </h4>
+                          <button type="button" class="close" #fecharmodalarquivos id="fecharmodal" data-bs-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">×</span>
+                          </button>
+                        </div>
+                        <div class="modal-body" >                            
+                            <formulario-pessoas-arquivos  [pessoa_id]="pessoa.id" (refresh)="sudmitArquivo()" />
+                        </div>           
+                      </div>        
+                    </div>        
+                  </div>
+                  <!--FIM MODAL ARQUIVOS-->
+                  <!-- INICIO MODAL SHOW ARQUIVOS-->
+                  <div class="modal fade" id="modalshowarquivos" style="display: none;" aria-hidden="true">
+                    <div class="modal-dialog modal-xl">
+                      <div class="modal-content">
+                        <div class="modal-header border-0">
+                          <h4 class="modal-title">
+                            Arquivo 
+                          </h4>
+                          <button type="button" class="close" #fecharmodalarquivos id="fecharmodal" data-bs-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">×</span>
+                          </button>
+                        </div>
+                        <div class="modal-body" *ngIf="arquivo" style="text-align: center; height: 650px;">   
+                            <img style="height: 100%;" *ngIf="arquivo.arquivo_tipo_id == 2"  [src]="urlarq(arquivo)" />    
+                            <iframe style="width: 100%; height: 100%;" *ngIf="arquivo.arquivo_tipo_id == 1" [src]="urlarq(arquivo)" ></iframe>
+                           
+                        </div>           
+                      </div>        
+                    </div>        
+                  </div>
+                  <!--FIM MODAL SHOW ARQUIVOS-->
+                  <!--INICIO TABLE-->
+                  <table  class="table table-hover table-head-fixed text-nowrap mt-2">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Tipo</th> 
+                        <th>Arquivo</th>                        
+                        <th>Opções</th>
+                      </tr>
+                    </thead>
+                    <tbody  >
+                      <tr *ngFor="let row of pessoa.arquivos" class="optionshover">
+                        <td>{{row.id}}</td>
+                        <td>{{row.arquivo_tipo.nome}}</td> 
+                        <td>
+                          <a *ngIf="row.arquivo_tipo_id == 1" (click)="showArquivo(row)" data-bs-toggle="modal" data-bs-target="#modalshowarquivos">
+                            {{row.nome}}
+                          </a>  
+                          <a *ngIf="row.arquivo_tipo_id == 2" (click)="showArquivo(row)" data-bs-toggle="modal" data-bs-target="#modalshowarquivos">
+                            <img  width="50px" [src]="urlarq(row)" /> 
+                          </a>      
+                          <!--<a (click)="showArquivo(row)" data-bs-toggle="modal" data-bs-target="#modalshowarquivos">{{row.nome}}</a>-->
+                        </td> 
+                        <td>                                        
+                            <a
+                              class="options ml-2"
+                              (click)="deleteArquivo(row.id)"                           
+                              title="Excluir"
+                            >
+                              <i
+                                class="fas fa-trash text-danger point "
+                                aria-hidden="true"
+                              ></i
+                            ></a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <!--FIM TABLE-->
+                </div>
                 <!--FIM TAB ARQUIVOS-->
               </div>
           </div>

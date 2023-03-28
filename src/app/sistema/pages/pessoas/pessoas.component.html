@@ -21,6 +21,7 @@
                 <th>Nome</th>
                 <th>Alcunha</th>
                 <th>CPF</th>
+                <th>Foto</th>
                 <th>Informações</th>
                 <th>Opções</th>
               </tr>
@@ -33,6 +34,9 @@
                 <td>{{row.alcunha}}</td> 
                 <td>{{row.cpf | mask: '000.000.000-00'}}</td>   
                 <td>
+                  <i  class="fas fa-portrait point" [ngClass]="row.foto ? 'text-success' : 'text-danger'" (click)="showFoto(row)" data-bs-toggle="modal" data-bs-target="#modalfoto"></i>
+                </td>
+                <td>
                   <i
                     (click)="showRedesSociais(row)"
                     
@@ -40,6 +44,24 @@
                     data-bs-target="#modalredes"
                     title="Redes Sociais"
                     class="fa fa-share-alt-square text-primary point"
+                    aria-hidden="true"
+                  ></i>
+                  <i
+                    (click)="showAnalises(row)"
+                   
+                    data-bs-toggle="modal"
+                    data-bs-target="#modalanalises"
+                    title="Análises"
+                    class="fa fa-warning text-primary point ml-2"
+                    aria-hidden="true"
+                  ></i>
+                  <i
+                    (click)="showOrganizacoes(row)"
+                   
+                    data-bs-toggle="modal"
+                    data-bs-target="#modalorganizacoes"
+                    title="Organizações"
+                    class="fa fa-building text-primary point ml-2"
                     aria-hidden="true"
                   ></i>
                   <i
@@ -107,7 +129,7 @@
           <div class="modal-content">
             <div class="modal-header border-0">
               <h4 class="modal-title">Cadastrar</h4>
-              <button type="button" #closeModalPessoa class="close" data-bs-dismiss="modal" aria-label="Close">
+              <button type="button" #closeModalCadastro class="close" data-bs-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
               </button>
             </div>
@@ -142,6 +164,42 @@
         
       </div>
       <!--FIM MODAL EXCLUIR-->    
+
+      <!-- /.INICIO MODAL foto -->
+    <div class="modal fade" id="modalfoto" style="display: none;" aria-hidden="true">
+      <div class="modal-dialog ">
+        <div class="modal-content" *ngIf="foto">
+          <div class="modal-header">
+            <h4 class="modal-title">Cadastrar foto do usuário <b>{{foto.nome}}</b></h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          
+          <div class="modal-body text-center" >                
+            <h1 style="font-size: 90px;" *ngIf="!foto?.foto"><i class="fas fa-portrait" [ngClass]="foto.foto ? 'text-success' : 'text-danger'" ></i></h1>
+            <img [src]="IMG+foto.foto" *ngIf="foto?.foto" alt="user-avatar"  height="120px" class="img-circle img-fluid">
+            <form >
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="form-group">
+                    <label for="foto">Foto<span class="text-danger">*</span></label>
+                    <input type="file"  class="form-control form-control-border" accept="image/x-png,image/gif,image/jpeg" (change)="fileEvent($event)"  id="foto" required >                          
+                  </div>
+                </div>
+              </div>
+            </form>  
+          </div>
+          <div class="modal-footer ">
+          
+            <button type="button" class="btn btn-link" data-bs-dismiss="modal">Fechar</button>                  
+          </div>
+        </div>
+        <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+    </div>
+    <!-- /.FIM MODAL FOTO -->
       
       <!-- INICIO MODAL REDES SOCIAIS-->
       <div class="modal fade" id="modalredes" style="display: none;" aria-hidden="true">
@@ -193,21 +251,148 @@
       </div>
       <!--FIM MODAL REDES SOCIAIS-->
 
-      <!-- INICIO MODAL VEICULOS-->
-      <div class="modal fade" id="modalveiculos" style="display: none;" aria-hidden="true">
+      <!-- INICIO MODAL ANALISES-->
+      <div class="modal fade" id="modalanalises" style="display: none;" aria-hidden="true">
         <div class="modal-dialog modal-xl">
           <div class="modal-content">
             <div class="modal-header border-0">
-              <h4 class="modal-title">Cadastrar Veículo</h4>
+              <h4 class="modal-title">
+                Cadastrar Análise 
+              </h4>
+              <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class="modal-body" *ngIf="informacoes">
+                <formulario-pessoas-analises [pessoa_id]="informacoes.id" (refresh)="refresh2()" />
+
+                <!--INICIO TABLE-->
+                <table  class="table table-hover table-head-fixed text-nowrap mt-2">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Categoria</th> 
+                      <th>Tipo</th>    
+                      <th>Nome</th>    
+                      <th>Data</th>   
+                      <th>Hora</th>   
+                      <th>Líder</th>   
+                      <th>Opções</th>
+                    </tr>
+                  </thead>
+                  <tbody *ngIf="informacoes" >
+                    <tr *ngFor="let row of informacoes.analises" class="optionshover">
+                      <td>{{row.pivot.id}}</td>
+                      <td>{{row.analise_categoria.nome}}</td> 
+                      <td>{{row.analise_tipo?.nome}}</td> 
+                      <td>{{row.nome}}</td> 
+                      <td>{{row.data | date: 'dd/MM/yyyy'}}</td> 
+                      <td>{{row.hora}}</td> 
+                      <td>
+                        <span *ngIf="row.pivot.lider">Sim</span>
+                      </td>
+                      <td>                                        
+                          <a
+                            class="options ml-2"
+                            (click)="deleteAnalise(row.pivot.id)"                           
+                            title="Excluir"
+                          >
+                            <i
+                              class="fas fa-trash text-danger point "
+                              aria-hidden="true"
+                            ></i
+                          ></a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <!--FIM TABLE-->
+            </div>           
+          </div>        
+        </div>        
+      </div>
+      <!--FIM MODAL ANALISES-->
+
+      <!-- INICIO MODAL ORGANIZACOES-->
+      <div class="modal fade" id="modalorganizacoes" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+          <div class="modal-content">
+            <div class="modal-header border-0">
+              <h4 class="modal-title">
+                Cadastrar Organização 
+              </h4>
               <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
               </button>
             </div>
             <div class="modal-body" *ngIf="informacoes">
-                <formulario-pessoas-veiculos [pessoa_id]="informacoes.id" (refresh)="refresh2()" />
+                <formulario-pessoas-organizacoes  [pessoa_id]="informacoes.id" (refresh)="refresh2()" />
 
                 <!--INICIO TABLE-->
-                <table  class="table table-hover table-head-fixed text-nowrap ">
+                <table  class="table table-hover table-head-fixed text-nowrap mt-2">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Tipo</th> 
+                      <th>Nome</th>    
+                      <th>Telefone 1</th>    
+                      <th>E-mail</th>   
+                      <th>Líder</th>   
+                      <th>Opções</th>
+                    </tr>
+                  </thead>
+                  <tbody *ngIf="informacoes" >
+                    <tr *ngFor="let row of informacoes.organizacoes" class="optionshover">
+                      <td>{{row.pivot.id}}</td>
+                      <td>{{row.organizacao_tipo.nome}}</td> 
+                      <td>{{row.nome}}</td> 
+                      <td>{{row?.telefone1}} </td> 
+                      <td>{{row?.email}}</td> 
+                      <td>
+                        <span *ngIf="row.pivot.lider">Sim</span>
+                      </td>
+                     
+                      <td>                                        
+                          <a
+                            class="options ml-2"
+                            (click)="deleteOrganizacao(row.pivot.id)"                           
+                            title="Excluir"
+                          >
+                            <i
+                              class="fas fa-trash text-danger point "
+                              aria-hidden="true"
+                            ></i
+                          ></a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <!--FIM TABLE-->
+            </div>           
+          </div>        
+        </div>        
+      </div>
+      <!--FIM MODAL ORGANIZACOES-->
+
+      <!-- INICIO MODAL VEICULOS-->
+      <div class="modal fade" id="modalveiculos" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+          <div class="modal-content">
+            <div class="modal-header border-0">
+              <h4 class="modal-title">
+                Cadastrar Veículo 
+                <button (click)="cadveiculo = true;" class="btn btn-outline-primary" title="Cadastrar"><i class="fa fa-plus"></i></button>
+              </h4>
+              <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class="modal-body" *ngIf="informacoes">
+                <formulario-veiculos *ngIf="cadveiculo" (refresh)="cadVeiculo()" (cancel)="cancelVeiculo()"/>
+                <formulario-pessoas-veiculos *ngIf="!cadveiculo" [pessoa_id]="informacoes.id" (refresh)="refresh2()" />
+
+                <!--INICIO TABLE-->
+                <table  class="table table-hover table-head-fixed text-nowrap mt-2">
                   <thead>
                     <tr>
                       <th>#</th>
@@ -253,6 +438,8 @@
         </div>        
       </div>
       <!--FIM MODAL VEICULOS-->
+
+      
       
     </section>
     <!--FIM SECTION content-->
