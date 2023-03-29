@@ -1,75 +1,37 @@
 <div class="content-wrapper">
-    <app-titulo titulo="Pessoa" intermediario="Pessoas" intermediariolink="/Pessoas" />
+    <app-titulo titulo="Veículo" intermediario="Veículos" intermediariolink="/Veiculos" />
   <!--INICIO SECTION content-->
   <section class="content" >
     <!--INICIO PROFILE -->
 
-    <div class="row" *ngIf="pessoa$ | async as pessoa; else loading">
+    <div class="row" *ngIf="veiculo$ | async as veiculo; else loading">
       <div class="col-sm-3">
         <div class="card ">
           <div class="card-body box-profile ">
-            <div class="text-center">
-              <img
-              
-                style="height: 200px; width: 200px;"
-                *ngIf="pessoa.foto"
-                class="profile-user-img img-fluid img-circle"
-                [src]="urlfoto(pessoa)"
-                alt="User profile picture"
-              />
-            </div>
-            
-            <h3 class="profile-username text-center">{{pessoa.nome}}</h3>
-            <p *ngIf="pessoa.alcunha" class="text-muted text-center">{{pessoa.alcunha}}</p>
+            <h3 class="profile-username text-center">{{veiculo.placa | uppercase}}</h3>
             <ul class="list-group list-group-unbordered mb-3">
-              <li class="list-group-item">
-                <b>CPF</b> <a class="float-right">{{pessoa.cpf | mask: '000.000.000-00'}}</a>
+                <li class="list-group-item">
+                    <b>Tipo</b> <a class="float-right">{{veiculo.veiculo_tipo?.nome}}</a>
+                </li>
+                <li class="list-group-item">
+                    <b>Marca</b> <a class="float-right">{{veiculo.modelo?.marca?.nome}}</a>
+                </li>
+                <li class="list-group-item">
+                    <b>Modelo</b> <a class="float-right">{{veiculo.modelo?.nome}}</a>
+                </li>
+                <li *ngIf="veiculo.cor" class="list-group-item">
+                    <b>Cor</b> <a class="float-right">{{veiculo.cor.nome}}</a>
+                </li>
+              <li *ngIf="veiculo.chassi" class="list-group-item">
+                <b>Chassi</b> <a class="float-right">{{veiculo.chassi}}</a>
               </li>
-              <li *ngIf="pessoa.alcunha" class="list-group-item">
-                <b>Data Nascimento</b> <a class="float-right">{{pessoa.data_nascimento | date: 'dd/MM/yyyy'}}</a>
+              <li *ngIf="veiculo.renavam" class="list-group-item">
+                <b>Renavam</b> <a class="float-right">{{veiculo.renavam}}</a>
               </li>
-              <li *ngIf="pessoa.sexo_id" class="list-group-item">
-                <b>Sexo</b> <a class="float-right">{{pessoa.sexo?.nome}}</a>
-              </li>
-              <!--<li *ngIf="pessoa.alcunha" class="list-group-item">
-                <b>Alcunha</b> <a class="float-right">{{pessoa.alcunha}}</a>
-              </li>-->
-              <li *ngIf="pessoa.mae" class="list-group-item">
-                <b>Mãe</b> <a class="float-right">{{pessoa.mae}}</a>
-              </li>
-              <li *ngIf="pessoa.pai" class="list-group-item">
-                <b>Pai</b> <a class="float-right">{{pessoa.pai}}</a>
-              </li> 
-              <li *ngIf="pessoa.email" class="list-group-item">
-                <b>E-mail</b> <a class="float-right">{{pessoa.email}}</a>
-              </li> 
-              <li *ngIf="pessoa.telefone1" class="list-group-item">
-                <b>Telefone 1</b> <a class="float-right">{{pessoa.telefone1}}</a>
-              </li> 
-              <li *ngIf="pessoa.telefone2" class="list-group-item">
-                <b>Telefone 2</b> <a class="float-right">{{pessoa.telefone2}}</a>
-              </li> 
-              <li *ngIf="pessoa.influencia_id" class="list-group-item">
-                <b>Influência</b> <a class="float-right">{{pessoa.influencia?.nome}}</a>
-              </li>  
-              
-
             </ul>      
             <a [routerLink]="['Imprimir']" target="_blank" class="btn btn-primary btn-block"><i class="fa fa-print" aria-hidden="true"></i> Imprimir</a>     
           </div>
-
-          
         </div>
-
-        <div class="card ">
-            <div class="card-header border-0">Redes Sociais</div>
-            <div class="card-body box-profile">
-                <ul class="list-unstyled">
-                    <li *ngFor="let rede of pessoa.redes_sociais"><a [href]="rede.pivot.nome" target="_blank">{{rede.nome}}</a></li>
-                </ul>
-            </div>
-          </div>
-
       </div>
 
       <div class="col-sm-9">
@@ -80,9 +42,8 @@
                 <!--<li class="nav-item"><a class="nav-link active" href="#informacoes" data-bs-toggle="tab">Informações</a></li>-->
                 <li class="nav-item"><a class="nav-link active" href="#observacao" data-bs-toggle="tab">Observação</a></li>
                 <li class="nav-item"><a class="nav-link" href="#analises" data-bs-toggle="tab">Análises</a></li>
-                <li class="nav-item"><a class="nav-link" href="#veiculos" data-bs-toggle="tab">Veículos</a></li>
-                
                 <li class="nav-item"><a class="nav-link" href="#organizacoes" data-bs-toggle="tab">Organizações</a></li>
+                <li class="nav-item"><a class="nav-link" href="#pessoas" data-bs-toggle="tab">Pessoas</a></li>
                 <li class="nav-item"><a class="nav-link" href="#arquivos" data-bs-toggle="tab">Arquivos</a></li>
             </ul>
           </div>
@@ -95,7 +56,7 @@
                 </div>-->
                 <!--INICIO TAB OBSERVACAO-->
                 <div class="active tab-pane" id="observacao">
-                    <div [innerHTML]="pessoa.observacao"></div>
+                    <div [innerHTML]="veiculo.observacao"></div>
                 </div>
                 <!--FIM TAB OBSERVACAO-->
                 <!--INICIO TAB ANALISES-->
@@ -114,7 +75,7 @@
                           </button>
                         </div>
                         <div class="modal-body" >                            
-                            <formulario-pessoas-analises [pessoa_id]="pessoa.id" (refresh)="sudmitAnalise()" />
+                            <formulario-veiculos-analises [veiculo_id]="veiculo.id" (refresh)="sudmitAnalise()" />
                         </div>           
                       </div>        
                     </div>        
@@ -130,21 +91,18 @@
                          <th>Nome</th>    
                          <th>Data</th>   
                          <th>Hora</th>   
-                         <th>Líder</th> 
                          <th>Opções</th>
                        </tr>
                      </thead>
                      <tbody  >
-                       <tr *ngFor="let row of pessoa.analises" class="optionshover">
+                       <tr *ngFor="let row of veiculo.analises" class="optionshover">
                          <td>{{row.pivot.id}}</td>
                          <td>{{row.analise_categoria.nome}}</td> 
                          <td>{{row.analise_tipo?.nome}}</td> 
                          <td>{{row.nome}}</td> 
                          <td>{{row.data | date: 'dd/MM/yyyy'}}</td> 
                          <td>{{row.hora}}</td> 
-                         <td>
-                            <span *ngIf="row.pivot.lider">Sim</span>
-                          </td>
+                         
                          <td>                                        
                              <a
                                class="options ml-2"
@@ -163,8 +121,8 @@
                    <!--FIM TABLE-->
                  </div>
                  <!--FIM TAB ANALISES-->
-                <!--INICIO TAB VEICULOS-->
-                <div class="tab-pane" id="veiculos">
+                <!--INICIO TAB PESSOAS-->
+                <div class="tab-pane" id="pessoas">
 
                   <button class="btn btn-outline-primary mb-2" data-bs-toggle="modal" data-bs-target="#modalveiculos" title="Cadastrar"><i class="fa fa-plus"></i></button>
                   <!-- INICIO MODAL VEICULOS-->
@@ -173,16 +131,14 @@
                       <div class="modal-content">
                         <div class="modal-header border-0">
                           <h4 class="modal-title">
-                            Cadastrar Veículo
-                            <button (click)="cadveiculo = true;" class="btn btn-outline-primary" title="Cadastrar"><i class="fa fa-plus"></i></button>
+                            Cadastrar Pessoa
                           </h4>
-                          <button type="button" class="close" #fecharmodalveiculo id="fecharmodal" data-bs-dismiss="modal" aria-label="Close">
+                          <button type="button" class="close" #fecharmodalpessoa id="fecharmodal" data-bs-dismiss="modal" aria-label="Close">
                           <span aria-hidden="true">×</span>
                           </button>
                         </div>
                         <div class="modal-body" >                            
-                            <formulario-veiculos *ngIf="cadveiculo" (refresh)="cadastroVeiculo()" (cancel)="cancelVeiculo()"/>
-                            <formulario-pessoas-veiculos *ngIf="!cadveiculo" [pessoa_id]="pessoa.id" (refresh)="sudmitVeiculo()" />
+                            <formulario-veiculos-pessoas [veiculo_id]="veiculo.id" (refresh)="sudmitPessoa()" />
                         </div>           
                       </div>        
                     </div>        
@@ -194,31 +150,24 @@
                     <thead>
                       <tr>
                         <th>#</th>
-                        <th>Tipo</th> 
-                        <th>Marca - Modelo</th>    
-                        <th>Placa</th>    
-                        <th>Chassi</th>   
-                        <th>Renavam</th>   
-                        <th>Pessoa / Organização</th>                      
+                        <th>Nome</th> 
+                        <th>CPF</th>    
+                        <th>Telefone 1</th>    
+                        <th>E-mail</th>   
                         <th>Opções</th>
                       </tr>
                     </thead>
                     <tbody  >
-                      <tr *ngFor="let row of pessoa.veiculos" class="optionshover">
+                      <tr *ngFor="let row of veiculo.pessoas" class="optionshover">
                         <td>{{row.pivot.id}}</td>
-                        <td>{{row.veiculo_tipo.nome}}</td> 
-                        <td>{{row.modelo?.marca?.nome}} - {{row.modelo?.nome}}</td> 
-                        <td>{{row.placa}}</td> 
-                        <td>{{row.chassi}}</td> 
-                        <td>{{row.renavam}}</td> 
-                        <td>
-                          <span *ngIf="row.pessoa">{{row.pessoa.nome}}</span>
-                          <span *ngIf="row.organizacao">{{row.organizacao.nome}}</span>
-                        </td> 
+                        <td>{{row.nome}}</td> 
+                        <td>{{row.cpf | mask: '000.000.000-00'}}</td> 
+                        <td>{{row?.telefone1}} </td> 
+                        <td>{{row?.email}}</td> 
                         <td>                                        
                             <a
                               class="options ml-2"
-                              (click)="deleteVeiculo(row.pivot.id)"            
+                              (click)="deletePessoa(row.pivot.id)"            
                               title="Excluir"
                             >
                               <i
@@ -232,7 +181,7 @@
                   </table>
                   <!--FIM TABLE-->
                 </div>
-                <!--FIM TAB VEICULOS-->
+                <!--FIM TAB PESSOAS-->
                 
                 <!--INICIO TAB ORGANIZACOES-->
                 <div class="tab-pane" id="organizacoes">
@@ -250,7 +199,7 @@
                           </button>
                         </div>
                         <div class="modal-body" >                            
-                            <formulario-pessoas-organizacoes  [pessoa_id]="pessoa.id" (refresh)="sudmitOrganizacao()" />
+                            <formulario-veiculos-organizacoes  [veiculo_id]="veiculo.id" (refresh)="sudmitOrganizacao()" />
                         </div>           
                       </div>        
                     </div>        
@@ -265,21 +214,16 @@
                         <th>Nome</th>    
                         <th>Telefone 1</th>    
                         <th>E-mail</th>   
-                        <th>Líder</th>   
                         <th>Opções</th>
                       </tr>
                     </thead>
                     <tbody  >
-                      <tr *ngFor="let row of pessoa.organizacoes" class="optionshover">
+                      <tr *ngFor="let row of veiculo.organizacoes" class="optionshover">
                         <td>{{row.pivot.id}}</td>
                         <td>{{row.organizacao_tipo.nome}}</td> 
                         <td>{{row.nome}}</td> 
                         <td>{{row?.telefone1}} </td> 
                         <td>{{row?.email}}</td> 
-                        <td>
-                          <span *ngIf="row.pivot.lider">Sim</span>
-                        </td>
-                      
                         <td>                                        
                             <a
                               class="options ml-2"
@@ -314,7 +258,7 @@
                           </button>
                         </div>
                         <div class="modal-body" >                            
-                            <formulario-pessoas-arquivos  [pessoa_id]="pessoa.id" (refresh)="sudmitArquivo()" />
+                            <formulario-veiculos-arquivos  [veiculo_id]="veiculo.id" (refresh)="sudmitArquivo()" />
                         </div>           
                       </div>        
                     </div>        
@@ -352,7 +296,7 @@
                       </tr>
                     </thead>
                     <tbody  >
-                      <tr *ngFor="let row of pessoa.arquivos" class="optionshover">
+                      <tr *ngFor="let row of veiculo.arquivos" class="optionshover">
                         <td>{{row.id}}</td>
                         <td>{{row.arquivo_tipo.nome}}</td> 
                         <td>
@@ -386,18 +330,12 @@
           </div>
         </div>
       </div>
-
-    
-
-    
-
     </div>
-
 
     <ng-template  #loading>
       <div class="text-center">
         <i class="fa fa-exclamation-triangle fa-4x" aria-hidden="true"></i>
-        <h2 >Pessoa não encontrado</h2>      
+        <h2 >Veículo não encontrado</h2>      
         <a routerLink="['/Inicio']">Voltar para o Início</a>
       </div>
       

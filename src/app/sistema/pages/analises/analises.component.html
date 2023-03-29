@@ -14,12 +14,13 @@
         <div class="card-body">
         
           <!--INICIO TABLE-->
-          <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-hover table-head-fixed text-nowrap ">
+          <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-hover table-head-fixed  ">
             <thead>
               <tr>
                 <th>#</th>
-                <th>Nome</th>
                 <th>Categoria</th>
+                <th>Nome</th>
+                
                 <th>Tipo</th>
                 <th>Data</th>
                 <th>Hora</th>
@@ -30,8 +31,9 @@
             <tbody *ngIf="data$ | async as data; else loading" >
               <tr *ngFor="let row of data" class="optionshover">
                 <td>{{row.id}}</td>
-                <td>{{row.nome}}</td> 
                 <td>{{row?.analise_categoria?.nome}}</td> 
+                <td>{{row.nome}}</td> 
+                
                 <td>{{row?.analise_tipo?.nome}}</td> 
                 <td>{{row.data | date: 'dd/MM/yyyy'}}</td>               
                 <td>{{row.hora}}</td> 

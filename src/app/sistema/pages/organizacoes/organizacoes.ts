@@ -2,6 +2,8 @@ import { Cidade } from "../cidades/cidades";
 import { Estado } from "../estados/estados";
 import { OrganizacaoTipo } from "../organizacoes-tipos/organizacoes-tipos";
 import { Pais } from "../paises/paises";
+import { Pessoas } from "../pessoas/pessoas";
+import { Veiculos } from "../veiculos/veiculos";
 
 export interface Organizacao{
     id?: number,
@@ -23,7 +25,9 @@ export interface Organizacao{
     cidade_id?: number,
     cidade?: Cidade,
     observacao?: string,
-    pivot: any
+    pivot: any,
+    veiculos: Veiculos,
+    pessoas: Pessoas
 }
 
 export type Organizacoes = Array<Organizacao>;

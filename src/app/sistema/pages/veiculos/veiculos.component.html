@@ -24,6 +24,7 @@
                 <th>Chassi</th>
                 <th>Renavam</th>
                 <th>Cor</th>
+                <th>Informações</th>
                 <th>Opções</th>
               </tr>
             </thead>
@@ -32,11 +33,40 @@
               <tr *ngFor="let row of data" class="optionshover">
                 <td>{{row.id}}</td>
                 <td>{{row.veiculo_tipo.nome}}</td>
-                <td>{{row.modelo?.nome}} / {{row.modelo?.marca?.nome}}</td>
-                <td>{{row.placa | uppercase}}</td>
+                <td>{{row.modelo?.marca?.nome}} {{row.modelo?.nome}}</td>
+                <td><a [routerLink]="['/Veiculos', row.id]">{{row.placa | uppercase}}</a></td>
                 <td>{{row?.chassi}}</td>
                 <td>{{row?.renavam}}</td>    
-                <td>{{row.cor?.nome}}</td>             
+                <td>{{row.cor?.nome}}</td>        
+                <td>                  
+                  <i
+                    (click)="showInformacoes(row)"
+                   
+                    data-bs-toggle="modal"
+                    data-bs-target="#modalanalises"
+                    title="Análises"
+                    class="fa fa-warning text-primary point ml-2"
+                    aria-hidden="true"
+                  ></i>
+                  <i
+                    (click)="showInformacoes(row)"
+                   
+                    data-bs-toggle="modal"
+                    data-bs-target="#modalorganizacoes"
+                    title="Organizações"
+                    class="fa fa-building text-primary point ml-2"
+                    aria-hidden="true"
+                  ></i>
+                  <i
+                    (click)="showInformacoes(row)"
+                   
+                    data-bs-toggle="modal"
+                    data-bs-target="#modalpessoas"
+                    title="Pessoas"
+                    class="fa fa-users text-primary point ml-2"
+                    aria-hidden="true"
+                  ></i>
+                </td>       
                 <td>                 
                   <a             
                       class="options ml-2"
@@ -126,7 +156,177 @@
         </div>
         
       </div>
-      <!--FIM MODAL EXCLUIR-->     
+      <!--FIM MODAL EXCLUIR-->    
+      
+      <!-- INICIO MODAL ANALISES-->
+      <div class="modal fade" id="modalanalises" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+          <div class="modal-content">
+            <div class="modal-header border-0">
+              <h4 class="modal-title">
+                Cadastrar Análise 
+              </h4>
+              <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class="modal-body" *ngIf="informacoes">
+                <formulario-veiculos-analises [veiculo_id]="informacoes.id" (refresh)="refresh2()" />
+
+                <!--INICIO TABLE-->
+                <table  class="table table-hover table-head-fixed text-nowrap mt-2">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Categoria</th> 
+                      <th>Tipo</th>    
+                      <th>Nome</th>    
+                      <th>Data</th>   
+                      <th>Hora</th>   
+                      <th>Opções</th>
+                    </tr>
+                  </thead>
+                  <tbody *ngIf="informacoes" >
+                    <tr *ngFor="let row of informacoes.analises" class="optionshover">
+                      <td>{{row.pivot.id}}</td>
+                      <td>{{row.analise_categoria.nome}}</td> 
+                      <td>{{row.analise_tipo?.nome}}</td> 
+                      <td>{{row.nome}}</td> 
+                      <td>{{row.data | date: 'dd/MM/yyyy'}}</td> 
+                      <td>{{row.hora}}</td> 
+                      <td>                                        
+                          <a
+                            class="options ml-2"
+                            (click)="deleteAnalise(row.pivot.id)"                           
+                            title="Excluir"
+                          >
+                            <i
+                              class="fas fa-trash text-danger point "
+                              aria-hidden="true"
+                            ></i
+                          ></a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <!--FIM TABLE-->
+            </div>           
+          </div>        
+        </div>        
+      </div>
+      <!--FIM MODAL ANALISES-->
+
+      <!-- INICIO MODAL ORGANIZACOES-->
+      <div class="modal fade" id="modalorganizacoes" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+          <div class="modal-content">
+            <div class="modal-header border-0">
+              <h4 class="modal-title">
+                Cadastrar Organização 
+              </h4>
+              <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class="modal-body" *ngIf="informacoes">
+                <formulario-veiculos-organizacoes  [veiculo_id]="informacoes.id" (refresh)="refresh2()" />
+
+                <!--INICIO TABLE-->
+                <table  class="table table-hover table-head-fixed text-nowrap mt-2">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Tipo</th> 
+                      <th>Nome</th>    
+                      <th>Telefone 1</th>    
+                      <th>E-mail</th>   
+                      <th>Opções</th>
+                    </tr>
+                  </thead>
+                  <tbody *ngIf="informacoes" >
+                    <tr *ngFor="let row of informacoes.organizacoes" class="optionshover">
+                      <td>{{row.pivot.id}}</td>
+                      <td>{{row.organizacao_tipo.nome}}</td> 
+                      <td>{{row.nome}}</td> 
+                      <td>{{row?.telefone1}} </td> 
+                      <td>{{row?.email}}</td> 
+                      <td>                                        
+                          <a
+                            class="options ml-2"
+                            (click)="deleteOrganizacao(row.pivot.id)"                           
+                            title="Excluir"
+                          >
+                            <i
+                              class="fas fa-trash text-danger point "
+                              aria-hidden="true"
+                            ></i
+                          ></a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <!--FIM TABLE-->
+            </div>           
+          </div>        
+        </div>        
+      </div>
+      <!--FIM MODAL ORGANIZACOES-->
+
+      <!-- INICIO MODAL PESSOAS-->
+      <div class="modal fade" id="modalpessoas" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+          <div class="modal-content">
+            <div class="modal-header border-0">
+              <h4 class="modal-title">
+                Cadastrar Pessoa 
+              </h4>
+              <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class="modal-body" *ngIf="informacoes">
+                <formulario-veiculos-pessoas  [veiculo_id]="informacoes.id" (refresh)="refresh2()" />
+
+                <!--INICIO TABLE-->
+                <table  class="table table-hover table-head-fixed text-nowrap mt-2">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Nome</th> 
+                      <th>CPF</th>    
+                      <th>Telefone 1</th>    
+                      <th>E-mail</th>   
+                      <th>Opções</th>
+                    </tr>
+                  </thead>
+                  <tbody *ngIf="informacoes" >
+                    <tr *ngFor="let row of informacoes.pessoas" class="optionshover">
+                      <td>{{row.pivot.id}}</td>
+                      <td>{{row.nome}}</td> 
+                      <td>{{row.cpf | mask: '000.000.000-00'}}</td> 
+                      <td>{{row?.telefone1}} </td> 
+                      <td>{{row?.email}}</td> 
+                      <td>                                        
+                          <a
+                            class="options ml-2"
+                            (click)="deletePessoa(row.pivot.id)"                           
+                            title="Excluir"
+                          >
+                            <i
+                              class="fas fa-trash text-danger point "
+                              aria-hidden="true"
+                            ></i
+                          ></a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <!--FIM TABLE-->
+            </div>           
+          </div>        
+        </div>        
+      </div>
+      <!--FIM MODAL PESSOAS-->
       
     </section>
     <!--FIM SECTION content-->

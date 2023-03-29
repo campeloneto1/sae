@@ -40,7 +40,7 @@ export interface Pessoa{
     analises?: Analises,
     organizacoes?: Organizacoes,
     arquivos?: PessoasArquivos,
-
+    pivot: any,
 
     observacao?: string,
     foto?: string,

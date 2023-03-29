@@ -1,7 +1,9 @@
+import { Analises } from "../analises/analises";
 import { Cor } from "../cores/cores";
 import { Modelo } from "../modelos/modelos";
-import { Organizacao } from "../organizacoes/organizacoes";
-import { Pessoa } from "../pessoas/pessoas";
+import { Organizacao, Organizacoes } from "../organizacoes/organizacoes";
+import { Pessoa, Pessoas } from "../pessoas/pessoas";
+import { VeiculosArquivos } from "./formulario-veiculos-arquivos/veiculos-arquivos";
 
 export interface Veiculo{
     id?: number,
@@ -18,7 +20,12 @@ export interface Veiculo{
     pessoa?: Pessoa,
     organizacao_id?: number,
     organizacao?: Organizacao,
-    pivot: any
+    pessoas?: Pessoas,
+    analises?: Analises,
+    organizacoes?: Organizacoes,
+    arquivos: VeiculosArquivos,
+    pivot?: any,
+    observacao?: string
 
 }
 

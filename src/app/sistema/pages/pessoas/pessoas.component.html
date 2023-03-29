@@ -14,7 +14,7 @@
         <div class="card-body">
         
           <!--INICIO TABLE-->
-          <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-hover table-head-fixed text-nowrap ">
+          <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-hover table-head-fixed ">
             <thead>
               <tr>
                 <th>#</th>
@@ -30,7 +30,7 @@
             <tbody *ngIf="data$ | async as data; else loading" >
               <tr *ngFor="let row of data" class="optionshover">
                 <td>{{row.id}}</td>
-                <td><a [routerLink]="['/Pessoa', row.id]">{{row.nome}}</a></td> 
+                <td><a [routerLink]="['/Pessoas', row.id]">{{row.nome}}</a></td> 
                 <td>{{row.alcunha}}</td> 
                 <td>{{row.cpf | mask: '000.000.000-00'}}</td>   
                 <td>

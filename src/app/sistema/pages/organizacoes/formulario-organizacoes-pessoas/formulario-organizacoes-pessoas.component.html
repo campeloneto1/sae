@@ -1,6 +1,6 @@
 <form  [formGroup]="form" (ngSubmit)="cadastrar()" >
     <div class="row">
-        <app-input-select class="col-sm-4" formControlName="analise_id" label="Análise" id="analise_id" [data$]="analises$" />
+        <app-input-select class="col-sm-6" formControlName="pessoa_id" label="Pessoa" id="pessoa_id" [data$]="pessoas$" />
         <div class="col-sm-2">
             <div class="form-check" style="margin-top:  30px;">
                 <input class="form-check-input" type="checkbox"  id="lider" formControlName="lider">

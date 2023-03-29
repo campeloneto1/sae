@@ -68,11 +68,11 @@ const routes: Routes = [
                 loadComponent: () => import('./pages/perfis/perfis.component').then((c) => c.PerfisComponent)
             },
             {
-                path: 'Pessoa/:id',
+                path: 'Pessoas/:id',
                 loadComponent: () => import('./pages/pessoas/pessoa/pessoa.component').then((c) => c.PessoaComponent)
             },
             {
-                path: 'Pessoa/:id/Imprimir',
+                path: 'Pessoas/:id/Imprimir',
                 loadComponent: () => import('./pages/pessoas/imprimir-pessoa/imprimir-pessoa.component').then((c) => c.ImprimirPessoaComponent)
             },
             {
@@ -90,6 +90,14 @@ const routes: Routes = [
             {
                 path: 'Usuarios',
                 loadComponent: () => import('./pages/usuarios/usuarios.component').then((c) => c.UsuariosComponent)
+            },
+            {
+                path: 'Veiculos/:id',
+                loadComponent: () => import('./pages/veiculos/veiculo/veiculo.component').then((c) => c.VeiculoComponent)
+            },
+            {
+                path: 'Veiculos/:id/Imprimir',
+                loadComponent: () => import('./pages/veiculos/imprimir-veiculo/imprimir-veiculo.component').then((c) => c.ImprimirVeiculoComponent)
             },
             {
                 path: 'Veiculos',

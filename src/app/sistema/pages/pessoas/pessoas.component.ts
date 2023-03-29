@@ -15,7 +15,7 @@ import { FormularioPessoasVeiculosComponent } from "./formulario-pessoas-veiculo
 import { PessoasVeiculosService } from "./formulario-pessoas-veiculos/pessoas-veiculos.service";
 import { FormularioVeiculosComponent } from "../veiculos/formulario/formulario-veiculos.component";
 import { AnalisesPessoasService } from "../analises/formulario-analises-pessoas/analises-pessoas.service";
-import { FormularioPessoasAnalisesComponent } from "./fomulario-pessoas-analises/formulario-pessoas-analises.component";
+import { FormularioPessoasAnalisesComponent } from "./formulario-pessoas-analises/formulario-pessoas-analises.component";
 import { OrganizacoesPessoasService } from "../organizacoes/formulario-organizacoes-pessoas/organizacoes-pessoas.service";
 import { FormularioPessoasOrganizacoesComponent } from "./formulario-pessoas-organizacoes/formulario-pessoas-organizacoes.component";
 import { environment } from "src/environments/environments";
@@ -206,15 +206,18 @@ export class PessoasComponent implements OnInit, OnDestroy{
     }
 
     deleteRedeSocial(data: number){
-        this.pessoasRedesSociaisService.destroy(data).subscribe({
-            next: (data) => {
-                this.sharedService.toast("Sucesso", data as string, 3);
-                this.refresh2();
-            },
-            error: (error) => {
-                this.sharedService.toast('Error!', error.erro as string, 2);
-            }
-        });
+        if (confirm("Tem certeza que deseja excluir a rede social?")){
+            this.pessoasRedesSociaisService.destroy(data).subscribe({
+                next: (data) => {
+                    this.sharedService.toast("Sucesso", data as string, 3);
+                    this.refresh2();
+                },
+                error: (error) => {
+                    this.sharedService.toast('Error!', error.erro as string, 2);
+                }
+            });
+        }
+        
     }
 
     showVeiculos(data: Pessoa){
@@ -223,15 +226,17 @@ export class PessoasComponent implements OnInit, OnDestroy{
     }
 
     deleteVeiculo(data: number){
-        this.pessoasVeiculosService.destroy(data).subscribe({
-            next: (data) => {
-                this.sharedService.toast("Sucesso", data as string, 3);
-                this.refresh2();
-            },
-            error: (error) => {
-                this.sharedService.toast('Error!', error.erro as string, 2);
-            }
-        });
+        if (confirm("Tem certeza que deseja excluir o veículo?")){
+            this.pessoasVeiculosService.destroy(data).subscribe({
+                next: (data) => {
+                    this.sharedService.toast("Sucesso", data as string, 3);
+                    this.refresh2();
+                },
+                error: (error) => {
+                    this.sharedService.toast('Error!', error.erro as string, 2);
+                }
+            });
+        }
     }
 
     cadVeiculo(){
@@ -249,15 +254,17 @@ export class PessoasComponent implements OnInit, OnDestroy{
     }
 
     deleteAnalise(data: number){
-        this.analisesPessoasService.destroy(data).subscribe({
-            next: (data) => {
-                this.sharedService.toast("Sucesso", data as string, 3);
-                this.refresh2();
-            },
-            error: (error) => {
-                this.sharedService.toast('Error!', error.erro as string, 2);
-            }
-        });
+        if (confirm("Tem certeza que deseja excluir a análise?")){
+            this.analisesPessoasService.destroy(data).subscribe({
+                next: (data) => {
+                    this.sharedService.toast("Sucesso", data as string, 3);
+                    this.refresh2();
+                },
+                error: (error) => {
+                    this.sharedService.toast('Error!', error.erro as string, 2);
+                }
+            });
+        }
     }
 
     showOrganizacoes(data: Pessoa){
@@ -266,15 +273,17 @@ export class PessoasComponent implements OnInit, OnDestroy{
     }
 
     deleteOrganizacao(data: number){
-        this.organizacoesPessoasService.destroy(data).subscribe({
-            next: (data) => {
-                this.sharedService.toast("Sucesso", data as string, 3);
-                this.refresh2();
-            },
-            error: (error) => {
-                this.sharedService.toast('Error!', error.erro as string, 2);
-            }
-        });
+        if (confirm("Tem certeza que deseja excluir a organização?")){
+            this.organizacoesPessoasService.destroy(data).subscribe({
+                next: (data) => {
+                    this.sharedService.toast("Sucesso", data as string, 3);
+                    this.refresh2();
+                },
+                error: (error) => {
+                    this.sharedService.toast('Error!', error.erro as string, 2);
+                }
+            });
+        }
     }
 
     

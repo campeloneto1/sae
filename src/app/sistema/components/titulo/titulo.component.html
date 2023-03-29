@@ -7,6 +7,7 @@
         <div class="col-sm-6">
           <ol *ngIf="!primario" class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a [routerLink]="['']">Início</a></li>
+            <li *ngIf="intermediario" class="breadcrumb-item"><a [routerLink]="[intermediariolink]">{{intermediario}}</a></li>
             <li class="breadcrumb-item active">{{titulo}}</li>
           </ol>
           <ol *ngIf="primario" class="breadcrumb float-sm-right">

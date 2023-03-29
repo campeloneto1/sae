@@ -5,69 +5,66 @@ import { Observable } from 'rxjs';
 import { TituloComponent } from 'src/app/sistema/components/titulo/titulo.component';
 import { SharedModule } from 'src/app/sistema/shared/shared.module';
 import { SharedService } from 'src/app/sistema/shared/shared.service';
-import { FormularioPessoasVeiculosComponent } from '../formulario-pessoas-veiculos/formulario-pessoas-veiculos.component';
-import { Pessoa } from '../pessoas';
-import { PessoasVeiculosService } from '../formulario-pessoas-veiculos/pessoas-veiculos.service';
-import { PessoasService } from '../pessoas.service';
-import { AnalisesPessoasService } from '../../analises/formulario-analises-pessoas/analises-pessoas.service';
-import { FormularioVeiculosComponent } from '../../veiculos/formulario/formulario-veiculos.component';
-import { FormularioPessoasAnalisesComponent } from '../formulario-pessoas-analises/formulario-pessoas-analises.component';
-import { OrganizacoesPessoasService } from '../../organizacoes/formulario-organizacoes-pessoas/organizacoes-pessoas.service';
-import { FormularioPessoasOrganizacoesComponent } from '../formulario-pessoas-organizacoes/formulario-pessoas-organizacoes.component';
-import { PessoasArquivosService } from '../formulario-pessoas-arquivos/pessoas-arquivos.service';
-import { FormularioPessoasArquivosComponent } from '../formulario-pessoas-arquivos/formulario-pessoas-arquivos.component';
-import { PessoaArquivo } from '../formulario-pessoas-arquivos/pessoas-arquivos';
 import { environment } from 'src/environments/environments';
 import { DomSanitizer } from "@angular/platform-browser"; 
+import { FormularioVeiculosPessoasComponent } from '../formulario-veiculos-pessoas/formulario-veiculos-pessoas.component';
+import { FormularioVeiculosAnalisesComponent } from '../formulario-veiculos-analises/formulario-veiculos-analises.component';
+import { FormularioVeiculosOrganizacoesComponent } from '../formulario-veiculos-organizacoes/formulario-veiculos-organizacoes.component';
+import { AnalisesVeiculosService } from '../../analises/formulario-analises-veiculos/analises-veiculos.service';
+import { OrganizacoesVeiculosService } from '../../organizacoes/formulario-organizacoes-veiculos/organizacoes-veiculos.service';
+import { VeiculosService } from '../veiculos.service';
+import { Veiculo } from '../veiculos';
+import { PessoasVeiculosService } from '../../pessoas/formulario-pessoas-veiculos/pessoas-veiculos.service';
+import { FormularioVeiculosArquivosComponent } from '../formulario-veiculos-arquivos/formulario-veiculos-arquivos.component';
+import { VeiculoArquivo } from '../formulario-veiculos-arquivos/veiculos-arquivos';
+import { VeiculosArquivosService } from '../formulario-veiculos-arquivos/veiculos-arquivos.service';
 
 
 @Component({
-  selector: 'pessoa',
-  templateUrl: './pessoa.component.html',
-  styleUrls: ['./pessoa.component.css'],
+  selector: 'veiculo',
+  templateUrl: './veiculo.component.html',
+  styleUrls: ['./veiculo.component.css'],
   standalone: true,
   imports: [
     CommonModule,
     SharedModule,
     TituloComponent,
-    FormularioPessoasVeiculosComponent,
-    FormularioVeiculosComponent,
-    FormularioPessoasAnalisesComponent,
-    FormularioPessoasOrganizacoesComponent,
-    FormularioPessoasArquivosComponent,
+    FormularioVeiculosPessoasComponent,
+    FormularioVeiculosAnalisesComponent,
+    FormularioVeiculosOrganizacoesComponent,
+    FormularioVeiculosArquivosComponent,
     RouterModule
   ],
 })
-export class PessoaComponent implements OnInit, OnDestroy {
+export class VeiculoComponent implements OnInit, OnDestroy {
   
   protected IMG = environment.image;
   protected id!: number;
-  protected pessoa$!: Observable<Pessoa>;
+  protected veiculo$!: Observable<Veiculo>;
+
+  protected arquivo!: VeiculoArquivo;
 
   protected subscription: any;
-  protected cadveiculo: boolean = false;
-
-  protected arquivo!: PessoaArquivo;
 
   @ViewChild('fecharmodalanalises') closebuttonAnalises: any;
-  @ViewChild('fecharmodalveiculo') closebuttonVeiculos: any;
+  @ViewChild('fecharmodalpessoa') closebuttonPessoas: any;
   @ViewChild('fecharmodalorganizacoes') closebuttonOrganizacao: any;
   @ViewChild('fecharmodalarquivos') closebuttonArquivos: any;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private sharedService: SharedService,
-    private pessoasService: PessoasService,
+    private veiculosService: VeiculosService,
     private pessoasVeiculosService: PessoasVeiculosService,
-    private analisesPessoasService: AnalisesPessoasService,
-    private organizacoesPessoasService: OrganizacoesPessoasService,
-    private pessoasArquivosService: PessoasArquivosService,
+    private analisesVeiculosService: AnalisesVeiculosService,
+    private organizacoesVeiculosService: OrganizacoesVeiculosService,
+    private veiculosArquivosService: VeiculosArquivosService,
     private sanitizer: DomSanitizer
   ) {}
 
   ngOnInit(): void {
     this.id = this.activatedRoute.snapshot.params['id'];
-    this.pessoa$ = this.pessoasService.show(this.id);
+    this.veiculo$ = this.veiculosService.show(this.id);
   }
 
   ngOnDestroy(): void {
@@ -77,18 +74,10 @@ export class PessoaComponent implements OnInit, OnDestroy {
   }
 
   refresh() {
-    this.pessoa$ = this.pessoasService.show(this.id);
+    this.veiculo$ = this.veiculosService.show(this.id);
   }
 
-  cadastroVeiculo() {
-    //this.refresh();
-    this.cadveiculo = false;
-  }
-
-  cancelVeiculo() {
-    this.cadveiculo = false;
-  }
-
+  
   sudmitAnalise(){
     this.closebuttonAnalises.nativeElement.click();
     this.refresh();
@@ -99,8 +88,8 @@ export class PessoaComponent implements OnInit, OnDestroy {
     this.refresh();
   }
 
-  sudmitVeiculo(){
-    this.closebuttonVeiculos.nativeElement.click();
+  sudmitPessoa(){
+    this.closebuttonPessoas.nativeElement.click();
     this.refresh();
   }
 
@@ -109,21 +98,17 @@ export class PessoaComponent implements OnInit, OnDestroy {
     this.refresh();
   }
 
-  showArquivo(data:PessoaArquivo){
+  showArquivo(data:VeiculoArquivo){
     this.arquivo = data;
     
   }
 
-  urlfoto(data:Pessoa):any{
-    return this.sanitizer.bypassSecurityTrustResourceUrl(`${this.IMG}/${data.foto}`);
-  }
-
-  urlarq(data:PessoaArquivo):any{
+  urlarq(data:VeiculoArquivo):any{
     return this.sanitizer.bypassSecurityTrustResourceUrl(`${this.IMG}/${data.nome}`);
   }
 
-  deleteVeiculo(data: number) {
-    if (confirm("Tem certeza que deseja excluir o veículo?")){
+  deletePessoa(data: number) {
+    if (confirm("Tem certeza que deseja excluir a pessoa?")){
       this.subscription = this.pessoasVeiculosService.destroy(data).subscribe({
         next: (data) => {
           this.sharedService.toast('Sucesso', data as string, 3);
@@ -138,7 +123,7 @@ export class PessoaComponent implements OnInit, OnDestroy {
 
   deleteAnalise(data: number) {
     if (confirm("Tem certeza que deseja excluir a análise?")){
-      this.analisesPessoasService.destroy(data).subscribe({
+      this.analisesVeiculosService.destroy(data).subscribe({
         next: (data) => {
           this.sharedService.toast('Sucesso', data as string, 3);
           this.refresh();
@@ -152,7 +137,7 @@ export class PessoaComponent implements OnInit, OnDestroy {
 
   deleteOrganizacao(data: number){
     if (confirm("Tem certeza que deseja excluir a organização?")){
-      this.organizacoesPessoasService.destroy(data).subscribe({
+      this.organizacoesVeiculosService.destroy(data).subscribe({
           next: (data) => {
               this.sharedService.toast("Sucesso", data as string, 3);
               this.refresh();
@@ -166,7 +151,7 @@ export class PessoaComponent implements OnInit, OnDestroy {
 
   deleteArquivo(data?: number){
     if (confirm("Tem certeza que deseja excluir o arquivo?")){
-      this.pessoasArquivosService.destroy(data||0).subscribe({
+      this.veiculosArquivosService.destroy(data||0).subscribe({
           next: (data) => {
               this.sharedService.toast("Sucesso", data as string, 3);
               this.refresh();

@@ -13,5 +13,7 @@ import { RouterModule } from "@angular/router";
 export class TituloComponent{
     @Input() titulo: string = '';
     @Input() primario: boolean = false;
+    @Input() intermediario: string = '';
+    @Input() intermediariolink: string = '';
 
 }
