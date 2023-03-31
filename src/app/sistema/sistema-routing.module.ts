@@ -56,6 +56,10 @@ const routes: Routes = [
                 loadComponent: () => import('./pages/organizacoes/organizacoes.component').then((c) => c.OrganizacoesComponent)
             },
             {
+                path: 'Organizacoes/:id',
+                loadComponent: () => import('./pages/organizacoes/organizacao/organizacao.component').then((c) => c.OrganizacaoComponent)
+            },
+            {
                 path: 'Organizacoes/Tipos',
                 loadComponent: () => import('./pages/organizacoes-tipos/organizacoes-tipos.component').then((c) => c.OrganizacoesTiposComponent)
             },

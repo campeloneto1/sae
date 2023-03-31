@@ -29,7 +29,7 @@
               <tr *ngFor="let row of data" class="optionshover">
                 <td>{{row.id}}</td>
                 <td>{{row.organizacao_tipo.nome}}</td> 
-                <td>{{row.nome}}</td> 
+                <td><a [routerLink]="[row.id]">{{row.nome}}</a></td> 
                 <td>
                   <i
                     (click)="showInformacoes(row)"
@@ -110,7 +110,7 @@
               </button>
             </div>
             <div class="modal-body">
-                <formulario-organizacoes (refresh)="cadVeiculo()" (cancel)="cancelVeiculo()" />
+                <formulario-organizacoes (refresh)="cadOrganizacao()" (cancel)="cancelOrganizacao()" />
             </div>           
           </div>        
         </div>        
@@ -162,9 +162,11 @@
                     <tr>
                       <th>#</th>
                       <th>Tipo</th> 
-                      <th>Telefone 1</th>    
+                      
                       <th>CPF</th>    
+                      <th>Telefone 1</th>    
                       <th>E-mail</th>   
+                      <th>Líder</th>
                       <th>Opções</th>
                     </tr>
                   </thead>
@@ -175,6 +177,7 @@
                       <td>{{row.cpf | mask: '000.000.000-00'}}</td> 
                       <td>{{row?.telefone1}} </td> 
                       <td>{{row?.email}}</td> 
+                      <td><span *ngIf="row.pivot.lider">Sim</span></td>
                       <td>                                        
                           <a
                             class="options ml-2"
@@ -204,15 +207,15 @@
             <div class="modal-header border-0">
               <h4 class="modal-title">
                 Cadastrar Veículo 
-                <button (click)="cadveiculo = true;" class="btn btn-outline-primary" title="Cadastrar"><i class="fa fa-plus"></i></button>
+                <button (click)="cadvei = true;" class="btn btn-outline-primary" title="Cadastrar"><i class="fa fa-plus"></i></button>
               </h4>
               <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
               </button>
             </div>
             <div class="modal-body" *ngIf="informacoes">
-                <formulario-veiculos *ngIf="cadveiculo" (refresh)="cadVeiculo()" (cancel)="cancelVeiculo()"/>
-                <formulario-organizacoes-veiculos *ngIf="!cadveiculo" [organizacao_id]="informacoes.id" (refresh)="refresh2()" />
+                <formulario-veiculos *ngIf="cadvei" (refresh)="cadVeiculo()" (cancel)="cancelVeiculo()"/>
+                <formulario-organizacoes-veiculos *ngIf="!cadvei" [organizacao_id]="informacoes.id" (refresh)="refresh2()" />
 
                 <!--INICIO TABLE-->
                 <table  class="table table-hover table-head-fixed text-nowrap mt-2">

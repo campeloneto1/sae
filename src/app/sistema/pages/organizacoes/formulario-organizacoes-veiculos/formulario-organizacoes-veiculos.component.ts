@@ -1,7 +1,7 @@
 import { CommonModule } from "@angular/common";
 import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { Observable } from "rxjs";
+import { Observable, of } from "rxjs";
 import { SharedModule } from "src/app/sistema/shared/shared.module";
 import { SharedService } from "src/app/sistema/shared/shared.service";
 import { Veiculos } from "../../veiculos/veiculos";
@@ -48,7 +48,14 @@ export class FormularioOrganizacoesVeiculosComponent{
             'lider': [''],
         });
         this.form.get('organizacao_id')?.patchValue(this.organizacao_id);
-        this.veiculos$ = this.veiculosService.index();
+        this.veiculosService.index().subscribe({
+            next: (data) => {
+                data.forEach(row => {
+                    row.nome = `${row.placa} (${row.modelo?.marca.nome} ${row.modelo?.nome})`;
+                })
+                this.veiculos$ = of(data);
+            }
+        });
     }
 
     ngOnDestroy(): void {

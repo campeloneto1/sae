@@ -1,5 +1,6 @@
 import { CommonModule } from "@angular/common";
 import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
+import { RouterModule } from "@angular/router";
 import { DataTableDirective } from "angular-datatables";
 import { Observable, Subject, tap } from "rxjs";
 import { TituloComponent } from "../../components/titulo/titulo.component";
@@ -26,7 +27,8 @@ import { OrganizacoesService } from "./organizacoes.service";
         FormularioOrganizacoesComponent,
         FormularioOrganizacoesPessoasComponent,
         FormularioOrganizacoesVeiculosComponent,
-        FormularioVeiculosComponent
+        FormularioVeiculosComponent,
+        RouterModule
     ]
 })
 
@@ -39,7 +41,7 @@ export class OrganizacoesComponent implements OnInit, OnDestroy{
 
     protected dtOptions: DataTables.Settings = {};  
     
-    protected cadveiculo: boolean = false;
+    protected cadvei: boolean = false;
 
     @ViewChild(DataTableDirective, { static: false })  dtElement!: DataTableDirective;
 
@@ -125,13 +127,13 @@ export class OrganizacoesComponent implements OnInit, OnDestroy{
         });        
     }
 
-    cadVeiculo(){
-        //this.refresh();
-        //this.modelCadastro.nativeElement.click();
+    cadOrganizacao(){
+        this.refresh();
+        this.modelCadastro.nativeElement.click();
     }
 
-    cancelVeiculo(){
-        //this.modelCadastro.nativeElement.click();
+    cancelOrganizacao(){
+        this.modelCadastro.nativeElement.click();
     }
 
     edit(data: Organizacao){
@@ -159,9 +161,18 @@ export class OrganizacoesComponent implements OnInit, OnDestroy{
         this.informacoes = {} as Organizacao;
         this.getOrganizacao(data.id || 0);
     }
+
+    cadVeiculo(){
+        this.cadvei = false;
+        this.refresh2();
+    }
+
+    cancelVeiculo(){
+        this.cadvei = false;
+    }
     
     deleteVeiculo(data: number){
-        if (confirm("Tem certeza que deseja excluir a organização?")){
+        if (confirm("Tem certeza que deseja excluir o veículo?")){
             this.organizacoesVeiculosService.destroy(data).subscribe({
                 next: (data) => {
                     this.sharedService.toast("Sucesso", data as string, 3);

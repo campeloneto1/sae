@@ -34,7 +34,12 @@ export class FormularioArquivosTiposComponent{
                 Validators.required,
                 Validators.minLength(2),
                 Validators.maxLength(150)
-            ])],            
+            ])],  
+            'foto': [''],
+            'video': [''],        
+            'audio': [''],
+            'texto': [''],
+            'pdf': [''],          
         });
     
     }

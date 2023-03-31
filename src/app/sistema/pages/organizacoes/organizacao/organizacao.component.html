@@ -1,33 +1,28 @@
 <div class="content-wrapper">
-    <app-titulo titulo="Veículo" intermediario="Veículos" intermediariolink="/Veiculos" />
+    <app-titulo titulo="Organização" intermediario="Organizações" intermediariolink="/Organizacoes" />
   <!--INICIO SECTION content-->
   <section class="content" >
     <!--INICIO PROFILE -->
 
-    <div class="row" *ngIf="veiculo$ | async as veiculo; else loading">
+    <div class="row" *ngIf="organizacao$ | async as organizacao; else loading">
       <div class="col-sm-3">
         <div class="card ">
           <div class="card-body box-profile ">
-            <h3 class="profile-username text-center">{{veiculo.placa | uppercase}}</h3>
+            <h3 class="profile-username text-center">{{organizacao.nome | uppercase}}</h3>
             <ul class="list-group list-group-unbordered mb-3">
                 <li class="list-group-item">
-                    <b>Tipo</b> <a class="float-right">{{veiculo.veiculo_tipo?.nome}}</a>
+                    <b>Tipo</b> <a class="float-right">{{organizacao.organizacao_tipo.nome}}</a>
                 </li>
-                <li class="list-group-item">
-                    <b>Marca</b> <a class="float-right">{{veiculo.modelo?.marca?.nome}}</a>
+                <li *ngIf="organizacao.telefone1" class="list-group-item">
+                    <b>Telefone 1</b> <a class="float-right">{{organizacao.telefone1}}</a>
                 </li>
-                <li class="list-group-item">
-                    <b>Modelo</b> <a class="float-right">{{veiculo.modelo?.nome}}</a>
+                <li *ngIf="organizacao.telefone2" class="list-group-item">
+                    <b>Telefone 2</b> <a class="float-right">{{organizacao.telefone2}}</a>
                 </li>
-                <li *ngIf="veiculo.cor" class="list-group-item">
-                    <b>Cor</b> <a class="float-right">{{veiculo.cor.nome}}</a>
+                <li *ngIf="organizacao.email" class="list-group-item">
+                    <b>E-mail</b> <a class="float-right">{{organizacao.email}}</a>
                 </li>
-              <li *ngIf="veiculo.chassi" class="list-group-item">
-                <b>Chassi</b> <a class="float-right">{{veiculo.chassi}}</a>
-              </li>
-              <li *ngIf="veiculo.renavam" class="list-group-item">
-                <b>Renavam</b> <a class="float-right">{{veiculo.renavam}}</a>
-              </li>
+             
             </ul>      
             <a [routerLink]="['Imprimir']" target="_blank" class="btn btn-primary btn-block"><i class="fa fa-print" aria-hidden="true"></i> Imprimir</a>     
           </div>
@@ -41,9 +36,8 @@
             <ul class="nav nav-pills">
                 <!--<li class="nav-item"><a class="nav-link active" href="#informacoes" data-bs-toggle="tab">Informações</a></li>-->
                 <li class="nav-item"><a class="nav-link active" href="#observacao" data-bs-toggle="tab">Observação</a></li>
-                <li class="nav-item"><a class="nav-link" href="#analises" data-bs-toggle="tab">Análises</a></li>
-                <li class="nav-item"><a class="nav-link" href="#organizacoes" data-bs-toggle="tab">Organizações</a></li>
                 <li class="nav-item"><a class="nav-link" href="#pessoas" data-bs-toggle="tab">Pessoas</a></li>
+                <li class="nav-item"><a class="nav-link" href="#veiculos" data-bs-toggle="tab">Veículos</a></li>
                 <li class="nav-item"><a class="nav-link" href="#arquivos" data-bs-toggle="tab">Arquivos</a></li>
             </ul>
           </div>
@@ -56,76 +50,15 @@
                 </div>-->
                 <!--INICIO TAB OBSERVACAO-->
                 <div class="active tab-pane" id="observacao">
-                    <div [innerHTML]="veiculo.observacao"></div>
+                    <div [innerHTML]="organizacao.observacao"></div>
                 </div>
                 <!--FIM TAB OBSERVACAO-->
-                <!--INICIO TAB ANALISES-->
-                <div class="tab-pane" id="analises">
-                  <button class="btn btn-outline-primary mb-2" data-bs-toggle="modal" data-bs-target="#modalanalises" title="Cadastrar"><i class="fa fa-plus"></i></button>
-                  <!-- INICIO MODAL ANALISES-->
-                  <div class="modal fade" id="modalanalises" style="display: none;" aria-hidden="true">
-                    <div class="modal-dialog modal-xl">
-                      <div class="modal-content">
-                        <div class="modal-header border-0">
-                          <h4 class="modal-title">
-                            Cadastrar Análise
-                          </h4>
-                          <button type="button" class="close" #fecharmodalanalises id="fecharmodal" data-bs-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">×</span>
-                          </button>
-                        </div>
-                        <div class="modal-body" >                            
-                            <formulario-veiculos-analises [veiculo_id]="veiculo.id" (refresh)="sudmitAnalise()" />
-                        </div>           
-                      </div>        
-                    </div>        
-                  </div>
-                  <!--FIM MODAL ANALISES-->
-                  <!--INICIO TABLE-->
-                   <table  class="table table-hover table-head-fixed text-nowrap mt-2">
-                     <thead>
-                       <tr>
-                         <th>#</th>
-                         <th>Categoria</th> 
-                         <th>Tipo</th>    
-                         <th>Nome</th>    
-                         <th>Data</th>   
-                         <th>Hora</th>   
-                         <th>Opções</th>
-                       </tr>
-                     </thead>
-                     <tbody  >
-                       <tr *ngFor="let row of veiculo.analises" class="optionshover">
-                         <td>{{row.pivot.id}}</td>
-                         <td>{{row.analise_categoria.nome}}</td> 
-                         <td>{{row.analise_tipo?.nome}}</td> 
-                         <td>{{row.nome}}</td> 
-                         <td>{{row.data | date: 'dd/MM/yyyy'}}</td> 
-                         <td>{{row.hora}}</td> 
-                         
-                         <td>                                        
-                             <a
-                               class="options ml-2"
-                               (click)="deleteAnalise(row.pivot.id)"                           
-                               title="Excluir"
-                             >
-                               <i
-                                 class="fas fa-trash text-danger point "
-                                 aria-hidden="true"
-                               ></i
-                             ></a>
-                         </td>
-                       </tr>
-                     </tbody>
-                   </table>
-                   <!--FIM TABLE-->
-                 </div>
-                 <!--FIM TAB ANALISES-->
+      
                 <!--INICIO TAB PESSOAS-->
                 <div class="tab-pane" id="pessoas">
 
                   <button class="btn btn-outline-primary mb-2" data-bs-toggle="modal" data-bs-target="#modalpessoas" title="Cadastrar"><i class="fa fa-plus"></i></button>
-                  <!-- INICIO MODAL VEICULOS-->
+                  <!-- INICIO MODAL Pessoa-->
                   <div class="modal fade" id="modalpessoas" style="display: none;" aria-hidden="true">
                     <div class="modal-dialog modal-xl">
                       <div class="modal-content">
@@ -138,12 +71,12 @@
                           </button>
                         </div>
                         <div class="modal-body" >                            
-                            <formulario-veiculos-pessoas [veiculo_id]="veiculo.id" (refresh)="sudmitPessoa()" />
+                            <formulario-organizacoes-pessoas [organizacao_id]="organizacao.id" (refresh)="sudmitPessoa()" />
                         </div>           
                       </div>        
                     </div>        
                   </div>
-                  <!--FIM MODAL VEICULOS-->
+                  <!--FIM MODAL Pessoa-->
 
                   <!--INICIO TABLE-->
                   <table  class="table table-hover table-head-fixed text-nowrap ">
@@ -154,16 +87,20 @@
                         <th>CPF</th>    
                         <th>Telefone 1</th>    
                         <th>E-mail</th>   
+                        <th>Líder</th>   
                         <th>Opções</th>
                       </tr>
                     </thead>
                     <tbody  >
-                      <tr *ngFor="let row of veiculo.pessoas" class="optionshover">
+                      <tr *ngFor="let row of organizacao.pessoas" class="optionshover">
                         <td>{{row.pivot.id}}</td>
                         <td>{{row.nome}}</td> 
                         <td>{{row.cpf | mask: '000.000.000-00'}}</td> 
                         <td>{{row?.telefone1}} </td> 
                         <td>{{row?.email}}</td> 
+                        <td>
+                            <span *nfIf="row.pivot?.lider">Sim</span>
+                        </td> 
                         <td>                                        
                             <a
                               class="options ml-2"
@@ -182,66 +119,77 @@
                   <!--FIM TABLE-->
                 </div>
                 <!--FIM TAB PESSOAS-->
-                
-                <!--INICIO TAB ORGANIZACOES-->
-                <div class="tab-pane" id="organizacoes">
-                  <button class="btn btn-outline-primary mb-2" data-bs-toggle="modal" data-bs-target="#modalorganizacoes" title="Cadastrar"><i class="fa fa-plus"></i></button>
-                  <!-- INICIO MODAL ORGANIZACAO-->
-                  <div class="modal fade" id="modalorganizacoes" style="display: none;" aria-hidden="true">
-                    <div class="modal-dialog modal-xl">
-                      <div class="modal-content">
-                        <div class="modal-header border-0">
-                          <h4 class="modal-title">
-                            Cadastrar Organização
-                          </h4>
-                          <button type="button" class="close" #fecharmodalorganizacoes id="fecharmodal" data-bs-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">×</span>
-                          </button>
-                        </div>
-                        <div class="modal-body" >                            
-                            <formulario-veiculos-organizacoes  [veiculo_id]="veiculo.id" (refresh)="sudmitOrganizacao()" />
-                        </div>           
+
+                <!--INICIO TAB VEICULOS-->
+                <div class="tab-pane" id="veiculos">
+
+                    <button class="btn btn-outline-primary mb-2" data-bs-toggle="modal" data-bs-target="#modalveiculos" title="Cadastrar"><i class="fa fa-plus"></i></button>
+                    <!-- INICIO MODAL VEICULOS-->
+                    <div class="modal fade" id="modalveiculos" style="display: none;" aria-hidden="true">
+                      <div class="modal-dialog modal-xl">
+                        <div class="modal-content">
+                          <div class="modal-header border-0">
+                            <h4 class="modal-title">
+                              Cadastrar Veículo
+                            </h4>
+                            <button type="button" class="close" #fecharmodalveiculo id="fecharmodal" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                            </button>
+                          </div>
+                          <div class="modal-body" >                            
+                              <formulario-organizacoes-veiculos [organizacao_id]="organizacao.id" (refresh)="sudmitPessoa()" />
+                          </div>           
+                        </div>        
                       </div>        
-                    </div>        
+                    </div>
+                    <!--FIM MODAL VEICULOS-->
+  
+                    <!--INICIO TABLE-->
+                    <table  class="table table-hover table-head-fixed text-nowrap ">
+                      <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Tipo</th> 
+                            <th>Marca - Modelo</th>    
+                            <th>Placa</th>    
+                            <th>Chassi</th>   
+                            <th>Renavam</th>   
+                            <th>Pessoa / Organização</th>                      
+                            <th>Opções</th>
+                        </tr>
+                      </thead>
+                      <tbody  >
+                        <tr *ngFor="let row of organizacao.veiculos" class="optionshover">
+                            <td>{{row.pivot.id}}</td>
+                            <td>{{row.veiculo_tipo.nome}}</td> 
+                            <td>{{row.modelo?.marca?.nome}} - {{row.modelo?.nome}}</td> 
+                            <td>{{row.placa}}</td> 
+                            <td>{{row.chassi}}</td> 
+                            <td>{{row.renavam}}</td> 
+                            <td>
+                              <span *ngIf="row.pessoa">{{row.pessoa.nome}}</span>
+                              <span *ngIf="row.organizacao">{{row.organizacao.nome}}</span>
+                            </td> 
+                            <td>                                        
+                                <a
+                                  class="options ml-2"
+                                  (click)="deleteVeiculo(row.pivot.id)"                           
+                                  title="Excluir"
+                                >
+                                  <i
+                                    class="fas fa-trash text-danger point "
+                                    aria-hidden="true"
+                                  ></i
+                                ></a>
+                            </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <!--FIM TABLE-->
                   </div>
-                  <!--FIM MODAL ORGANIZACAO-->
-                  <!--INICIO TABLE-->
-                  <table  class="table table-hover table-head-fixed text-nowrap mt-2">
-                    <thead>
-                      <tr>
-                        <th>#</th>
-                        <th>Tipo</th> 
-                        <th>Nome</th>    
-                        <th>Telefone 1</th>    
-                        <th>E-mail</th>   
-                        <th>Opções</th>
-                      </tr>
-                    </thead>
-                    <tbody  >
-                      <tr *ngFor="let row of veiculo.organizacoes" class="optionshover">
-                        <td>{{row.pivot.id}}</td>
-                        <td>{{row.organizacao_tipo.nome}}</td> 
-                        <td>{{row.nome}}</td> 
-                        <td>{{row?.telefone1}} </td> 
-                        <td>{{row?.email}}</td> 
-                        <td>                                        
-                            <a
-                              class="options ml-2"
-                              (click)="deleteOrganizacao(row.pivot.id)"                           
-                              title="Excluir"
-                            >
-                              <i
-                                class="fas fa-trash text-danger point "
-                                aria-hidden="true"
-                              ></i
-                            ></a>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                  <!--FIM TABLE-->
-                </div>
-                <!--FIM TAB ORGANIZACOES-->
+                  <!--FIM TAB VEICULOS-->
+                
+               
                 <!--INICIO TAB ARQUIVOS-->
                 <div class="tab-pane" id="arquivos">
                   <button class="btn btn-outline-primary mb-2" data-bs-toggle="modal" data-bs-target="#modalarquivos" title="Cadastrar"><i class="fa fa-plus"></i></button>
@@ -258,7 +206,7 @@
                           </button>
                         </div>
                         <div class="modal-body" >                            
-                            <formulario-veiculos-arquivos  [veiculo_id]="veiculo.id" (refresh)="sudmitArquivo()" />
+                            <formulario-organizacoes-arquivos  [organizacao_id]="organizacao.id" (refresh)="sudmitArquivo()" />
                         </div>           
                       </div>        
                     </div>        
@@ -296,7 +244,7 @@
                       </tr>
                     </thead>
                     <tbody  >
-                      <tr *ngFor="let row of veiculo.arquivos" class="optionshover">
+                      <tr *ngFor="let row of organizacao.arquivos" class="optionshover">
                         <td>{{row.id}}</td>
                         <td>{{row.arquivo_tipo.nome}}</td> 
                         <td>

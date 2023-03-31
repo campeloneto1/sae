@@ -216,16 +216,14 @@
                       <td>{{ row.arquivo_tipo.nome }}</td>
                       <td>
                         <a
-                          *ngIf="row.arquivo_tipo_id == 1"
-                          data-bs-toggle="modal"
-                          data-bs-target="#modalshowarquivos"
+                          *ngIf="row.arquivo_tipo.pdf || row.arquivo_tipo.texto"
+                          
                         >
                           {{ row.nome }}
                         </a>
                         <a
-                          *ngIf="row.arquivo_tipo_id == 2"
-                          data-bs-toggle="modal"
-                          data-bs-target="#modalshowarquivos"
+                          *ngIf="row.arquivo_tipo.foto"
+                          
                         >
                           <img width="100px" [src]="urlarq(row)" />
                         </a>

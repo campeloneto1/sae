@@ -25,6 +25,7 @@ export interface Veiculo{
     organizacoes?: Organizacoes,
     arquivos: VeiculosArquivos,
     pivot?: any,
+    nome?: string,
     observacao?: string
 
 }

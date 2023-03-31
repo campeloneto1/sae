@@ -4,6 +4,7 @@ import { OrganizacaoTipo } from "../organizacoes-tipos/organizacoes-tipos";
 import { Pais } from "../paises/paises";
 import { Pessoas } from "../pessoas/pessoas";
 import { Veiculos } from "../veiculos/veiculos";
+import { OrganizacoesArquivos } from "./formulario-organizacoes-arquivos/organizacoes-arquivos";
 
 export interface Organizacao{
     id?: number,
@@ -27,7 +28,8 @@ export interface Organizacao{
     observacao?: string,
     pivot: any,
     veiculos: Veiculos,
-    pessoas: Pessoas
+    pessoas: Pessoas,
+    arquivos: OrganizacoesArquivos
 }
 
 export type Organizacoes = Array<Organizacao>;
