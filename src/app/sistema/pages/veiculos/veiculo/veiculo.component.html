@@ -291,6 +291,7 @@
                       <tr>
                         <th>#</th>
                         <th>Tipo</th> 
+                        <th>Nome</th>
                         <th>Arquivo</th>                        
                         <th>Opções</th>
                       </tr>
@@ -299,11 +300,12 @@
                       <tr *ngFor="let row of veiculo.arquivos" class="optionshover">
                         <td>{{row.id}}</td>
                         <td>{{row.arquivo_tipo.nome}}</td> 
+                        <td>{{row.nome}}</td> 
                         <td>
-                          <a *ngIf="row.arquivo_tipo.pdf || row.arquivo_tipo.texto" (click)="showArquivo(row)" data-bs-toggle="modal" data-bs-target="#modalshowarquivos">
-                            {{row.nome}}
+                          <a style="cursor: pointer;" *ngIf="row.arquivo_tipo.pdf || row.arquivo_tipo.texto" (click)="showArquivo(row)" data-bs-toggle="modal" data-bs-target="#modalshowarquivos">
+                            {{row.arquivo}}
                           </a>  
-                          <a *ngIf="row.arquivo_tipo.foto" (click)="showArquivo(row)" data-bs-toggle="modal" data-bs-target="#modalshowarquivos">
+                          <a style="cursor: pointer;" *ngIf="row.arquivo_tipo.foto" (click)="showArquivo(row)" data-bs-toggle="modal" data-bs-target="#modalshowarquivos">
                             <img  width="50px" [src]="urlarq(row)" /> 
                           </a>      
                           <!--<a (click)="showArquivo(row)" data-bs-toggle="modal" data-bs-target="#modalshowarquivos">{{row.nome}}</a>-->

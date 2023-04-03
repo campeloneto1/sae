@@ -8,7 +8,7 @@
       <div class="col-sm-3">
         <div class="card ">
           <div class="card-body box-profile ">
-            <h3 class="profile-username text-center">{{organizacao.nome | uppercase}}</h3>
+            <h3 class="profile-username text-center">{{organizacao.nome }}</h3>
             <ul class="list-group list-group-unbordered mb-3">
                 <li class="list-group-item">
                     <b>Tipo</b> <a class="float-right">{{organizacao.organizacao_tipo.nome}}</a>
@@ -25,6 +25,19 @@
              
             </ul>      
             <a [routerLink]="['Imprimir']" target="_blank" class="btn btn-primary btn-block"><i class="fa fa-print" aria-hidden="true"></i> Imprimir</a>     
+          </div>
+        </div>
+
+        <div class="card " *ngIf="organizacao.rua">
+          <div class="card-header border-0">Endereço</div>
+          <div class="card-body box-profile">
+              {{organizacao.rua}}
+              <span *ngIf="organizacao.numero">, {{organizacao.numero}}</span>
+              <span *ngIf="organizacao.bairro">, {{organizacao.bairro}}</span>
+              <span *ngIf="organizacao.complemento">, {{organizacao.complemento}}</span>
+              <span *ngIf="organizacao.cidade">, {{organizacao.cidade.nome}} - {{organizacao.cidade.estado.uf}}</span>
+
+              <iframe *ngIf="organizacao.rua" style="width: 100%; height: 300px;" id="gmap_canvas" [src]="googlemaps(organizacao)" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
           </div>
         </div>
       </div>
@@ -99,7 +112,7 @@
                         <td>{{row?.telefone1}} </td> 
                         <td>{{row?.email}}</td> 
                         <td>
-                            <span *nfIf="row.pivot?.lider">Sim</span>
+                            <span *ngIf="row.pivot?.lider">Sim</span>
                         </td> 
                         <td>                                        
                             <a
@@ -133,11 +146,11 @@
                               Cadastrar Veículo
                             </h4>
                             <button type="button" class="close" #fecharmodalveiculo id="fecharmodal" data-bs-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
+                              <span aria-hidden="true">×</span>
                             </button>
                           </div>
                           <div class="modal-body" >                            
-                              <formulario-organizacoes-veiculos [organizacao_id]="organizacao.id" (refresh)="sudmitPessoa()" />
+                              <formulario-organizacoes-veiculos [organizacao_id]="organizacao.id" (refresh)="sudmitVeiculo()" />
                           </div>           
                         </div>        
                       </div>        
@@ -239,6 +252,7 @@
                       <tr>
                         <th>#</th>
                         <th>Tipo</th> 
+                        <th>Nome</th> 
                         <th>Arquivo</th>                        
                         <th>Opções</th>
                       </tr>
@@ -247,11 +261,12 @@
                       <tr *ngFor="let row of organizacao.arquivos" class="optionshover">
                         <td>{{row.id}}</td>
                         <td>{{row.arquivo_tipo.nome}}</td> 
+                        <td>{{row.nome}}</td> 
                         <td>
-                          <a *ngIf="row.arquivo_tipo.pdf || row.arquivo_tipo.texto" (click)="showArquivo(row)" data-bs-toggle="modal" data-bs-target="#modalshowarquivos">
-                            {{row.nome}}
+                          <a style="cursor: pointer;" *ngIf="row.arquivo_tipo.pdf || row.arquivo_tipo.texto" (click)="showArquivo(row)" data-bs-toggle="modal" data-bs-target="#modalshowarquivos">
+                            {{row.arquivo}}
                           </a>  
-                          <a *ngIf="row.arquivo_tipo.foto" (click)="showArquivo(row)" data-bs-toggle="modal" data-bs-target="#modalshowarquivos">
+                          <a style="cursor: pointer;" *ngIf="row.arquivo_tipo.foto" (click)="showArquivo(row)" data-bs-toggle="modal" data-bs-target="#modalshowarquivos">
                             <img  width="50px" [src]="urlarq(row)" /> 
                           </a>      
                           <!--<a (click)="showArquivo(row)" data-bs-toggle="modal" data-bs-target="#modalshowarquivos">{{row.nome}}</a>-->

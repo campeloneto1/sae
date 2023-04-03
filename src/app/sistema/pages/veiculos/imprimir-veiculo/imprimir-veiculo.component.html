@@ -207,6 +207,7 @@
                     <tr>
                       <th>#</th>
                       <th>Tipo</th>
+                      <th>Nome</th>
                       <th>Arquivo</th>
                     </tr>
                   </thead>
@@ -214,16 +215,10 @@
                     <tr *ngFor="let row of veiculo.arquivos" class="optionshover">
                       <td>{{ row.id }}</td>
                       <td>{{ row.arquivo_tipo.nome }}</td>
-                      <td>
+                      <td>{{ row.nome }}</td>
+                      <td>                        
                         <a
-                          *ngIf="row.arquivo_tipo.pdf || row.arquivo_tipo.texto"
-                          
-                        >
-                          {{ row.nome }}
-                        </a>
-                        <a
-                          *ngIf="row.arquivo_tipo.foto"
-                          
+                          *ngIf="row.arquivo_tipo.foto"                          
                         >
                           <img width="100px" [src]="urlarq(row)" />
                         </a>

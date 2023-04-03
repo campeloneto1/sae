@@ -127,12 +127,12 @@ export class OrganizacoesComponent implements OnInit, OnDestroy{
         });        
     }
 
-    cadOrganizacao(){
+    submitCadastro(){
         this.refresh();
         this.modelCadastro.nativeElement.click();
     }
 
-    cancelOrganizacao(){
+    cancelCadastro(){
         this.modelCadastro.nativeElement.click();
     }
 

@@ -127,12 +127,12 @@ export class VeiculosComponent implements OnInit, OnDestroy{
         });
     }
 
-    cadVeiculo(){
+    submitCadastro(){
         this.refresh();
         this.modelCadastro.nativeElement.click();
     }
 
-    cancelVeiculo(){
+    cancelCadastro(){
         this.modelCadastro.nativeElement.click();
     }
 

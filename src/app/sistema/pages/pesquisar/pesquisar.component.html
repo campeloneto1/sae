@@ -1,0 +1,199 @@
+<div class="content-wrapper">
+    <app-titulo titulo="Pesquisar" />
+  <!--INICIO SECTION content-->
+  <section class="content">
+    <!-- INICIO CARD PESQUISA-->
+    <div class="card">
+      <div class="card-body border-0">
+        <form [formGroup]="form" (ngSubmit)="pesquisar()" >
+            <div class="row">
+                <app-input-text class="col-sm-8 offset-sm-2" formControlName="pesquisar" label="Pesquisar" id="pesquisar" tipo="text" />
+            </div>
+            <div class="row">
+                <div class="col-sm-2 offset-sm-2">
+                    <div class="form-check text-center">
+                        <input class="form-check-input" type="checkbox"  id="analises" formControlName="analises">
+                        <label class="form-check-label" for="analises">Análises</label>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-check text-center">
+                        <input class="form-check-input" type="checkbox"  id="organizacoes" formControlName="organizacoes">
+                        <label class="form-check-label" for="organizacoes">Organizações</label>
+                    </div>
+                </div>  
+                <div class="col-sm-2">
+                    <div class="form-check text-center">
+                        <input class="form-check-input" type="checkbox"  id="pessoas" formControlName="pessoas">
+                        <label class="form-check-label" for="pessoas">Pessoas</label>
+                    </div>
+                </div> 
+               
+                <div class="col-sm-2">
+                    <div class="form-check text-center">
+                        <input class="form-check-input" type="checkbox"  id="veiculos" formControlName="veiculos">
+                        <label class="form-check-label" for="veiculos">Veículos</label>
+                    </div>
+                </div> 
+            </div>
+            <div class="row mt-3">
+                <div class="offset-sm-4 col-sm-4 text-right" >
+                    <button [disabled]="form.invalid" type="submit" class="btn btn-block btn-primary">Pesquisar</button>
+                </div>
+            </div>
+        </form>
+      </div>
+    </div>
+    <!-- FIM CARD PESQUISA-->
+    <!-- INICIO CARD RESULTADO-->
+    <div class="card" *ngIf="resultado">
+        <div class="card-header border-0 p-2">
+            <ul class="nav nav-pills" >
+                <!--<li class="nav-item"><a class="nav-link active" href="#informacoes" data-bs-toggle="tab">Informações</a></li>-->
+                <li class="nav-item">
+                    <a [ngClass]="!form.value.analises ? 'disabled' : ''" class="nav-link active" href="#tabanalises" data-bs-toggle="tab">
+                        Análises 
+                        <span class="right badge badge-danger">{{resultado.analises?.length}}</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a [ngClass]="!form.value.organizacoes ? 'disabled' : ''" class="nav-link" href="#taborganizacoes" data-bs-toggle="tab">
+                        Organizações
+                        <span class="right badge badge-danger">{{resultado.organizacoes?.length}}</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a [ngClass]="!form.value.pessoas ? 'disabled' : ''" class="nav-link" href="#tabpessoas" data-bs-toggle="tab">
+                        Pessoas
+                        <span class="right badge badge-danger">{{resultado.pessoas?.length}}</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a [ngClass]="!form.value.veiculos ? 'disabled' : ''" class="nav-link" href="#tabveiculos" data-bs-toggle="tab">
+                        Veículos
+                        <span class="right badge badge-danger">{{resultado.veiculos?.length}}</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="card-body border-0" >          
+            <div class="tab-content">
+                 <!--INICIO TAB analises-->
+                 <div class="active tab-pane" id="tabanalises">
+                    <table  class="table table-hover table-head-fixed text-nowrap mt-2">
+                        <thead>
+                          <tr>
+                            <th>#</th>
+                            <th>Categoria</th> 
+                            <th>Tipo</th>    
+                            <th>Nome</th>    
+                            <th>Data</th>   
+                            <th>Hora</th>   
+                          </tr>
+                        </thead>
+                        <tbody  >
+                          <tr *ngFor="let row of resultado.analises">
+                            <td>{{row.id}}</td>
+                            <td>{{row.analise_categoria?.nome}}</td> 
+                            <td>{{row.analise_tipo?.nome}}</td> 
+                            <td><a [routerLink]="['/Analises',row.id]">{{row.nome}}</a></td> 
+                            <td>{{row.data | date: 'dd/MM/yyyy'}}</td> 
+                            <td>{{row.hora}}</td> 
+                          </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!--FIM TAB analises-->
+                <!--INICIO TAB organizacoes-->
+                <div class="tab-pane" id="taborganizacoes">
+                    <!--INICIO TABLE-->
+                  <table  class="table table-hover table-head-fixed text-nowrap mt-2">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Tipo</th> 
+                        <th>Nome</th>    
+                        <th>Telefone 1</th>    
+                        <th>E-mail</th>   
+                      </tr>
+                    </thead>
+                    <tbody  >
+                      <tr *ngFor="let row of resultado.organizacoes" class="optionshover">
+                        <td>{{row.id}}</td>
+                        <td>{{row.organizacao_tipo.nome}}</td> 
+                        <td><a [routerLink]="['/Organizacoes',row.id]">{{row.nome}}</a></td> 
+                        <td>{{row?.telefone1}} </td> 
+                        <td>{{row?.email}}</td> 
+                      </tr>
+                    </tbody>
+                  </table>
+                  <!--FIM TABLE-->
+                </div>
+                <!--FIM TAB organizacoes-->
+                <!--INICIO TAB pessoas-->
+                <div class="tab-pane" id="tabpessoas">
+                    <!--INICIO TABLE-->
+                    <table  class="table table-hover table-head-fixed text-nowrap ">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nome</th> 
+                            <th>CPF</th>    
+                            <th>Telefone 1</th>    
+                            <th>E-mail</th>   
+                        </tr>
+                        </thead>
+                        <tbody  >
+                        <tr *ngFor="let row of resultado.pessoas" class="optionshover">
+                            <td>{{row.id}}</td>
+                            <td><a [routerLink]="['/Pessoas',row.id]">{{row.nome}}</a></td> 
+                            <td>{{row.cpf | mask: '000.000.000-00'}}</td> 
+                            <td>{{row?.telefone1}} </td> 
+                            <td>{{row?.email}}</td> 
+                        </tr>
+                        </tbody>
+                    </table>
+                    <!--FIM TABLE-->
+                </div>
+                <!--FIM TAB pessoas-->
+                <!--INICIO TAB veiculos-->
+                <div class="tab-pane" id="tabveiculos">
+                     <!--INICIO TABLE-->
+                  <table  class="table table-hover table-head-fixed text-nowrap ">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Tipo</th> 
+                        <th>Marca - Modelo</th>    
+                        <th>Placa</th>    
+                        <th>Chassi</th>   
+                        <th>Renavam</th>   
+                        <th>Pessoa / Organização</th>                      
+                      </tr>
+                    </thead>
+                    <tbody  >
+                      <tr *ngFor="let row of resultado.veiculos" class="optionshover">
+                        <td>{{row.id}}</td>
+                        <td>{{row.veiculo_tipo.nome}}</td> 
+                        <td>{{row.modelo?.marca?.nome}} - {{row.modelo?.nome}}</td> 
+                        <td><a [routerLink]="['/Veiculos',row.id]">{{row.placa}}</a></td> 
+                        <td>{{row.chassi}}</td> 
+                        <td>{{row.renavam}}</td> 
+                        <td>
+                          <span *ngIf="row.pessoa">{{row.pessoa.nome}}</span>
+                          <span *ngIf="row.organizacao">{{row.organizacao.nome}}</span>
+                        </td> 
+                        
+                      </tr>
+                    </tbody>
+                  </table>
+                  <!--FIM TABLE-->
+                </div>
+                <!--FIM TAB veiculos-->
+            </div>
+        </div>
+    </div>
+    <!-- FIM CARD RESULTADO-->
+  </section>
+  <!--FIM SECTION content-->
+</div>

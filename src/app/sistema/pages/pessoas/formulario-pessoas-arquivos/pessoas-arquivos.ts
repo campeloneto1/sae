@@ -6,6 +6,7 @@ export interface PessoaArquivo{
     arquivo_tipo: ArquivoTipo,
     pessoa_id: number,
     nome: string,
+    arquivo: string,
     pivot: any,
 }
 

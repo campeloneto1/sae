@@ -64,7 +64,7 @@ export class ImprimirPessoaComponent implements OnInit, OnDestroy {
   }
  
   urlarq(data:PessoaArquivo):any{
-    return this.sanitizer.bypassSecurityTrustResourceUrl(`${this.IMG}/${data.nome}`);
+    return this.sanitizer.bypassSecurityTrustResourceUrl(`${this.IMG}/${data.arquivo}`);
   }
 
   print(){

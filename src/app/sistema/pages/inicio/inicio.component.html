@@ -1,39 +1,32 @@
 <div class="content-wrapper">
-    <app-titulo titulo="Início" [primario]="true" />
-  
-    <!--INICIO SECTION content-->
-    <section class="content">
-      <!--INICIO DIV ROW-->
-      <div class="row">
-        <!--INICIO DIV col-sm 3 quant dia-->
-        <div class="col-sm-2">
-         
+  <app-titulo titulo="Início" [primario]="true" />
+  <!--INICIO SECTION content-->
+  <section class="content">
+    <!--INICIO DIV ROW-->
+    <div class="row">
+      <!--INICIO DIV col-sm 3 quant analises mes-->
+      <div class="col-sm-3">
+        <!--INICIO INFO BOX-->
+        <div class="info-box">
+          <span class="info-box-icon bg-info elevation-1"
+            ><i class="fa fa-warning"></i
+          ></span>
+          <div class="info-box-content">
+            <span class="info-box-text">Análises no mês</span>
+            <span class="info-box-number">
+              {{quantanalises}}
+              
+            </span>
+          </div>
         </div>
-        <!--FIM DIV col-sm 3 quant dia-->
-        <!--INICIO DIV col-sm 3 acessos no mes-->
-        <div class="col-sm-2">
-          
-        </div>
-        <!--FIM DIV col-sm 3 acessos no mes-->
+        <!--FIM INFO BOX-->
       </div>
-      <!--Fim DIV ROW-->
-  
-      <!--INICIO DIV ROW INFORMACOES-->
-      <div class="row">
-        
-        <!--INICIO COL SM 4 POR SETORES-->
-        <div class="col-sm-4">
-          
-        </div>
-        <!--FIM COL SM 4 POR SETORES-->
-        <!--INICIO COL SM 4 POR DIA-->
-        <div class="col-sm-6">
-          
-        </div>
-        <!--FIM COL SM 4 POR DIA-->
-      </div>
-      <!--FIM DIV ROW INFORMACOES-->
-    </section>
-    <!--FIM SECTION content-->
-  </div>
-  
+      <!--FIM DIV col-sm 3 quant analises mes-->
+      <!--INICIO DIV col-sm 3 acessos no mes-->
+      <div class="col-sm-2"></div>
+      <!--FIM DIV col-sm 3 acessos no mes-->
+    </div>
+    <!--Fim DIV ROW-->
+  </section>
+  <!--FIM SECTION content-->
+</div>

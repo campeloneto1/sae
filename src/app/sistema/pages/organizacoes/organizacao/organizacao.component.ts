@@ -74,6 +74,10 @@ export class OrganizacaoComponent implements OnInit, OnDestroy {
     this.organizacao$ = this.organizacoesService.show(this.id);
   }
 
+  googlemaps(data:Organizacao){
+    return this.sanitizer.bypassSecurityTrustResourceUrl(`https://maps.google.com/maps?q=${data.rua?.replace(" ", "+")},${data.numero?.replace(" ", "+")},${data.bairro?.replace(" ", "+")},${data.cidade?.nome?.replace(" ", "+")}&z=15&ie=UTF8&output=embed`);
+  }
+
 
   sudmitVeiculo(){
     this.closebuttonVeiculos.nativeElement.click();
@@ -90,13 +94,15 @@ export class OrganizacaoComponent implements OnInit, OnDestroy {
     this.refresh();
   }
 
+
+
   showArquivo(data:OrganizacaoArquivo){
     this.arquivo = data;
     
   }
 
   urlarq(data:OrganizacaoArquivo):any{
-    return this.sanitizer.bypassSecurityTrustResourceUrl(`${this.IMG}/${data.nome}`);
+    return this.sanitizer.bypassSecurityTrustResourceUrl(`${this.IMG}/${data.arquivo}`);
   }
 
   deletePessoa(data: number) {

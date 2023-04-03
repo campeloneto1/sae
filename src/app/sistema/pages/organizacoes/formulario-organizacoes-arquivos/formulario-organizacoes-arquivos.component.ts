@@ -51,6 +51,9 @@ export class FormularioOrganizacoesArquivosComponent{
             'nome': ['', Validators.compose([
                 Validators.required,
             ])],
+            'arquivo': ['', Validators.compose([
+                Validators.required,
+            ])],
             'file': ['', Validators.compose([
                 Validators.required,
             ])],
@@ -116,7 +119,7 @@ export class FormularioOrganizacoesArquivosComponent{
           }).subscribe({
             next: data => {       
                 //console.log(data);
-                this.form.get('nome')?.patchValue(data);
+                this.form.get('arquivo')?.patchValue(data);
              },
              error: (error) => {
               //console.log(error)

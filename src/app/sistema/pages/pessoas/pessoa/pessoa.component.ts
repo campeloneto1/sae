@@ -114,12 +114,16 @@ export class PessoaComponent implements OnInit, OnDestroy {
     
   }
 
+  googlemaps(data:Pessoa){
+    return this.sanitizer.bypassSecurityTrustResourceUrl(`https://maps.google.com/maps?q=${data.rua?.replace(" ", "+")},${data.numero?.replace(" ", "+")},${data.bairro?.replace(" ", "+")},${data.cidade?.nome?.replace(" ", "+")}&z=15&ie=UTF8&output=embed`);
+  }
+
   urlfoto(data:Pessoa):any{
     return this.sanitizer.bypassSecurityTrustResourceUrl(`${this.IMG}/${data.foto}`);
   }
 
   urlarq(data:PessoaArquivo):any{
-    return this.sanitizer.bypassSecurityTrustResourceUrl(`${this.IMG}/${data.nome}`);
+    return this.sanitizer.bypassSecurityTrustResourceUrl(`${this.IMG}/${data.arquivo}`);
   }
 
   deleteVeiculo(data: number) {

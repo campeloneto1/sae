@@ -20,6 +20,7 @@
                 <th>#</th>
                 <th>Nome</th>
                 <th>Gestor</th>
+                <th>Restrito</th>
                 <th>Tipo de Análise</th>
                 <th>Prévia</th>
                 <th>Síntese</th>
@@ -34,6 +35,9 @@
                 <td>{{row.nome}}</td>       
                 <td>
                   <span *ngIf="row.gestor">Sim</span>
+                </td> 
+                <td>
+                  <span *ngIf="row.restrito">Sim</span>
                 </td> 
                 <td>
                   <span *ngIf="row.tipo">Sim</span>

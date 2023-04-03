@@ -6,6 +6,7 @@ export interface OrganizacaoArquivo{
     arquivo_tipo: ArquivoTipo,
     organizacao_id: number,
     nome: string,
+    arquivo: string,
     pivot: any,
 }
 

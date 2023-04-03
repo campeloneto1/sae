@@ -4,6 +4,9 @@ import { AnaliseTipo } from "../analises-tipos/analises-tipos";
 import { Cidade } from "../cidades/cidades";
 import { Estado } from "../estados/estados";
 import { Pais } from "../paises/paises";
+import { Pessoas } from "../pessoas/pessoas";
+import { Veiculos } from "../veiculos/veiculos";
+import { AnalisesArquivos } from "./formulario-analises-arquivos/analises-arquivos";
 
 export interface Analise{
     id?: number,
@@ -28,7 +31,10 @@ export interface Analise{
     observacao?: string,
     previa?: string,
     sintese?: string,
-    pivot: any
+    pivot: any,
+    pessoas: Pessoas,
+    veiculos: Veiculos,
+    arquivos: AnalisesArquivos
 
 
 }

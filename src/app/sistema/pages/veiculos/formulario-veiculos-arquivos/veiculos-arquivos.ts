@@ -6,6 +6,7 @@ export interface VeiculoArquivo{
     arquivo_tipo: ArquivoTipo,
     veiculo_id: number,
     nome: string,
+    arquivo: string,
     pivot: any,
 }
 

@@ -26,6 +26,16 @@
             <p>Início</p>
           </a>
         </li>
+        <li class="nav-item">
+          <a
+            [routerLink]="['Pesquisar']"
+            routerLinkActive="active"
+            class="nav-link"
+          >
+            <i class="nav-icon fa fa-search"></i>
+            <p>Pesquisar</p>
+          </a>
+        </li>
         <li class="nav-item" *ngIf="perfil.analises">
           <a
             [routerLink]="['Analises']"

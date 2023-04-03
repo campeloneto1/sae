@@ -36,6 +36,7 @@ export class FormularioAnalisesCategoriasComponent{
                 Validators.maxLength(150)
             ])],  
             'gestor': [0],
+            'restrito': [0],
             'tipo': [0],
             'previa': [0],     
             'sintese': [0],

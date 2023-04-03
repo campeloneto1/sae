@@ -1,8 +1,10 @@
 export interface Perfil{
     id?: number,
     nome: string,
+    
     administrador: boolean,
     gestor: boolean,
+    restrito: boolean,
     relatorios: boolean,
 
     users: boolean,

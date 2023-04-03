@@ -51,9 +51,7 @@
               </li> 
               <li *ngIf="pessoa.influencia_id" class="list-group-item">
                 <b>Influência</b> <a class="float-right">{{pessoa.influencia?.nome}}</a>
-              </li>  
-              
-
+              </li>              
             </ul>      
             <a [routerLink]="['Imprimir']" target="_blank" class="btn btn-primary btn-block"><i class="fa fa-print" aria-hidden="true"></i> Imprimir</a>     
           </div>
@@ -62,13 +60,26 @@
         </div>
 
         <div class="card ">
-            <div class="card-header border-0">Redes Sociais</div>
-            <div class="card-body box-profile">
-                <ul class="list-unstyled">
-                    <li *ngFor="let rede of pessoa.redes_sociais"><a [href]="rede.pivot.nome" target="_blank">{{rede.nome}}</a></li>
-                </ul>
-            </div>
+          <div class="card-header border-0">Redes Sociais</div>
+          <div class="card-body box-profile">
+              <ul class="list-unstyled">
+                  <li *ngFor="let rede of pessoa.redes_sociais"><a [href]="rede.pivot.nome" target="_blank">{{rede.nome}}</a></li>
+              </ul>
           </div>
+        </div>
+
+        <div class="card " *ngIf="pessoa.rua">
+          <div class="card-header border-0">Endereço</div>
+          <div class="card-body box-profile">
+              {{pessoa.rua}}
+              <span *ngIf="pessoa.numero">, {{pessoa.numero}}</span>
+              <span *ngIf="pessoa.bairro">, {{pessoa.bairro}}</span>
+              <span *ngIf="pessoa.complemento">, {{pessoa.complemento}}</span>
+              <span *ngIf="pessoa.cidade">, {{pessoa.cidade.nome}} - {{pessoa.cidade.estado.uf}}</span>
+
+              <iframe *ngIf="pessoa.rua" style="width: 100%; height: 300px;" id="gmap_canvas" [src]="googlemaps(pessoa)" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+          </div>
+        </div>
 
       </div>
 
@@ -347,6 +358,7 @@
                       <tr>
                         <th>#</th>
                         <th>Tipo</th> 
+                        <th>Nome</th>   
                         <th>Arquivo</th>                        
                         <th>Opções</th>
                       </tr>
@@ -355,11 +367,12 @@
                       <tr *ngFor="let row of pessoa.arquivos" class="optionshover">
                         <td>{{row.id}}</td>
                         <td>{{row.arquivo_tipo.nome}}</td> 
+                        <td>{{row.nome}}</td> 
                         <td>
-                          <a *ngIf="row.arquivo_tipo.pdf || row.arquivo_tipo.texto" (click)="showArquivo(row)" data-bs-toggle="modal" data-bs-target="#modalshowarquivos">
-                            {{row.nome}}
+                          <a style="cursor: pointer;" *ngIf="row.arquivo_tipo.pdf || row.arquivo_tipo.texto" (click)="showArquivo(row)" data-bs-toggle="modal" data-bs-target="#modalshowarquivos">
+                            {{row.arquivo}}
                           </a>  
-                          <a *ngIf="row.arquivo_tipo.foto" (click)="showArquivo(row)" data-bs-toggle="modal" data-bs-target="#modalshowarquivos">
+                          <a style="cursor: pointer;" *ngIf="row.arquivo_tipo.foto" (click)="showArquivo(row)" data-bs-toggle="modal" data-bs-target="#modalshowarquivos">
                             <img  width="50px" [src]="urlarq(row)" /> 
                           </a>      
                           <!--<a (click)="showArquivo(row)" data-bs-toggle="modal" data-bs-target="#modalshowarquivos">{{row.nome}}</a>-->

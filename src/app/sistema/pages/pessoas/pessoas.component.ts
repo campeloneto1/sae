@@ -127,15 +127,15 @@ export class PessoasComponent implements OnInit, OnDestroy{
         });        
     }
 
-    cadastroPessoa(){
+    submitCadastro(){
+        this.modelCadastro.nativeElement.click();
         this.refresh();
-        this.modelCadastro.nativeElement.click();
     }
 
-    cancelarCadastro(){
+    cancelCadastro(){
         this.modelCadastro.nativeElement.click();
     }
-
+    
     getPessoa(data: number){
         this.subscription3 = this.pessoasService.show(data).subscribe({
             next: (data) => {

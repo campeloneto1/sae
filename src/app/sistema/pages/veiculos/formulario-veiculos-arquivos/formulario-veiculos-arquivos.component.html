@@ -1,6 +1,7 @@
 <form  [formGroup]="form" (ngSubmit)="cadastrar()" >
     <div class="row">
         <app-input-select class="col-sm-2" formControlName="arquivo_tipo_id" label="Tipo de Arquvio" id="arquivo_tipo_id" [data$]="arquivostipos$" />
+        <app-input-text class="col-sm-4" formControlName="nome" label="Nome" id="nome" tipo="nome" />
         <app-input-text (change)="fileEvent($event)" class="col-sm-4" formControlName="file" label="Arquivo" id="file" tipo="file" />
         <div class="col-sm-2">
             <button style="margin-top: 31px;" [disabled]="form.invalid"  type="submit" class="btn btn-primary">Cadastrar</button>

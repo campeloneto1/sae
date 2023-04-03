@@ -60,7 +60,7 @@ export class ImprimirVeiculoComponent implements OnInit, OnDestroy {
   }
  
   urlarq(data:VeiculoArquivo):any{
-    return this.sanitizer.bypassSecurityTrustResourceUrl(`${this.IMG}/${data.nome}`);
+    return this.sanitizer.bypassSecurityTrustResourceUrl(`${this.IMG}/${data.arquivo}`);
   }
 
   print(){

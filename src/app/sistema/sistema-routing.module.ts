@@ -15,6 +15,7 @@ const routes: Routes = [
                 path: 'Analises',
                 loadComponent: () => import('./pages/analises/analises.component').then((c) => c.AnalisesComponent)
             },
+            
             {
                 path: 'Analises/Tipos',
                 loadComponent: () => import('./pages/analises-tipos/analises-tipos.component').then((c) => c.AnalisesTiposComponent)
@@ -22,6 +23,14 @@ const routes: Routes = [
             {
                 path: 'Analises/Categorias',
                 loadComponent: () => import('./pages/analises-categorias/analises-categorias.component').then((c) => c.AnalisesCategoriasComponent)
+            },
+            {
+                path: 'Analises/:id',
+                loadComponent: () => import('./pages/analises/analise/analise.component').then((c) => c.AnaliseComponent)
+            },
+            {
+                path: 'Analises/:id/Imprimir',
+                loadComponent: () => import('./pages/analises/imprimir-analise/imprimir-analise.component').then((c) => c.ImprimirAnaliseComponent)
             },
             {
                 path: 'Arquivos/Tipos',
@@ -56,16 +65,24 @@ const routes: Routes = [
                 loadComponent: () => import('./pages/organizacoes/organizacoes.component').then((c) => c.OrganizacoesComponent)
             },
             {
-                path: 'Organizacoes/:id',
-                loadComponent: () => import('./pages/organizacoes/organizacao/organizacao.component').then((c) => c.OrganizacaoComponent)
-            },
-            {
                 path: 'Organizacoes/Tipos',
                 loadComponent: () => import('./pages/organizacoes-tipos/organizacoes-tipos.component').then((c) => c.OrganizacoesTiposComponent)
             },
             {
+                path: 'Organizacoes/:id',
+                loadComponent: () => import('./pages/organizacoes/organizacao/organizacao.component').then((c) => c.OrganizacaoComponent)
+            },
+            {
+                path: 'Organizacoes/:id/Imprimir',
+                loadComponent: () => import('./pages/organizacoes/imprimir-organizacao/imprimir-organizacao.component').then((c) => c.ImprimirOrganizacaoComponent)
+            },
+            {
                 path: 'Paises',
                 loadComponent: () => import('./pages/paises/paises.component').then((c) => c.PaisesComponent)
+            },
+            {
+                path: 'Pesquisar',
+                loadComponent: () => import('./pages/pesquisar/pesquisar.component').then((c) => c.PesquisarComponent)
             },
             {
                 path: 'Perfis',
@@ -96,20 +113,20 @@ const routes: Routes = [
                 loadComponent: () => import('./pages/usuarios/usuarios.component').then((c) => c.UsuariosComponent)
             },
             {
-                path: 'Veiculos/:id',
-                loadComponent: () => import('./pages/veiculos/veiculo/veiculo.component').then((c) => c.VeiculoComponent)
-            },
-            {
-                path: 'Veiculos/:id/Imprimir',
-                loadComponent: () => import('./pages/veiculos/imprimir-veiculo/imprimir-veiculo.component').then((c) => c.ImprimirVeiculoComponent)
-            },
-            {
                 path: 'Veiculos',
                 loadComponent: () => import('./pages/veiculos/veiculos.component').then((c) => c.VeiculosComponent)
             },
             {
                 path: 'Veiculos/Tipos',
                 loadComponent: () => import('./pages/veiculos-tipos/veiculos-tipos.component').then((c) => c.VeiculosTiposComponent)
+            },
+            {
+                path: 'Veiculos/:id',
+                loadComponent: () => import('./pages/veiculos/veiculo/veiculo.component').then((c) => c.VeiculoComponent)
+            },
+            {
+                path: 'Veiculos/:id/Imprimir',
+                loadComponent: () => import('./pages/veiculos/imprimir-veiculo/imprimir-veiculo.component').then((c) => c.ImprimirVeiculoComponent)
             },
             {
                 path: '',

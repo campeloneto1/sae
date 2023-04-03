@@ -104,7 +104,7 @@ export class VeiculoComponent implements OnInit, OnDestroy {
   }
 
   urlarq(data:VeiculoArquivo):any{
-    return this.sanitizer.bypassSecurityTrustResourceUrl(`${this.IMG}/${data.nome}`);
+    return this.sanitizer.bypassSecurityTrustResourceUrl(`${this.IMG}/${data.arquivo}`);
   }
 
   deletePessoa(data: number) {

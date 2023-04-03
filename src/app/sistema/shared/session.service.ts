@@ -1,8 +1,12 @@
+import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
+import { environment } from "src/environments/environments";
 import { Perfil } from "../pages/perfis/perfis";
 import { Usuario } from "../pages/usuarios/usuarios";
 import { Session } from "./session";
+
+const API = environment.url;
 
 @Injectable({providedIn: 'root'})
 
@@ -24,7 +28,8 @@ export class SessionService{
         'Usuarios',
       ]   
 
-      constructor(private router: Router){
+      constructor(private router: Router,
+        private http: HttpClient){
         try {
             if(localStorage.getItem('sistema') == 'sae'){
               //console.log(sessionStorage.getItem('usuario'));
@@ -68,10 +73,10 @@ export class SessionService{
         localStorage.setItem('token', btoa(data.token) + string);
         localStorage.setItem('user', btoa(JSON.stringify(data.user)) + string2);
     }
-
+    
     check(){
         if(localStorage.getItem('token') && localStorage.getItem('sistema') == 'sae'){
-            return true;
+           return true;   
         }else{
             return false;
         }
