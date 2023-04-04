@@ -39,7 +39,8 @@ export class FormularioArquivosTiposComponent{
             'video': [''],        
             'audio': [''],
             'texto': [''],
-            'pdf': [''],          
+            'pdf': [''],   
+            'link': [''],          
         });
     
     }

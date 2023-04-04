@@ -1,0 +1,166 @@
+<form  [formGroup]="form" (ngSubmit)="cadastrar()" >
+    <div class="row">
+        <app-input-text class="col-sm-4" formControlName="nome" label="Nome" id="nome" tipo="text" />        
+    </div>
+
+    <!--inicio permissos analises-->
+    <div class="row">
+        <h3>Análises</h3>
+
+        <div class="col-sm-2">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" checked="" id="analises" formControlName="analises">
+                <label class="form-check-label" for="analises">Consulta</label>
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" checked="" id="analises_cad" formControlName="analises_cad">
+                <label class="form-check-label" for="analises_cad">Cadastro</label>
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" checked="" id="analises_edt" formControlName="analises_edt">
+                <label class="form-check-label" for="analises_edt">Edição</label>
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" checked="" id="analises_del" formControlName="analises_del">
+                <label class="form-check-label" for="analises_del">Exclusão</label>
+            </div>
+        </div>
+    </div>
+    <!--fim permissos analises-->
+
+    <!--inicio permissos organizacoes-->
+    <div class="row">
+        <h3>Organizações</h3>
+
+        <div class="col-sm-2">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" checked="" id="organizacoes" formControlName="organizacoes">
+                <label class="form-check-label" for="organizacoes">Consulta</label>
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" checked="" id="organizacoes_cad" formControlName="organizacoes_cad">
+                <label class="form-check-label" for="organizacoes_cad">Cadastro</label>
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" checked="" id="organizacoes_edt" formControlName="organizacoes_edt">
+                <label class="form-check-label" for="organizacoes_edt">Edição</label>
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" checked="" id="organizacoes_del" formControlName="organizacoes_del">
+                <label class="form-check-label" for="organizacoes_del">Exclusão</label>
+            </div>
+        </div>
+    </div>
+    <!--fim permissos organizacoes-->
+
+    <!--inicio permissos pessoas-->
+    <div class="row">
+        <h3>Pessoas</h3>
+
+        <div class="col-sm-2">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" checked="" id="pessoas" formControlName="pessoas">
+                <label class="form-check-label" for="pessoas">Consulta</label>
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" checked="" id="pessoas_cad" formControlName="pessoas_cad">
+                <label class="form-check-label" for="pessoas_cad">Cadastro</label>
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" checked="" id="pessoas_edt" formControlName="pessoas_edt">
+                <label class="form-check-label" for="pessoas_edt">Edição</label>
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" checked="" id="pessoas_del" formControlName="pessoas_del">
+                <label class="form-check-label" for="pessoas_del">Exclusão</label>
+            </div>
+        </div>
+    </div>
+    <!--fim permissos pessoas-->
+
+    <!--inicio permissos veiculos-->
+    <div class="row">
+        <h3>Veículo</h3>
+
+        <div class="col-sm-2">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" checked="" id="veiculos" formControlName="veiculos">
+                <label class="form-check-label" for="veiculos">Consulta</label>
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" checked="" id="veiculos_cad" formControlName="veiculos_cad">
+                <label class="form-check-label" for="veiculos_cad">Cadastro</label>
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" checked="" id="veiculos_edt" formControlName="veiculos_edt">
+                <label class="form-check-label" for="veiculos_edt">Edição</label>
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" checked="" id="veiculos_del" formControlName="veiculos_del">
+                <label class="form-check-label" for="veiculos_del">Exclusão</label>
+            </div>
+        </div>
+    </div>
+    <!--fim permissos veiculos-->
+
+    <!--inicio permissos users-->
+    <div class="row">
+        <h3>Usuários</h3>
+
+        <div class="col-sm-2">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" checked="" id="users" formControlName="users">
+                <label class="form-check-label" for="users">Consulta</label>
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" checked="" id="users_cad" formControlName="users_cad">
+                <label class="form-check-label" for="users_cad">Cadastro</label>
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" checked="" id="users_edt" formControlName="users_edt">
+                <label class="form-check-label" for="users_edt">Edição</label>
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" checked="" id="users_del" formControlName="users_del">
+                <label class="form-check-label" for="users_del">Exclusão</label>
+            </div>
+        </div>
+    </div>
+    <!--fim permissos users-->
+
+    <div class="d-flex justify-content-end">
+      
+        <a (click)="form.reset()" data-bs-dismiss="modal" class="btn btn-link text-danger">Cancelar</a>
+        <button [disabled]="form.invalid" data-bs-dismiss="modal" type="submit" class="btn btn-primary">Cadastrar</button>
+    </div>
+</form>

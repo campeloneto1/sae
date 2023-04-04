@@ -202,7 +202,7 @@ export class FormularioPessoasComponent{
         this.form.patchValue(data);
         this.form.get('estado_id')?.patchValue(data.cidade?.estado_id);
         this.form.get('pais_id')?.patchValue(data.cidade?.estado?.pais_id);
-        this.getEstados();
-        this.getCidades();
+        this.estados$ = this.sharedService.getEstados(this.form.value.pais_id);
+        this.cidades$ = this.sharedService.getCidades(this.form.value.estado_id);
     }
 }

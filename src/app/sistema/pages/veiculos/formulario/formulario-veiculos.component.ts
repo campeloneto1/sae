@@ -10,6 +10,8 @@ import { Marcas } from "../../marcas/marcas";
 import { MarcasService } from "../../marcas/marcas.service";
 import { Modelos } from "../../modelos/modelos";
 import { ModelosService } from "../../modelos/modelos.service";
+import { Organizacoes } from "../../organizacoes/organizacoes";
+import { OrganizacoesService } from "../../organizacoes/organizacoes.service";
 import { Pessoas } from "../../pessoas/pessoas";
 import { PessoasService } from "../../pessoas/pessoas.service";
 import { VeiculosTiposService } from "../../veiculos-tipos/veiculos-tipos.service";
@@ -35,6 +37,7 @@ export class FormularioVeiculosComponent{
     protected modelos$!: Observable<Modelos>;
     protected cores$!: Observable<Cores>;
     protected pessoas$!: Observable<Pessoas>;
+    protected organizacoes$!: Observable<Organizacoes>;
 
     protected subscription: any;
     protected subscription2: any;
@@ -49,7 +52,8 @@ export class FormularioVeiculosComponent{
         private marcasService: MarcasService,
         private veiculosService: VeiculosService,
         private veiculosTiposService: VeiculosTiposService,
-        private pessoasService: PessoasService
+        private pessoasService: PessoasService,
+        private organizacoesService: OrganizacoesService
     ){}
    
     ngOnInit(): void {
@@ -81,6 +85,7 @@ export class FormularioVeiculosComponent{
                 Validators.required,
             ])],
             'pessoa_id': [''],
+            'organizacao_id': [''],
             'observacao': [''],
             'key': [''],
            
@@ -88,7 +93,8 @@ export class FormularioVeiculosComponent{
 
         this.tipos$ = this.veiculosTiposService.index();
         this.cores$ = this.coresService.index();
-        this.marcas$ = this.marcasService.index();        
+        this.marcas$ = this.marcasService.index();      
+        this.organizacoes$ = this.organizacoesService.index();        
 
         this.subscription2 = this.pessoasService.index().subscribe({
             next: (data) => {

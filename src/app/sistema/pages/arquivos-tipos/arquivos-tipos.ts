@@ -5,7 +5,8 @@ export interface ArquivoTipo{
     texto: boolean,
     video: boolean,
     foto: boolean,
-    pdf: boolean
+    pdf: boolean,
+    link: boolean
 }
 
 export type ArquivosTipos = Array<ArquivoTipo>;

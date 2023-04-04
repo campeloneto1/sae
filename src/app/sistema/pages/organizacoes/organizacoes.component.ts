@@ -4,8 +4,10 @@ import { RouterModule } from "@angular/router";
 import { DataTableDirective } from "angular-datatables";
 import { Observable, Subject, tap } from "rxjs";
 import { TituloComponent } from "../../components/titulo/titulo.component";
+import { SessionService } from "../../shared/session.service";
 import { SharedModule } from "../../shared/shared.module";
 import { SharedService } from "../../shared/shared.service";
+import { Usuario } from "../usuarios/usuarios";
 import { FormularioVeiculosComponent } from "../veiculos/formulario/formulario-veiculos.component";
 import { FormularioOrganizacoesPessoasComponent } from "./formulario-organizacoes-pessoas/formulario-organizacoes-pessoas.component";
 import { OrganizacoesPessoasService } from "./formulario-organizacoes-pessoas/organizacoes-pessoas.service";
@@ -35,6 +37,8 @@ import { OrganizacoesService } from "./organizacoes.service";
 export class OrganizacoesComponent implements OnInit, OnDestroy{
     protected data$!: Observable<Organizacoes>;
 
+    protected user!: Usuario;
+
     protected excluir!: Organizacao;
 
     protected informacoes!: Organizacao;
@@ -58,6 +62,7 @@ export class OrganizacoesComponent implements OnInit, OnDestroy{
     protected subscription3: any;
 
     constructor(private sharedService: SharedService,
+        private sessionService: SessionService,
         private organizacoesService: OrganizacoesService,
         private organizacoesPessoasService: OrganizacoesPessoasService,
         private organizacoesVeiculosService: OrganizacoesVeiculosService,
@@ -67,6 +72,7 @@ export class OrganizacoesComponent implements OnInit, OnDestroy{
    
 
     ngOnInit(): void {
+        this.user = this.sessionService.retornaUser();
         this.dtOptions = this.sharedService.getDtOptions();
         this.dtOptions = { ...this.dtOptions, order: [2, 'asc'] };        
 

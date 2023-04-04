@@ -1,16 +1,12 @@
 <div class="content-wrapper">
-    <app-titulo titulo="Perfis" [primario]="false" />
+    <app-titulo titulo="Logs" [primario]="false" />
   
     <!--INICIO SECTION content-->
     <section class="content">
 
       <!--INICIO CARD-->
       <div class="card">
-        <div class="card-header border-0">
-          <div class="d-flex justify-content-between">
-            <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalcad" title="Cadastrar"><i class="fa fa-plus"></i></button>
-          </div>
-        </div>
+        
         <div class="card-body">
         
           <!--INICIO TABLE-->
@@ -18,7 +14,10 @@
             <thead>
               <tr>
                 <th>#</th>
-                <th>Nome</th>
+                <th>Usuário</th>
+                <th>Mensagem</th>
+                <th>Tabela</th>
+                <th>ID</th>
                 <th>Opções</th>
               </tr>
             </thead>
@@ -26,20 +25,12 @@
             <tbody *ngIf="data$ | async as data; else loading" >
               <tr *ngFor="let row of data" class="optionshover">
                 <td>{{row.id}}</td>
-                <td>{{row.nome}}</td>               
+                <td>{{row.user.nome}}</td>      
+                <td>{{row.mensagem}}</td>               
+                <td>{{row.table}}</td>      
+                <td>{{row.fk}}</td>      
                 <td>                 
-                  <a             
-                      class="options ml-2"
-                      (click)="edit(row)"
-                      data-bs-toggle="modal"
-                      data-bs-target="#modalcad"
-                      title="Editar"
-                    >
-                      <i
-                        class="fas fa-edit text-primary point"
-                        aria-hidden="true"
-                      ></i>
-                    </a>
+                  
                     <a
                       class="options ml-2"
                       (click)="delete(row)"
@@ -74,25 +65,7 @@
         
         </div>
       </div>
-      <!--FIM CARD-->
-      
-      <!-- INICIO MODAL CADASTRO-->
-      <div class="modal fade" id="modalcad" style="display: none;" aria-hidden="true">
-        <div class="modal-dialog modal-xl">
-          <div class="modal-content">
-            <div class="modal-header border-0">
-              <h4 class="modal-title">Cadastrar</h4>
-              <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">×</span>
-              </button>
-            </div>
-            <div class="modal-body">
-                <formulario-perfis (refresh)="refresh()" />
-            </div>           
-          </div>        
-        </div>        
-      </div>
-      <!--FIM MODAL CADASTRO-->
+      <!--FIM CARD-->         
 
       <!-- INICIO MODAL EXCLUIR-->
       <div class="modal fade" id="modaldel" style="display: none;" aria-hidden="true">
@@ -105,7 +78,7 @@
               </button>
             </div>
             <div class="modal-body" *ngIf="excluir">
-              <p>Tem certeza que deseja excluir: <strong>{{excluir.nome}}</strong></p>
+              <p>Tem certeza que deseja excluir o log?</p>
             </div>
             <div class="modal-footer ">
               <a type="button" class="btn btn-link " data-bs-dismiss="modal">Fechar</a>

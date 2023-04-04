@@ -27,20 +27,18 @@ export class InputTextComponent implements ControlValueAccessor{
 
   protected inputvalor!: any;
   protected control!: AbstractControl;
+  protected touched = false;
+  protected disabled = true;
 
   onChange = (inputvalor:any) => {};
 
   onTouched = () => {};
 
-  touched = false;
-
-  disabled = true;
-
   change() {
     this.markAsTouched();
     if (!this.disabled) {     
       //console.log(this.inputvalor)
-      this.onChange(this.inputvalor);
+      this.onChange(this.inputvalor);      
     }
   }
 

@@ -8,7 +8,8 @@ export interface Usuario{
     telefone: string,
     //telefone2: string,
     perfil_id: number,
-    perfil: Perfil
+    perfil: Perfil,
+    key: string
 }
 
 export type Usuarios = Array<Usuario>;

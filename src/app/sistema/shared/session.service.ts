@@ -13,20 +13,54 @@ const API = environment.url;
 export class SessionService{
     private token!: string;
     private user!: Usuario;
-    private pagseguro: boolean = false;
 
-    pathadministrador = [
+      pathadministrador = [
+        'Analises/Categorias',
         'Cidades',
+        'Cores',
         'Estados',
+        'Logs',
+        'Marcas',
+        'Modelos',
         'Paises',
         'Perfis',      
         'Sexos',
-        'Logs',
+        'Arquivos/Tipos', 
+        'Analises/Tipos', 
+        'Organizacoes/Tipos', 
+        'Veiculos/Tipos', 
+        
       ];
       
-      pathgestor = [
+      pathgestor = [        
+        'Influencias',
+        'RedesSociais',
         'Usuarios',
-      ]   
+      ];  
+      
+      pathanalises = [        
+        'Analises',
+        'Analises/:id',
+        'Analises/:id/Imprimir',
+      ]; 
+
+      pathorganizacoes = [        
+        'Organizacoes',
+        'Organizacoes/:id',
+        'Organizacoes/:id/Imprimir',
+      ]; 
+
+      pathpessoas = [        
+        'Pessoas',
+        'Pessoas/:id',
+        'Pessoas/:id/Imprimir',
+      ];
+      
+      pathveiculos = [        
+        'Veiculos',
+        'Veiculos/:id',
+        'Veiculos/:id/Imprimir',
+      ];
 
       constructor(private router: Router,
         private http: HttpClient){
@@ -110,6 +144,24 @@ export class SessionService{
       if(this.pathgestor.includes(data.routeConfig.path) && !this.user.perfil?.gestor){
         return false;
       }
+
+      if(this.pathanalises.includes(data.routeConfig.path) && !this.user.perfil?.analises){
+        return false;
+      }
+
+      if(this.pathorganizacoes.includes(data.routeConfig.path) && !this.user.perfil?.organizacoes){
+        return false;
+      }
+
+      if(this.pathpessoas.includes(data.routeConfig.path) && !this.user.perfil?.pessoas){
+        return false;
+      }
+
+      if(this.pathveiculos.includes(data.routeConfig.path) && !this.user.perfil?.veiculos){
+        return false;
+      }
+      
+      
       return true;
     }
 

@@ -18,7 +18,7 @@ import { LoginService } from "./login.service";
 
 export class LoginComponent implements OnInit{
     
-    form!: FormGroup;
+    protected form!: FormGroup;
 
     constructor(
         private sharedService: SharedService,
@@ -56,13 +56,13 @@ export class LoginComponent implements OnInit{
         }
     
         this.loginService.entrar(this.form.value).subscribe({
-            next: (data:any) => {
-                console.log(data);
+            next: (data) => {
+                //console.log(data);
                 this.sessionService.setSession(data as Session);
                 this.router.navigate([''])
             },
-            error: (error:any) => {
-                console.log(error)
+            error: (error) => {
+                //console.log(error)
                 this.sharedService.toast('Erro', error.error.erro, 2);
             }
         });

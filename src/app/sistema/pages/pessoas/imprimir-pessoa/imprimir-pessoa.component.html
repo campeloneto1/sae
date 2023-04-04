@@ -28,8 +28,8 @@
         <b>“Raça de Fortes, Povo de Bravos”</b>
       </p>-->
       </div>
-      <div class="col-sm-6 text-right">
-        <!--<b>Usuário:</b> {{ user.nome }} -->
+      <div class="col-sm-12 text-right">
+        {{user.key}}
         <b>Data:</b> {{ date | date : "dd/MM/yyyy HH:mm" }}
       </div>
     </div>
@@ -54,6 +54,7 @@
           <div class="page">PAGE 2</div>-->
           <!--INICIO PAGE 1-->
           <div class="page">
+            <p class="marcadagua">Documento Sigiloso</p>
             <div class="noprint text-center">
               <!--<img src="assets/cabecalho.png" class="cabecalho" />-->
               <div class="text-center" style="position: relative; margin-top: 20px;">
@@ -136,18 +137,19 @@
             </div>
             <!--DIV 5-->
 
-            <div style="margin-top: 40px" [innerHTML]="pessoa.observacao"></div>
+            <div style="margin-top: 20px" [innerHTML]="pessoa.observacao"></div>
           </div>
           <!--FIM PAGE 1-->
           <!--INICIO PAGE 2 ANALISES-->
           <div class="page" *ngIf="(pessoa?.analises)!.length > 0">
+            <p class="marcadagua">Documento Sigiloso</p>
             <div class=" ">
               <h4 style="margin-top: 30px">Análises</h4>
             </div>
             <!--DIV 1 -->
             <div style="margin-top: 20px" class="row">
               <!--INICIO TABLE-->
-              <table class="table table-head-fixed text-nowrap mt-2">
+              <table class="table table-head-fixed  mt-2">
                 <thead>
                   <tr>
                     <th>#</th>
@@ -180,13 +182,14 @@
           <!--FIM PAGE 2 ANALISES-->
           <!--INICIO PAGE 3 ORGANIZACOES-->
           <div class="page" *ngIf="(pessoa?.organizacoes)!.length > 0">
+            <p class="marcadagua">Documento Sigiloso</p>
             <div class=" ">
               <h4 style="margin-top: 30px">Organizações</h4>
             </div>
             <!--DIV 1 -->
             <div style="margin-top: 20px" class="row">
               <!--INICIO TABLE-->
-              <table class="table table-head-fixed text-nowrap mt-2">
+              <table class="table table-head-fixed  mt-2">
                 <thead>
                   <tr>
                     <th>#</th>
@@ -220,13 +223,14 @@
           <!--FIM PAGE 3 ORGANIZACOES-->
           <!--INICIO PAGE 4 VEICULOS-->
           <div class="page" *ngIf="(pessoa?.veiculos)!.length > 0">
+            <p class="marcadagua">Documento Sigiloso</p>
             <div class=" ">
               <h4 style="margin-top: 30px">Veículos</h4>
             </div>
             <!--DIV 1 -->
             <div style="margin-top: 20px" class="row">
               <!--INICIO TABLE-->
-              <table class="table table-head-fixed text-nowrap">
+              <table class="table table-head-fixed ">
                 <thead>
                   <tr>
                     <th>#</th>
@@ -235,7 +239,7 @@
                     <th>Placa</th>
                     <th>Chassi</th>
                     <th>Renavam</th>
-                    <th>Pessoa / Organização</th>
+                    <th>Proprietário</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -249,7 +253,7 @@
                     <td>{{ row.chassi }}</td>
                     <td>{{ row.renavam }}</td>
                     <td>
-                      <span *ngIf="row.pessoa">{{ row.pessoa.nome }}</span>
+                      <span *ngIf="row.pessoa">{{ row.pessoa.nome }} (CPF: {{ row.pessoa.cpf | mask: '000.000.000-00' }})</span>
                       <span *ngIf="row.organizacao">{{
                         row.organizacao.nome
                       }}</span>
@@ -264,13 +268,14 @@
           <!--FIM PAGE 4 VEICULOS-->
           <!--INICIO PAGE 5 ARQUIVOS-->
           <div class="page" *ngIf="(pessoa?.arquivos)!.length > 0">
+            <p class="marcadagua">Documento Sigiloso</p>
             <div class=" ">
               <h4 style="margin-top: 30px">Arquivos</h4>
             </div>
             <!--DIV 1 -->
             <div style="margin-top: 20px" class="row">
               <!--INICIO TABLE-->
-              <table class="table table-head-fixed text-nowrap mt-2">
+              <table class="table table-head-fixed  mt-2">
                 <thead>
                   <tr>
                     <th>#</th>
@@ -290,6 +295,7 @@
                       >
                         <img width="100px" [src]="urlarq(row)" />
                       </a>
+                      <span *ngIf="row.arquivo_tipo.link">{{ row.arquivo }}</span>
                       <!--<a (click)="showArquivo(row)" data-bs-toggle="modal" data-bs-target="#modalshowarquivos">{{row.nome}}</a>-->
                     </td>
                   </tr>

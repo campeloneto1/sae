@@ -73,7 +73,7 @@ export class AnalisesComponent implements OnInit, OnDestroy{
     ngOnInit(): void {
         this.user = this.sessionService.retornaUser();
         this.dtOptions = this.sharedService.getDtOptions();
-        this.dtOptions = { ...this.dtOptions, order: [2, 'asc'] };        
+        this.dtOptions = { ...this.dtOptions, order: [0, 'desc'] };        
 
         this.data$ = this.analisesService.index().pipe(
             tap(() => {

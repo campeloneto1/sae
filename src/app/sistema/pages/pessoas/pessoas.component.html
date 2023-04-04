@@ -8,7 +8,7 @@
       <div class="card">
         <div class="card-header border-0">
           <div class="d-flex justify-content-between">
-            <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalcad" title="Cadastrar"><i class="fa fa-plus"></i></button>
+            <button *ngIf="user.perfil.pessoas_cad" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalcad" title="Cadastrar"><i class="fa fa-plus"></i></button>
           </div>
         </div>
         <div class="card-body">
@@ -34,12 +34,12 @@
                 <td>{{row.alcunha}}</td> 
                 <td>{{row.cpf | mask: '000.000.000-00'}}</td>   
                 <td>
-                  <i  class="fas fa-portrait point" [ngClass]="row.foto ? 'text-success' : 'text-danger'" (click)="showFoto(row)" data-bs-toggle="modal" data-bs-target="#modalfoto"></i>
+                  <i *ngIf="user.perfil.pessoas_edt" class="fas fa-portrait point" [ngClass]="row.foto ? 'text-success' : 'text-danger'" (click)="showFoto(row)" data-bs-toggle="modal" data-bs-target="#modalfoto"></i>
                 </td>
                 <td>
                   <i
                     (click)="showRedesSociais(row)"
-                    
+                    *ngIf="user.perfil.pessoas_edt"
                     data-bs-toggle="modal"
                     data-bs-target="#modalredes"
                     title="Redes Sociais"
@@ -48,7 +48,7 @@
                   ></i>
                   <i
                     (click)="showAnalises(row)"
-                   
+                    *ngIf="user.perfil.pessoas_edt"
                     data-bs-toggle="modal"
                     data-bs-target="#modalanalises"
                     title="Análises"
@@ -57,7 +57,7 @@
                   ></i>
                   <i
                     (click)="showOrganizacoes(row)"
-                   
+                    *ngIf="user.perfil.pessoas_edt"
                     data-bs-toggle="modal"
                     data-bs-target="#modalorganizacoes"
                     title="Organizações"
@@ -66,7 +66,7 @@
                   ></i>
                   <i
                     (click)="showVeiculos(row)"
-                   
+                    *ngIf="user.perfil.pessoas_edt"
                     data-bs-toggle="modal"
                     data-bs-target="#modalveiculos"
                     title="Veículos"
@@ -75,7 +75,8 @@
                   ></i>
                 </td>           
                 <td>                 
-                  <a             
+                  <a            
+                     *ngIf="user.perfil.pessoas_edt" 
                       class="options ml-2"
                       (click)="edit(row)"
                       data-bs-toggle="modal"
@@ -88,6 +89,7 @@
                       ></i>
                     </a>
                     <a
+                    *ngIf="user.perfil.pessoas_del"
                       class="options ml-2"
                       (click)="delete(row)"
                       data-bs-toggle="modal"
@@ -215,7 +217,7 @@
                 <formulario-pessoas-redes-sociais [pessoa_id]="informacoes.id" (refresh)="refresh2()" />
 
                 <!--INICIO TABLE-->
-                <table  class="table table-hover table-head-fixed text-nowrap ">
+                <table  class="table table-hover table-head-fixed  ">
                   <thead>
                     <tr>
                       <th>#</th>
@@ -267,7 +269,7 @@
                 <formulario-pessoas-analises [pessoa_id]="informacoes.id" (refresh)="refresh2()" />
 
                 <!--INICIO TABLE-->
-                <table  class="table table-hover table-head-fixed text-nowrap mt-2">
+                <table  class="table table-hover table-head-fixed  mt-2">
                   <thead>
                     <tr>
                       <th>#</th>
@@ -285,7 +287,7 @@
                       <td>{{row.pivot.id}}</td>
                       <td>{{row.analise_categoria.nome}}</td> 
                       <td>{{row.analise_tipo?.nome}}</td> 
-                      <td>{{row.nome}}</td> 
+                      <td><a data-bs-dismiss="modal" [routerLink]="['/Analises', row.id]">{{row.nome}}</a></td> 
                       <td>{{row.data | date: 'dd/MM/yyyy'}}</td> 
                       <td>{{row.hora}}</td> 
                       <td>
@@ -329,7 +331,7 @@
                 <formulario-pessoas-organizacoes  [pessoa_id]="informacoes.id" (refresh)="refresh2()" />
 
                 <!--INICIO TABLE-->
-                <table  class="table table-hover table-head-fixed text-nowrap mt-2">
+                <table  class="table table-hover table-head-fixed  mt-2">
                   <thead>
                     <tr>
                       <th>#</th>
@@ -345,7 +347,7 @@
                     <tr *ngFor="let row of informacoes.organizacoes" class="optionshover">
                       <td>{{row.pivot.id}}</td>
                       <td>{{row.organizacao_tipo.nome}}</td> 
-                      <td>{{row.nome}}</td> 
+                      <td><a data-bs-dismiss="modal" [routerLink]="['/Organizacoes', row.id]">{{row.nome}}</a></td> 
                       <td>{{row?.telefone1}} </td> 
                       <td>{{row?.email}}</td> 
                       <td>
@@ -392,7 +394,7 @@
                 <formulario-pessoas-veiculos *ngIf="!cadveiculo" [pessoa_id]="informacoes.id" (refresh)="refresh2()" />
 
                 <!--INICIO TABLE-->
-                <table  class="table table-hover table-head-fixed text-nowrap mt-2">
+                <table  class="table table-hover table-head-fixed  mt-2">
                   <thead>
                     <tr>
                       <th>#</th>
@@ -401,7 +403,7 @@
                       <th>Placa</th>    
                       <th>Chassi</th>   
                       <th>Renavam</th>   
-                      <th>Pessoa / Organização</th>                      
+                      <th>Proprietário</th>                      
                       <th>Opções</th>
                     </tr>
                   </thead>
@@ -410,12 +412,12 @@
                       <td>{{row.pivot.id}}</td>
                       <td>{{row.veiculo_tipo.nome}}</td> 
                       <td>{{row.modelo?.marca?.nome}} - {{row.modelo?.nome}}</td> 
-                      <td>{{row.placa}}</td> 
+                      <td><a data-bs-dismiss="modal" [routerLink]="['/Veiculos', row.id]">{{row.placa}}</a></td> 
                       <td>{{row.chassi}}</td> 
                       <td>{{row.renavam}}</td> 
                       <td>
-                        <span *ngIf="row.pessoa">{{row.pessoa.nome}}</span>
-                        <span *ngIf="row.organizacao">{{row.organizacao.nome}}</span>
+                        <span *ngIf="row.pessoa"><a [routerLink]="['/Pessoas', row.pessoa.id]">{{row.pessoa.nome}}</a></span>
+                          <span *ngIf="row.organizacao"><a [routerLink]="['/Organizacoes', row.organizacao.id]">{{row.organizacao.nome}}</a></span>
                       </td> 
                       <td>                                        
                           <a

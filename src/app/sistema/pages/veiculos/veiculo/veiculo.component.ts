@@ -18,6 +18,8 @@ import { PessoasVeiculosService } from '../../pessoas/formulario-pessoas-veiculo
 import { FormularioVeiculosArquivosComponent } from '../formulario-veiculos-arquivos/formulario-veiculos-arquivos.component';
 import { VeiculoArquivo } from '../formulario-veiculos-arquivos/veiculos-arquivos';
 import { VeiculosArquivosService } from '../formulario-veiculos-arquivos/veiculos-arquivos.service';
+import { SessionService } from 'src/app/sistema/shared/session.service';
+import { Usuario } from '../../usuarios/usuarios';
 
 
 @Component({
@@ -41,7 +43,7 @@ export class VeiculoComponent implements OnInit, OnDestroy {
   protected IMG = environment.image;
   protected id!: number;
   protected veiculo$!: Observable<Veiculo>;
-
+  protected user!: Usuario;
   protected arquivo!: VeiculoArquivo;
 
   protected subscription: any;
@@ -54,6 +56,7 @@ export class VeiculoComponent implements OnInit, OnDestroy {
   constructor(
     private activatedRoute: ActivatedRoute,
     private sharedService: SharedService,
+    private sessionService: SessionService,
     private veiculosService: VeiculosService,
     private pessoasVeiculosService: PessoasVeiculosService,
     private analisesVeiculosService: AnalisesVeiculosService,
@@ -63,6 +66,7 @@ export class VeiculoComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.user = this.sessionService.retornaUser();
     this.id = this.activatedRoute.snapshot.params['id'];
     this.veiculo$ = this.veiculosService.show(this.id);
   }

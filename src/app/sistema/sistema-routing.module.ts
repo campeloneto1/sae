@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
+import { AlowedGuard } from "../guards/alowed.guard";
 import { SistemaComponent } from "./sistema.component";
 
 const routes: Routes = [
@@ -9,124 +10,159 @@ const routes: Routes = [
         children: [
             {
                 path: 'Inicio',
-                loadComponent: () => import('./pages/inicio/inicio.component').then((c) => c.InicioComponent)
+                loadComponent: () => import('./pages/inicio/inicio.component').then((c) => c.InicioComponent),
+                canActivate: [AlowedGuard]
             },
             {
                 path: 'Analises',
-                loadComponent: () => import('./pages/analises/analises.component').then((c) => c.AnalisesComponent)
+                loadComponent: () => import('./pages/analises/analises.component').then((c) => c.AnalisesComponent),
+                canActivate: [AlowedGuard]
             },
             
             {
                 path: 'Analises/Tipos',
-                loadComponent: () => import('./pages/analises-tipos/analises-tipos.component').then((c) => c.AnalisesTiposComponent)
+                loadComponent: () => import('./pages/analises-tipos/analises-tipos.component').then((c) => c.AnalisesTiposComponent),
+                canActivate: [AlowedGuard]
             },
             {
                 path: 'Analises/Categorias',
-                loadComponent: () => import('./pages/analises-categorias/analises-categorias.component').then((c) => c.AnalisesCategoriasComponent)
+                loadComponent: () => import('./pages/analises-categorias/analises-categorias.component').then((c) => c.AnalisesCategoriasComponent),
+                canActivate: [AlowedGuard]
             },
             {
                 path: 'Analises/:id',
-                loadComponent: () => import('./pages/analises/analise/analise.component').then((c) => c.AnaliseComponent)
+                loadComponent: () => import('./pages/analises/analise/analise.component').then((c) => c.AnaliseComponent),
+                canActivate: [AlowedGuard]
             },
             {
                 path: 'Analises/:id/Imprimir',
-                loadComponent: () => import('./pages/analises/imprimir-analise/imprimir-analise.component').then((c) => c.ImprimirAnaliseComponent)
+                loadComponent: () => import('./pages/analises/imprimir-analise/imprimir-analise.component').then((c) => c.ImprimirAnaliseComponent),
+                canActivate: [AlowedGuard]
             },
             {
                 path: 'Arquivos/Tipos',
-                loadComponent: () => import('./pages/arquivos-tipos/arquivos-tipos.component').then((c) => c.ArquivosTiposComponent)
+                loadComponent: () => import('./pages/arquivos-tipos/arquivos-tipos.component').then((c) => c.ArquivosTiposComponent),
+                canActivate: [AlowedGuard]
             },
             {
                 path: 'Cidades',
-                loadComponent: () => import('./pages/cidades/cidades.component').then((c) => c.CidadesComponent)
+                loadComponent: () => import('./pages/cidades/cidades.component').then((c) => c.CidadesComponent),
+                canActivate: [AlowedGuard]
             },
             {
                 path: 'Cores',
-                loadComponent: () => import('./pages/cores/cores.component').then((c) => c.CoresComponent)
+                loadComponent: () => import('./pages/cores/cores.component').then((c) => c.CoresComponent),
+                canActivate: [AlowedGuard]
             },
             {
                 path: 'Estados',
-                loadComponent: () => import('./pages/estados/estados.component').then((c) => c.EstadosComponent)
+                loadComponent: () => import('./pages/estados/estados.component').then((c) => c.EstadosComponent),
+                canActivate: [AlowedGuard]
             },
             {
                 path: 'Influencias',
-                loadComponent: () => import('./pages/influencias/influencias.component').then((c) => c.InfluenciasComponent)
+                loadComponent: () => import('./pages/influencias/influencias.component').then((c) => c.InfluenciasComponent),
+                canActivate: [AlowedGuard]
+            },
+            {
+                path: 'Logs',
+                loadComponent: () => import('./pages/logs/logs.component').then((c) => c.LogsComponent),
+                canActivate: [AlowedGuard]
             },
             {
                 path: 'Marcas',
-                loadComponent: () => import('./pages/marcas/marcas.component').then((c) => c.MarcasComponent)
+                loadComponent: () => import('./pages/marcas/marcas.component').then((c) => c.MarcasComponent),
+                canActivate: [AlowedGuard]
             },
             {
                 path: 'Modelos',
-                loadComponent: () => import('./pages/modelos/modelos.component').then((c) => c.ModelosComponent)
+                loadComponent: () => import('./pages/modelos/modelos.component').then((c) => c.ModelosComponent),
+                canActivate: [AlowedGuard]
             },
             {
                 path: 'Organizacoes',
-                loadComponent: () => import('./pages/organizacoes/organizacoes.component').then((c) => c.OrganizacoesComponent)
+                loadComponent: () => import('./pages/organizacoes/organizacoes.component').then((c) => c.OrganizacoesComponent),
+                canActivate: [AlowedGuard]
             },
             {
                 path: 'Organizacoes/Tipos',
-                loadComponent: () => import('./pages/organizacoes-tipos/organizacoes-tipos.component').then((c) => c.OrganizacoesTiposComponent)
+                loadComponent: () => import('./pages/organizacoes-tipos/organizacoes-tipos.component').then((c) => c.OrganizacoesTiposComponent),
+                canActivate: [AlowedGuard]
             },
             {
                 path: 'Organizacoes/:id',
-                loadComponent: () => import('./pages/organizacoes/organizacao/organizacao.component').then((c) => c.OrganizacaoComponent)
+                loadComponent: () => import('./pages/organizacoes/organizacao/organizacao.component').then((c) => c.OrganizacaoComponent),
+                canActivate: [AlowedGuard]
             },
             {
                 path: 'Organizacoes/:id/Imprimir',
-                loadComponent: () => import('./pages/organizacoes/imprimir-organizacao/imprimir-organizacao.component').then((c) => c.ImprimirOrganizacaoComponent)
+                loadComponent: () => import('./pages/organizacoes/imprimir-organizacao/imprimir-organizacao.component').then((c) => c.ImprimirOrganizacaoComponent),
+                canActivate: [AlowedGuard]
             },
             {
                 path: 'Paises',
-                loadComponent: () => import('./pages/paises/paises.component').then((c) => c.PaisesComponent)
+                loadComponent: () => import('./pages/paises/paises.component').then((c) => c.PaisesComponent),
+                canActivate: [AlowedGuard]
             },
             {
                 path: 'Pesquisar',
-                loadComponent: () => import('./pages/pesquisar/pesquisar.component').then((c) => c.PesquisarComponent)
+                loadComponent: () => import('./pages/pesquisar/pesquisar.component').then((c) => c.PesquisarComponent),
+                canActivate: [AlowedGuard]
             },
             {
                 path: 'Perfis',
-                loadComponent: () => import('./pages/perfis/perfis.component').then((c) => c.PerfisComponent)
+                loadComponent: () => import('./pages/perfis/perfis.component').then((c) => c.PerfisComponent),
+                canActivate: [AlowedGuard]
             },
             {
                 path: 'Pessoas/:id',
-                loadComponent: () => import('./pages/pessoas/pessoa/pessoa.component').then((c) => c.PessoaComponent)
+                loadComponent: () => import('./pages/pessoas/pessoa/pessoa.component').then((c) => c.PessoaComponent),
+                canActivate: [AlowedGuard]
             },
             {
                 path: 'Pessoas/:id/Imprimir',
-                loadComponent: () => import('./pages/pessoas/imprimir-pessoa/imprimir-pessoa.component').then((c) => c.ImprimirPessoaComponent)
+                loadComponent: () => import('./pages/pessoas/imprimir-pessoa/imprimir-pessoa.component').then((c) => c.ImprimirPessoaComponent),
+                canActivate: [AlowedGuard]
             },
             {
                 path: 'Pessoas',
-                loadComponent: () => import('./pages/pessoas/pessoas.component').then((c) => c.PessoasComponent)
+                loadComponent: () => import('./pages/pessoas/pessoas.component').then((c) => c.PessoasComponent),
+                canActivate: [AlowedGuard]
             },
             {
                 path: 'RedesSociais',
-                loadComponent: () => import('./pages/redes-sociais/redes-sociais.component').then((c) => c.RedesSociaisComponent)
+                loadComponent: () => import('./pages/redes-sociais/redes-sociais.component').then((c) => c.RedesSociaisComponent),
+                canActivate: [AlowedGuard]
             },
             {
                 path: 'Sexos',
-                loadComponent: () => import('./pages/sexos/sexos.component').then((c) => c.SexosComponent)
+                loadComponent: () => import('./pages/sexos/sexos.component').then((c) => c.SexosComponent),
+                canActivate: [AlowedGuard]
             },
             {
                 path: 'Usuarios',
-                loadComponent: () => import('./pages/usuarios/usuarios.component').then((c) => c.UsuariosComponent)
+                loadComponent: () => import('./pages/usuarios/usuarios.component').then((c) => c.UsuariosComponent),
+                canActivate: [AlowedGuard]
             },
             {
                 path: 'Veiculos',
-                loadComponent: () => import('./pages/veiculos/veiculos.component').then((c) => c.VeiculosComponent)
+                loadComponent: () => import('./pages/veiculos/veiculos.component').then((c) => c.VeiculosComponent),
+                canActivate: [AlowedGuard]
             },
             {
                 path: 'Veiculos/Tipos',
-                loadComponent: () => import('./pages/veiculos-tipos/veiculos-tipos.component').then((c) => c.VeiculosTiposComponent)
+                loadComponent: () => import('./pages/veiculos-tipos/veiculos-tipos.component').then((c) => c.VeiculosTiposComponent),
+                canActivate: [AlowedGuard]
             },
             {
                 path: 'Veiculos/:id',
-                loadComponent: () => import('./pages/veiculos/veiculo/veiculo.component').then((c) => c.VeiculoComponent)
+                loadComponent: () => import('./pages/veiculos/veiculo/veiculo.component').then((c) => c.VeiculoComponent),
+                canActivate: [AlowedGuard]
             },
             {
                 path: 'Veiculos/:id/Imprimir',
-                loadComponent: () => import('./pages/veiculos/imprimir-veiculo/imprimir-veiculo.component').then((c) => c.ImprimirVeiculoComponent)
+                loadComponent: () => import('./pages/veiculos/imprimir-veiculo/imprimir-veiculo.component').then((c) => c.ImprimirVeiculoComponent),
+                canActivate: [AlowedGuard]
             },
             {
                 path: '',

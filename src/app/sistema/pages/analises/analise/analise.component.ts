@@ -16,6 +16,8 @@ import { AnaliseArquivo } from '../formulario-analises-arquivos/analises-arquivo
 import { FormularioAnalisesArquivosComponent } from '../formulario-analises-arquivos/formulario-analises-arquivos.component';
 import { FormularioAnalisesPessoasComponent } from '../formulario-analises-pessoas/formulario-analises-pessoas.component';
 import { FormularioAnalisesVeiculosComponent } from '../formulario-analises-veiculos/formulario-analises-veiculos.component';
+import { Usuario } from '../../usuarios/usuarios';
+import { SessionService } from 'src/app/sistema/shared/session.service';
 
 
 
@@ -39,7 +41,7 @@ export class AnaliseComponent implements OnInit, OnDestroy {
   protected IMG = environment.image;
   protected id!: number;
   protected analise$!: Observable<Analise>;
-
+  protected user!: Usuario;
   protected arquivo!: AnaliseArquivo;
 
   protected subscription: any;
@@ -52,6 +54,7 @@ export class AnaliseComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private sharedService: SharedService,
     private analisesService: AnalisesService,
+    private sessionService: SessionService,
     private analisesPessoasService: AnalisesPessoasService,
     private analisesVeiculosService: AnalisesVeiculosService,
     private analisesArquivosService: AnalisesArquivosService,
@@ -59,6 +62,7 @@ export class AnaliseComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.user = this.sessionService.retornaUser();
     this.id = this.activatedRoute.snapshot.params['id'];
     this.analise$ = this.analisesService.show(this.id);
   }
@@ -74,7 +78,8 @@ export class AnaliseComponent implements OnInit, OnDestroy {
   }
   
   googlemaps(data:Analise){
-    return this.sanitizer.bypassSecurityTrustResourceUrl(`https://maps.google.com/maps?q=${data.rua?.replace(" ", "+")},${data.numero?.replace(" ", "+")},${data.bairro?.replace(" ", "+")},${data.cidade?.nome?.replace(" ", "+")}&z=15&ie=UTF8&output=embed`);
+    //return this.sanitizer.bypassSecurityTrustResourceUrl(`https://maps.google.com/maps?q=${data.rua?.replace(" ", "+")},${data.numero?.replace(" ", "+")},${data.bairro?.replace(" ", "+")},${data.cidade?.nome?.replace(" ", "+")}&z=15&ie=UTF8&output=embed`);
+    return this.sanitizer.bypassSecurityTrustResourceUrl(`https://maps.google.com/maps?q=${data.rua?.replace(" ", "+")},${data.numero?.replace(" ", "+")},${data.bairro?.replace(" ", "+")},${data.cidade?.nome?.replace(" ", "+")}&z=15&ie=UTF8`);
   }
 
   sudmitVeiculo(){

@@ -71,9 +71,15 @@ export class FormularioAnalisesComponent{
                 Validators.minLength(7),
                 Validators.maxLength(7)
             ])],
-            'pais_id': [''],
-            'estado_id': [''],
-            'cidade_id': [''],
+            'pais_id': ['', Validators.compose([
+                Validators.required
+            ])],
+            'estado_id': ['', Validators.compose([
+                Validators.required
+            ])],
+            'cidade_id': ['', Validators.compose([
+                Validators.required
+            ])],
             'rua': ['', Validators.compose([
                 Validators.minLength(5),
                 Validators.maxLength(150)
@@ -157,6 +163,7 @@ export class FormularioAnalisesComponent{
     }
 
     cadastrar(){
+        //console.log(this.form.value);
         if(this.form.valid){
             if(this.form.value.id){
                 this.subscription = this.analisesService.update(this.form.value).subscribe({
@@ -193,8 +200,8 @@ export class FormularioAnalisesComponent{
         this.form.patchValue(data);
         this.form.get('estado_id')?.patchValue(data.cidade?.estado_id);
         this.form.get('pais_id')?.patchValue(data.cidade?.estado?.pais_id);
-        this.getEstados();
-        this.getCidades();
+        this.estados$ = this.sharedService.getEstados(this.form.value.pais_id);
+        this.cidades$ = this.sharedService.getCidades(this.form.value.estado_id);
         this.getCategoria();
     }
 }

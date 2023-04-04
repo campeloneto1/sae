@@ -8,7 +8,7 @@
       <div class="card">
         <div class="card-header border-0">
           <div class="d-flex justify-content-between">
-            <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalcad" title="Cadastrar"><i class="fa fa-plus"></i></button>
+            <button *ngIf="user.perfil.analises_cad" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalcad" title="Cadastrar"><i class="fa fa-plus"></i></button>
           </div>
         </div>
         <div class="card-body">
@@ -24,6 +24,7 @@
                 <th>Data</th>
                 <th>Hora</th>
                 <th>Informações</th>
+                <th>Status</th>
                 <th>Opções</th>
               </tr>
             </thead>
@@ -32,7 +33,10 @@
               <tr *ngFor="let row of data" class="optionshover">
                 <td>{{row.id}}</td>
                 <td>{{row?.analise_categoria?.nome}}</td> 
-                <td><a [routerLink]="['/Analises', row.id]">{{row.nome}}</a></td> 
+                <td>
+                  <a *ngIf="(row.analise_categoria.restrito && user.perfil.restrito) || !row.analise_categoria.restrito" [routerLink]="['/Analises', row.id]">{{row.nome}}</a>
+                  <span *ngIf="row.analise_categoria.restrito && !user.perfil.restrito">{{row.nome}}</span>
+                </td> 
                 
                 <td>{{row?.analise_tipo?.nome}}</td> 
                 <td>{{row.data | date: 'dd/MM/yyyy'}}</td>               
@@ -40,7 +44,7 @@
                 <td>
                   <i
                     (click)="showInformacoes(row)"
-                  
+                    *ngIf="user.perfil.analises_edt"
                     data-bs-toggle="modal"
                     data-bs-target="#modalpessoas"
                     title="Pessoas"
@@ -49,7 +53,7 @@
                   ></i>
                   <i
                     (click)="showInformacoes(row)"
-                   
+                    *ngIf="user.perfil.analises_edt"
                     data-bs-toggle="modal"
                     data-bs-target="#modalveiculos"
                     title="Veículos"
@@ -57,9 +61,15 @@
                     aria-hidden="true"
                   ></i>
                 </td>
+                <td>
+                  <i title="Prévia em branco" *ngIf="row?.analise_categoria?.previa && !row?.previa" class="fa fa-square " style="color: darkgrey;" aria-hidden="true"></i>
+                  <i title="Prévia preenchida" *ngIf="row?.analise_categoria?.previa && row?.previa" class="fa fa-check-square " style="color: darkblue;" aria-hidden="true"></i>
+                  <i title="Síntese em branco" *ngIf="row?.analise_categoria?.sintese && !row?.sintese" class="fa fa-square ml-1" style="color: darkgrey;" aria-hidden="true"></i>
+                  <i title="Síntese preenchida" *ngIf="row?.analise_categoria?.sintese && row?.sintese" class="fa fa-check-square ml-1" style="color: green;" aria-hidden="true"></i>
+                </td>
                 <td >                 
                   <a  
-                    *ngIf="(row.analise_categoria.restrito && user.perfil.restrito) || !row.analise_categoria.restrito"           
+                    *ngIf="((row.analise_categoria.restrito && user.perfil.restrito) || !row.analise_categoria.restrito) && user.perfil.analises_edt"           
                       class="options ml-2"
                       (click)="edit(row)"
                       data-bs-toggle="modal"
@@ -72,7 +82,7 @@
                       ></i>
                     </a>
                     <a
-                      *ngIf="(row.analise_categoria.restrito && user.perfil.restrito) || !row.analise_categoria.restrito"
+                      *ngIf="((row.analise_categoria.restrito && user.perfil.restrito) || !row.analise_categoria.restrito) && user.perfil.analises_del"
                       class="options ml-2"
                       (click)="delete(row)"
                       data-bs-toggle="modal"
@@ -166,7 +176,7 @@
                 <formulario-analises-pessoas  [analise_id]="informacoes.id" (refresh)="refresh2()" />
 
                 <!--INICIO TABLE-->
-                <table  class="table table-hover table-head-fixed text-nowrap mt-2">
+                <table  class="table table-hover table-head-fixed  mt-2">
                   <thead>
                     <tr>
                       <th>#</th>
@@ -182,7 +192,7 @@
                   <tbody *ngIf="informacoes" >
                     <tr *ngFor="let row of informacoes.pessoas" class="optionshover">
                       <td>{{row.pivot.id}}</td>
-                      <td>{{row.nome}}</td> 
+                      <td><a data-bs-dismiss="modal" [routerLink]="['/Pessoas', row.id]">{{row.nome}}</a></td> 
                       <td>{{row.cpf | mask: '000.000.000-00'}}</td> 
                       <td>{{row?.telefone1}} </td> 
                       <td>{{row?.email}}</td> 
@@ -227,7 +237,7 @@
                 <formulario-analises-veiculos *ngIf="!cadvei" [analise_id]="informacoes.id" (refresh)="refresh2()" />
 
                 <!--INICIO TABLE-->
-                <table  class="table table-hover table-head-fixed text-nowrap mt-2">
+                <table  class="table table-hover table-head-fixed  mt-2">
                   <thead>
                     <tr>
                       <th>#</th>
@@ -236,7 +246,7 @@
                       <th>Placa</th>    
                       <th>Chassi</th>   
                       <th>Renavam</th>   
-                      <th>Pessoa / Organização</th>                      
+                      <th>Proprietário</th>                      
                       <th>Opções</th>
                     </tr>
                   </thead>
@@ -245,12 +255,12 @@
                       <td>{{row.pivot.id}}</td>
                       <td>{{row.veiculo_tipo.nome}}</td> 
                       <td>{{row.modelo?.marca?.nome}} - {{row.modelo?.nome}}</td> 
-                      <td>{{row.placa}}</td> 
+                      <td><a data-bs-dismiss="modal" [routerLink]="['/Veiculos', row.id]">{{row.placa}}</a></td> 
                       <td>{{row.chassi}}</td> 
                       <td>{{row.renavam}}</td> 
                       <td>
-                        <span *ngIf="row.pessoa">{{row.pessoa.nome}}</span>
-                        <span *ngIf="row.organizacao">{{row.organizacao.nome}}</span>
+                        <span *ngIf="row.pessoa"><a [routerLink]="['/Pessoas', row.pessoa.id]">{{row.pessoa.nome}}</a></span>
+                          <span *ngIf="row.organizacao"><a [routerLink]="['/Organizacoes', row.organizacao.id]">{{row.organizacao.nome}}</a></span>
                       </td> 
                       <td>                                        
                           <a

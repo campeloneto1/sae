@@ -8,13 +8,14 @@
         <app-input-text class="col-sm-2" formControlName="hora" label="Hora" id="hora" tipo="time" />
     </div>
 
-    <div class="row" *ngIf="analisecategoria?.endereco">
+    <div class="row">
         <app-input-select (ngModelChange)="getEstados()" class="col-sm-2" formControlName="pais_id" label="País" id="pais_id" [data$]="paises$" />
         <app-input-select (ngModelChange)="getCidades()" class="col-sm-2" formControlName="estado_id" label="Estado" id="estado_id" [data$]="estados$" />
         <app-input-select class="col-sm-2" formControlName="cidade_id" label="Cidade" id="cidade_id" [data$]="cidades$" />
-        <app-input-text class="col-sm-2" formControlName="cep" label="CEP" id="cep" tipo="text" mascara="00.000-00" />
+        
     </div>
     <div class="row" *ngIf="analisecategoria?.endereco">
+        <app-input-text class="col-sm-2" formControlName="cep" label="CEP" id="cep" tipo="text" mascara="00.000-00" />
         <app-input-text class="col-sm-4" formControlName="rua" label="Rua" id="rua" tipo="text" />
         <app-input-text class="col-sm-2" formControlName="numero" label="Número" id="numero" tipo="text" />
         <app-input-text class="col-sm-2" formControlName="bairro" label="Bairro" id="bairro" tipo="text" />

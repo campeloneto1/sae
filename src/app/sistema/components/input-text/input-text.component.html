@@ -1,5 +1,4 @@
 <div class="form-group">
-  
   <label for="{{ id }}">
     {{ label }}
     <span *ngIf="control?.errors?.['required']" class="text-danger">*</span>
@@ -12,7 +11,7 @@
     [ngClass]="{
       'is-invalid': control.invalid && (control.dirty || control.touched)
     }"
-    type="{{tipo}}"
+    type="{{ tipo }}"
     class="form-control"
     id="{{ id }}"
     placeholder="{{ label }}"
@@ -25,8 +24,8 @@
     [ngClass]="{
       'is-invalid': control.invalid && (control.dirty || control.touched)
     }"
-    mask="{{mascara}}"
-    type="{{tipo}}"
+    mask="{{ mascara }}"
+    type="{{ tipo }}"
     class="form-control"
     id="{{ id }}"
     placeholder="{{ label }}"
@@ -56,7 +55,7 @@
       {{ label }} deve ter no máximo
       {{control.errors?.['maxlength'].requiredLength}} caracteres
     </span>
-    
+
     <span *ngIf="control?.errors?.['email']">
       O texto informado precisa ser um e-mail.
     </span>
@@ -67,10 +66,7 @@
     </span>
     <span *ngIf="control?.errors?.['max']">
       {{ label }} deve ser no máximo
-      {{control.errors?.['max'].max}} 
+      {{control.errors?.['max'].max}}
     </span>
   </div>
-
-
- 
 </div>

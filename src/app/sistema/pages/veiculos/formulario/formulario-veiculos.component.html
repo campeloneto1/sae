@@ -11,7 +11,8 @@
         <app-input-text class="col-sm-2" formControlName="renavam" label="Renavam" id="renavam" tipo="text" />
     </div>
     <div class="row">
-        <app-input-select class="col-sm-6" formControlName="pessoa_id" label="Pessoa" id="pessoa_id" [data$]="pessoas$" />
+        <app-input-select *ngIf="!form.value.organizacao_id" class="col-sm-6" formControlName="pessoa_id" label="Pessoa" id="pessoa_id" [data$]="pessoas$" />
+        <app-input-select *ngIf="!form.value.pessoa_id" class="col-sm-6" formControlName="organizacao_id" label="Organização" id="organizacao_id" [data$]="organizacoes$" />
     </div>
     <div class="row">
         <app-input-textarea class="col-sm-12" formControlName="observacao" label="Observação" id="observacao" tipo="textarea" />

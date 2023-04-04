@@ -19,6 +19,8 @@ import { FormularioPessoasArquivosComponent } from '../formulario-pessoas-arquiv
 import { PessoaArquivo } from '../formulario-pessoas-arquivos/pessoas-arquivos';
 import { environment } from 'src/environments/environments';
 import { DomSanitizer } from "@angular/platform-browser"; 
+import { SessionService } from 'src/app/sistema/shared/session.service';
+import { Usuario } from '../../usuarios/usuarios';
 
 
 @Component({
@@ -43,7 +45,7 @@ export class PessoaComponent implements OnInit, OnDestroy {
   protected IMG = environment.image;
   protected id!: number;
   protected pessoa$!: Observable<Pessoa>;
-
+  protected user!: Usuario;
   protected subscription: any;
   protected cadveiculo: boolean = false;
 
@@ -57,6 +59,7 @@ export class PessoaComponent implements OnInit, OnDestroy {
   constructor(
     private activatedRoute: ActivatedRoute,
     private sharedService: SharedService,
+    private sessionService: SessionService,
     private pessoasService: PessoasService,
     private pessoasVeiculosService: PessoasVeiculosService,
     private analisesPessoasService: AnalisesPessoasService,
@@ -66,6 +69,7 @@ export class PessoaComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.user = this.sessionService.retornaUser();
     this.id = this.activatedRoute.snapshot.params['id'];
     this.pessoa$ = this.pessoasService.show(this.id);
   }
@@ -115,7 +119,8 @@ export class PessoaComponent implements OnInit, OnDestroy {
   }
 
   googlemaps(data:Pessoa){
-    return this.sanitizer.bypassSecurityTrustResourceUrl(`https://maps.google.com/maps?q=${data.rua?.replace(" ", "+")},${data.numero?.replace(" ", "+")},${data.bairro?.replace(" ", "+")},${data.cidade?.nome?.replace(" ", "+")}&z=15&ie=UTF8&output=embed`);
+    //return this.sanitizer.bypassSecurityTrustResourceUrl(`https://maps.google.com/maps?q=${data.rua?.replace(" ", "+")},${data.numero?.replace(" ", "+")},${data.bairro?.replace(" ", "+")},${data.cidade?.nome?.replace(" ", "+")}&z=15&ie=UTF8&output=embed`);
+    return this.sanitizer.bypassSecurityTrustResourceUrl(`https://maps.google.com/maps?q=${data.rua?.replace(" ", "+")},${data.numero?.replace(" ", "+")},${data.bairro?.replace(" ", "+")},${data.cidade?.nome?.replace(" ", "+")}&z=15&ie=UTF8`);
   }
 
   urlfoto(data:Pessoa):any{

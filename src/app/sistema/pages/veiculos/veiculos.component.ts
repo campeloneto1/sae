@@ -4,11 +4,13 @@ import { RouterModule } from "@angular/router";
 import { DataTableDirective } from "angular-datatables";
 import { Observable, Subject, tap } from "rxjs";
 import { TituloComponent } from "../../components/titulo/titulo.component";
+import { SessionService } from "../../shared/session.service";
 import { SharedModule } from "../../shared/shared.module";
 import { SharedService } from "../../shared/shared.service";
 import { AnalisesVeiculosService } from "../analises/formulario-analises-veiculos/analises-veiculos.service";
 import { OrganizacoesVeiculosService } from "../organizacoes/formulario-organizacoes-veiculos/organizacoes-veiculos.service";
 import { PessoasVeiculosService } from "../pessoas/formulario-pessoas-veiculos/pessoas-veiculos.service";
+import { Usuario } from "../usuarios/usuarios";
 import { FormularioVeiculosAnalisesComponent } from "./formulario-veiculos-analises/formulario-veiculos-analises.component";
 import { FormularioVeiculosOrganizacoesComponent } from "./formulario-veiculos-organizacoes/formulario-veiculos-organizacoes.component";
 import { FormularioVeiculosPessoasComponent } from "./formulario-veiculos-pessoas/formulario-veiculos-pessoas.component";
@@ -38,6 +40,8 @@ export class VeiculosComponent implements OnInit, OnDestroy{
 
     protected excluir!: Veiculo;
 
+    protected user!: Usuario;
+
     protected informacoes!: Veiculo;
 
     protected dtOptions: DataTables.Settings = {};    
@@ -57,6 +61,7 @@ export class VeiculosComponent implements OnInit, OnDestroy{
     protected subscription3: any;
 
     constructor(private sharedService: SharedService,
+        private sessionService: SessionService,
         private veiculosService: VeiculosService,
         private analisesVeiculosService: AnalisesVeiculosService,
         private pessoasVeiculosService: PessoasVeiculosService,
@@ -67,6 +72,7 @@ export class VeiculosComponent implements OnInit, OnDestroy{
    
 
     ngOnInit(): void {
+        this.user = this.sessionService.retornaUser();
         this.dtOptions = this.sharedService.getDtOptions();
         this.dtOptions = { ...this.dtOptions, order: [3, 'asc'] };        
 

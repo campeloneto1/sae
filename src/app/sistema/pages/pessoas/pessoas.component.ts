@@ -20,6 +20,8 @@ import { OrganizacoesPessoasService } from "../organizacoes/formulario-organizac
 import { FormularioPessoasOrganizacoesComponent } from "./formulario-pessoas-organizacoes/formulario-pessoas-organizacoes.component";
 import { environment } from "src/environments/environments";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { Usuario } from "../usuarios/usuarios";
+import { SessionService } from "../../shared/session.service";
 @Component({
     selector: 'pessoas',
     templateUrl: './pessoas.component.html',
@@ -42,6 +44,8 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 export class PessoasComponent implements OnInit, OnDestroy{
     protected IMG = environment.image;
     protected data$!: Observable<Pessoas>;
+
+    protected user!: Usuario;
 
     protected excluir!: Pessoa;
 
@@ -68,6 +72,7 @@ export class PessoasComponent implements OnInit, OnDestroy{
     protected subscription3: any;
 
     constructor(private sharedService: SharedService,
+        private sessionService: SessionService,
         private pessoasService: PessoasService,
         private pessoasRedesSociaisService: PessoasRedesSociaisService,
         private pessoasVeiculosService: PessoasVeiculosService,
@@ -78,6 +83,7 @@ export class PessoasComponent implements OnInit, OnDestroy{
     }
 
     ngOnInit(): void {
+        this.user = this.sessionService.retornaUser();
         this.dtOptions = this.sharedService.getDtOptions();
         this.dtOptions = { ...this.dtOptions, order: [1, 'asc'] };        
 

@@ -5,29 +5,25 @@ import { Observable, Subject, tap } from "rxjs";
 import { TituloComponent } from "../../components/titulo/titulo.component";
 import { SharedModule } from "../../shared/shared.module";
 import { SharedService } from "../../shared/shared.service";
-import { FormularioPerfisComponent } from "./formulario/formulario-perfis.component";
-import { Perfil, Perfis } from "./perfis";
-import { PerfisService } from "./perfis.service";
-
+import { Log, Logs } from "./logs";
+import { LogsService } from "./logs.service";
 
 @Component({
-    selector: 'perfis',
-    templateUrl: './perfis.component.html',
-    styleUrls: ['./perfis.component.css'],
+    selector: 'logs',
+    templateUrl: './logs.component.html',
+    styleUrls: ['./logs.component.css'],
     standalone: true,
-    imports: [CommonModule, SharedModule, TituloComponent, FormularioPerfisComponent]
+    imports: [CommonModule, SharedModule, TituloComponent]
 })
 
-export class PerfisComponent implements OnInit, OnDestroy{
-    protected data$!: Observable<Perfis>;
+export class LogsComponent implements OnInit, OnDestroy{
+    protected data$!: Observable<Logs>;
 
-    protected excluir!: Perfil;
+    protected excluir!: Log;
 
     protected dtOptions: DataTables.Settings = {};    
 
     @ViewChild(DataTableDirective, { static: false })  dtElement!: DataTableDirective;
-
-    @ViewChild(FormularioPerfisComponent) formulario!: FormularioPerfisComponent;
 
     // We use this trigger because fetching the list of persons can be quite long,
     // thus we ensure the data is fetched before rendering
@@ -37,7 +33,7 @@ export class PerfisComponent implements OnInit, OnDestroy{
     protected subscription2: any;
 
     constructor(private sharedService: SharedService,
-        private perfisService: PerfisService){
+        private logsService: LogsService){
 
     }
    
@@ -46,7 +42,7 @@ export class PerfisComponent implements OnInit, OnDestroy{
         this.dtOptions = this.sharedService.getDtOptions();
         this.dtOptions = { ...this.dtOptions, order: [1, 'asc'] };        
 
-        this.data$ = this.perfisService.index().pipe(
+        this.data$ = this.logsService.index().pipe(
             tap(() => {
               this.dtTrigger.next(this.dtOptions);
             })
@@ -62,7 +58,7 @@ export class PerfisComponent implements OnInit, OnDestroy{
     }
 
     refresh(){
-        this.data$ = this.perfisService.index().pipe(
+        this.data$ = this.logsService.index().pipe(
             tap(() => {
               this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
                 // Destroy the table first
@@ -73,18 +69,14 @@ export class PerfisComponent implements OnInit, OnDestroy{
             })
           );
     }
-
-    edit(data: Perfil){
-        this.formulario.editar(data);
-    }
-
-    delete(data: Perfil){
+    
+    delete(data: Log){
         this.excluir = data;
     }
 
     confirm(){
         //console.log(this.excluir);
-        this.subscription = this.perfisService.destroy(this.excluir.id || 0).subscribe({
+        this.subscription = this.logsService.destroy(this.excluir.id || 0).subscribe({
             next: (data) => {
                 this.sharedService.toast("Sucesso", data as string, 3);
                 this.refresh();

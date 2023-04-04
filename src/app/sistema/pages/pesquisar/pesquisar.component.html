@@ -10,27 +10,27 @@
                 <app-input-text class="col-sm-8 offset-sm-2" formControlName="pesquisar" label="Pesquisar" id="pesquisar" tipo="text" />
             </div>
             <div class="row">
-                <div class="col-sm-2 offset-sm-2">
-                    <div class="form-check text-center">
+                <div  class="col-sm-2 offset-sm-2">
+                    <div *ngIf="user.perfil.analises" class="form-check text-center">
                         <input class="form-check-input" type="checkbox"  id="analises" formControlName="analises">
                         <label class="form-check-label" for="analises">Análises</label>
                     </div>
                 </div>
-                <div class="col-sm-2">
-                    <div class="form-check text-center">
+                <div  class="col-sm-2">
+                    <div *ngIf="user.perfil.organizacoes" class="form-check text-center">
                         <input class="form-check-input" type="checkbox"  id="organizacoes" formControlName="organizacoes">
                         <label class="form-check-label" for="organizacoes">Organizações</label>
                     </div>
                 </div>  
-                <div class="col-sm-2">
-                    <div class="form-check text-center">
+                <div  class="col-sm-2">
+                    <div *ngIf="user.perfil.pessoas" class="form-check text-center">
                         <input class="form-check-input" type="checkbox"  id="pessoas" formControlName="pessoas">
                         <label class="form-check-label" for="pessoas">Pessoas</label>
                     </div>
                 </div> 
                
-                <div class="col-sm-2">
-                    <div class="form-check text-center">
+                <div  class="col-sm-2">
+                    <div *ngIf="user.perfil.veiculos" class="form-check text-center">
                         <input class="form-check-input" type="checkbox"  id="veiculos" formControlName="veiculos">
                         <label class="form-check-label" for="veiculos">Veículos</label>
                     </div>
@@ -50,25 +50,25 @@
         <div class="card-header border-0 p-2">
             <ul class="nav nav-pills" >
                 <!--<li class="nav-item"><a class="nav-link active" href="#informacoes" data-bs-toggle="tab">Informações</a></li>-->
-                <li class="nav-item">
+                <li *ngIf="user.perfil.analises" class="nav-item">
                     <a [ngClass]="!form.value.analises ? 'disabled' : ''" class="nav-link active" href="#tabanalises" data-bs-toggle="tab">
                         Análises 
                         <span class="right badge badge-danger">{{resultado.analises?.length}}</span>
                     </a>
                 </li>
-                <li class="nav-item">
+                <li *ngIf="user.perfil.organizacoes" class="nav-item">
                     <a [ngClass]="!form.value.organizacoes ? 'disabled' : ''" class="nav-link" href="#taborganizacoes" data-bs-toggle="tab">
                         Organizações
                         <span class="right badge badge-danger">{{resultado.organizacoes?.length}}</span>
                     </a>
                 </li>
-                <li class="nav-item">
+                <li *ngIf="user.perfil.pessoas" class="nav-item">
                     <a [ngClass]="!form.value.pessoas ? 'disabled' : ''" class="nav-link" href="#tabpessoas" data-bs-toggle="tab">
                         Pessoas
                         <span class="right badge badge-danger">{{resultado.pessoas?.length}}</span>
                     </a>
                 </li>
-                <li class="nav-item">
+                <li *ngIf="user.perfil.veiculos" class="nav-item">
                     <a [ngClass]="!form.value.veiculos ? 'disabled' : ''" class="nav-link" href="#tabveiculos" data-bs-toggle="tab">
                         Veículos
                         <span class="right badge badge-danger">{{resultado.veiculos?.length}}</span>
@@ -180,8 +180,8 @@
                         <td>{{row.chassi}}</td> 
                         <td>{{row.renavam}}</td> 
                         <td>
-                          <span *ngIf="row.pessoa">{{row.pessoa.nome}}</span>
-                          <span *ngIf="row.organizacao">{{row.organizacao.nome}}</span>
+                          <span *ngIf="row.pessoa"><a [routerLink]="['/Pessoas',row.pessoa.id]">{{row.pessoa.nome}}</a></span>
+                          <span *ngIf="row.organizacao"><a [routerLink]="['/Organizacoes',row.organizacao.id]">{{row.organizacao.nome}}</a></span>
                         </td> 
                         
                       </tr>

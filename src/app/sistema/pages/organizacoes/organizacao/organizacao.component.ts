@@ -18,6 +18,8 @@ import { OrganizacoesPessoasService } from '../formulario-organizacoes-pessoas/o
 import { FormularioOrganizacoesArquivosComponent } from '../formulario-organizacoes-arquivos/formulario-organizacoes-arquivos.component';
 import { FormularioOrganizacoesPessoasComponent } from '../formulario-organizacoes-pessoas/formulario-organizacoes-pessoas.component';
 import { FormularioOrganizacoesVeiculosComponent } from '../formulario-organizacoes-veiculos/formulario-organizacoes-veiculos.component';
+import { Usuario } from '../../usuarios/usuarios';
+import { SessionService } from 'src/app/sistema/shared/session.service';
 
 
 @Component({
@@ -40,7 +42,7 @@ export class OrganizacaoComponent implements OnInit, OnDestroy {
   protected IMG = environment.image;
   protected id!: number;
   protected organizacao$!: Observable<Organizacao>;
-
+  protected user!: Usuario;
   protected arquivo!: OrganizacaoArquivo;
 
   protected subscription: any;
@@ -52,6 +54,7 @@ export class OrganizacaoComponent implements OnInit, OnDestroy {
   constructor(
     private activatedRoute: ActivatedRoute,
     private sharedService: SharedService,
+    private sessionService: SessionService,
     private organizacoesService: OrganizacoesService,
     private organizacoesPessoasService: OrganizacoesPessoasService,
     private organizacoesVeiculosService: OrganizacoesVeiculosService,
@@ -60,6 +63,7 @@ export class OrganizacaoComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.user = this.sessionService.retornaUser();
     this.id = this.activatedRoute.snapshot.params['id'];
     this.organizacao$ = this.organizacoesService.show(this.id);
   }
@@ -75,7 +79,9 @@ export class OrganizacaoComponent implements OnInit, OnDestroy {
   }
 
   googlemaps(data:Organizacao){
-    return this.sanitizer.bypassSecurityTrustResourceUrl(`https://maps.google.com/maps?q=${data.rua?.replace(" ", "+")},${data.numero?.replace(" ", "+")},${data.bairro?.replace(" ", "+")},${data.cidade?.nome?.replace(" ", "+")}&z=15&ie=UTF8&output=embed`);
+    //console.log('aaaaaaa');
+    //return this.sanitizer.bypassSecurityTrustResourceUrl(`https://maps.google.com/maps?q=${data.rua?.replace(" ", "+")},${data.numero?.replace(" ", "+")},${data.bairro?.replace(" ", "+")},${data.cidade?.nome?.replace(" ", "+")}&z=15&ie=UTF8&output=embed`);
+    return this.sanitizer.bypassSecurityTrustResourceUrl(`https://maps.google.com/maps?q=${data.rua?.replace(" ", "+")},${data.numero?.replace(" ", "+")},${data.bairro?.replace(" ", "+")},${data.cidade?.nome?.replace(" ", "+")}&z=15&ie=UTF8`);
   }
 
 

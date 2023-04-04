@@ -76,8 +76,8 @@
               <span *ngIf="pessoa.bairro">, {{pessoa.bairro}}</span>
               <span *ngIf="pessoa.complemento">, {{pessoa.complemento}}</span>
               <span *ngIf="pessoa.cidade">, {{pessoa.cidade.nome}} - {{pessoa.cidade.estado.uf}}</span>
-
-              <iframe *ngIf="pessoa.rua" style="width: 100%; height: 300px;" id="gmap_canvas" [src]="googlemaps(pessoa)" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+              <a target="_blank" [href]="googlemaps(pessoa)">Abrir no google maps</a>
+              <!--<iframe *ngIf="pessoa.rua" style="width: 100%; height: 300px;" id="gmap_canvas" [src]="googlemaps(pessoa)" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>-->
           </div>
         </div>
 
@@ -111,7 +111,7 @@
                 <!--FIM TAB OBSERVACAO-->
                 <!--INICIO TAB ANALISES-->
                 <div class="tab-pane" id="analises">
-                  <button class="btn btn-outline-primary mb-2" data-bs-toggle="modal" data-bs-target="#modalanalises" title="Cadastrar"><i class="fa fa-plus"></i></button>
+                  <button *ngIf="user.perfil.pessoas_edt" class="btn btn-outline-primary mb-2" data-bs-toggle="modal" data-bs-target="#modalanalises" title="Cadastrar"><i class="fa fa-plus"></i></button>
                   <!-- INICIO MODAL ANALISES-->
                   <div class="modal fade" id="modalanalises" style="display: none;" aria-hidden="true">
                     <div class="modal-dialog modal-xl">
@@ -132,7 +132,7 @@
                   </div>
                   <!--FIM MODAL ANALISES-->
                   <!--INICIO TABLE-->
-                   <table  class="table table-hover table-head-fixed text-nowrap mt-2">
+                   <table  class="table table-hover table-head-fixed  mt-2">
                      <thead>
                        <tr>
                          <th>#</th>
@@ -150,7 +150,7 @@
                          <td>{{row.pivot.id}}</td>
                          <td>{{row.analise_categoria.nome}}</td> 
                          <td>{{row.analise_tipo?.nome}}</td> 
-                         <td>{{row.nome}}</td> 
+                         <td><a  [routerLink]="['/Analises', row.id]">{{row.nome}}</a></td> 
                          <td>{{row.data | date: 'dd/MM/yyyy'}}</td> 
                          <td>{{row.hora}}</td> 
                          <td>
@@ -158,6 +158,7 @@
                           </td>
                          <td>                                        
                              <a
+                             *ngIf="user.perfil.pessoas_edt"
                                class="options ml-2"
                                (click)="deleteAnalise(row.pivot.id)"                           
                                title="Excluir"
@@ -177,7 +178,7 @@
                 <!--INICIO TAB VEICULOS-->
                 <div class="tab-pane" id="veiculos">
 
-                  <button class="btn btn-outline-primary mb-2" data-bs-toggle="modal" data-bs-target="#modalveiculos" title="Cadastrar"><i class="fa fa-plus"></i></button>
+                  <button *ngIf="user.perfil.pessoas_edt" class="btn btn-outline-primary mb-2" data-bs-toggle="modal" data-bs-target="#modalveiculos" title="Cadastrar"><i class="fa fa-plus"></i></button>
                   <!-- INICIO MODAL VEICULOS-->
                   <div class="modal fade" id="modalveiculos" style="display: none;" aria-hidden="true">
                     <div class="modal-dialog modal-xl">
@@ -201,7 +202,7 @@
                   <!--FIM MODAL VEICULOS-->
 
                   <!--INICIO TABLE-->
-                  <table  class="table table-hover table-head-fixed text-nowrap ">
+                  <table  class="table table-hover table-head-fixed  ">
                     <thead>
                       <tr>
                         <th>#</th>
@@ -210,7 +211,7 @@
                         <th>Placa</th>    
                         <th>Chassi</th>   
                         <th>Renavam</th>   
-                        <th>Pessoa / Organização</th>                      
+                        <th>Proprietário</th>                      
                         <th>Opções</th>
                       </tr>
                     </thead>
@@ -219,15 +220,17 @@
                         <td>{{row.pivot.id}}</td>
                         <td>{{row.veiculo_tipo.nome}}</td> 
                         <td>{{row.modelo?.marca?.nome}} - {{row.modelo?.nome}}</td> 
-                        <td>{{row.placa}}</td> 
+                        <td><a  [routerLink]="['/Veiculos', row.id]">{{row.placa}}</a></td> 
                         <td>{{row.chassi}}</td> 
                         <td>{{row.renavam}}</td> 
                         <td>
-                          <span *ngIf="row.pessoa">{{row.pessoa.nome}}</span>
-                          <span *ngIf="row.organizacao">{{row.organizacao.nome}}</span>
+                          <span *ngIf="row.pessoa"><a [routerLink]="['/Pessoas', row.pessoa.id]">{{row.pessoa.nome}}</a></span>
+                          <span *ngIf="row.organizacao"><a [routerLink]="['/Organizacoes', row.organizacao.id]">{{row.organizacao.nome}}</a></span>
+                          
                         </td> 
                         <td>                                        
                             <a
+                            *ngIf="user.perfil.pessoas_edt"
                               class="options ml-2"
                               (click)="deleteVeiculo(row.pivot.id)"            
                               title="Excluir"
@@ -247,7 +250,7 @@
                 
                 <!--INICIO TAB ORGANIZACOES-->
                 <div class="tab-pane" id="organizacoes">
-                  <button class="btn btn-outline-primary mb-2" data-bs-toggle="modal" data-bs-target="#modalorganizacoes" title="Cadastrar"><i class="fa fa-plus"></i></button>
+                  <button *ngIf="user.perfil.pessoas_edt" class="btn btn-outline-primary mb-2" data-bs-toggle="modal" data-bs-target="#modalorganizacoes" title="Cadastrar"><i class="fa fa-plus"></i></button>
                   <!-- INICIO MODAL ORGANIZACAO-->
                   <div class="modal fade" id="modalorganizacoes" style="display: none;" aria-hidden="true">
                     <div class="modal-dialog modal-xl">
@@ -268,7 +271,7 @@
                   </div>
                   <!--FIM MODAL ORGANIZACAO-->
                   <!--INICIO TABLE-->
-                  <table  class="table table-hover table-head-fixed text-nowrap mt-2">
+                  <table  class="table table-hover table-head-fixed  mt-2">
                     <thead>
                       <tr>
                         <th>#</th>
@@ -284,7 +287,7 @@
                       <tr *ngFor="let row of pessoa.organizacoes" class="optionshover">
                         <td>{{row.pivot.id}}</td>
                         <td>{{row.organizacao_tipo.nome}}</td> 
-                        <td>{{row.nome}}</td> 
+                        <td><a  [routerLink]="['/Organizacoes', row.id]">{{row.nome}}</a></td> 
                         <td>{{row?.telefone1}} </td> 
                         <td>{{row?.email}}</td> 
                         <td>
@@ -293,6 +296,7 @@
                       
                         <td>                                        
                             <a
+                              *ngIf="user.perfil.pessoas_edt"
                               class="options ml-2"
                               (click)="deleteOrganizacao(row.pivot.id)"                           
                               title="Excluir"
@@ -311,7 +315,7 @@
                 <!--FIM TAB ORGANIZACOES-->
                 <!--INICIO TAB ARQUIVOS-->
                 <div class="tab-pane" id="arquivos">
-                  <button class="btn btn-outline-primary mb-2" data-bs-toggle="modal" data-bs-target="#modalarquivos" title="Cadastrar"><i class="fa fa-plus"></i></button>
+                  <button *ngIf="user.perfil.pessoas_edt" class="btn btn-outline-primary mb-2" data-bs-toggle="modal" data-bs-target="#modalarquivos" title="Cadastrar"><i class="fa fa-plus"></i></button>
                   <!-- INICIO MODAL ARQUIVOS-->
                   <div class="modal fade" id="modalarquivos" style="display: none;" aria-hidden="true">
                     <div class="modal-dialog modal-xl">
@@ -346,14 +350,14 @@
                         <div class="modal-body" *ngIf="arquivo" style="text-align: center; height: 650px;">   
                             <img style="height: 100%;" *ngIf="arquivo.arquivo_tipo.foto"  [src]="urlarq(arquivo)" />    
                             <iframe style="width: 100%; height: 100%;" *ngIf="arquivo.arquivo_tipo.pdf || arquivo.arquivo_tipo.texto" [src]="urlarq(arquivo)" ></iframe>
-                           
+                            <iframe style="width: 100%; height: 100%;" *ngIf="arquivo.arquivo_tipo.link" [src]="arquivo" ></iframe>
                         </div>           
                       </div>        
                     </div>        
                   </div>
                   <!--FIM MODAL SHOW ARQUIVOS-->
                   <!--INICIO TABLE-->
-                  <table  class="table table-hover table-head-fixed text-nowrap mt-2">
+                  <table  class="table table-hover table-head-fixed  mt-2">
                     <thead>
                       <tr>
                         <th>#</th>
@@ -369,7 +373,7 @@
                         <td>{{row.arquivo_tipo.nome}}</td> 
                         <td>{{row.nome}}</td> 
                         <td>
-                          <a style="cursor: pointer;" *ngIf="row.arquivo_tipo.pdf || row.arquivo_tipo.texto" (click)="showArquivo(row)" data-bs-toggle="modal" data-bs-target="#modalshowarquivos">
+                          <a style="cursor: pointer;" *ngIf="row.arquivo_tipo.pdf || row.arquivo_tipo.texto || row.arquivo_tipo.link" (click)="showArquivo(row)" data-bs-toggle="modal" data-bs-target="#modalshowarquivos">
                             {{row.arquivo}}
                           </a>  
                           <a style="cursor: pointer;" *ngIf="row.arquivo_tipo.foto" (click)="showArquivo(row)" data-bs-toggle="modal" data-bs-target="#modalshowarquivos">
@@ -379,6 +383,7 @@
                         </td> 
                         <td>                                        
                             <a
+                            *ngIf="user.perfil.pessoas_edt"
                               class="options ml-2"
                               (click)="deleteArquivo(row.id)"                           
                               title="Excluir"

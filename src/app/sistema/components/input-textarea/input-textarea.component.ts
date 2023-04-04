@@ -37,7 +37,7 @@ export class InputTextareaComponent implements ControlValueAccessor, OnInit, OnD
       translate: 'yes',
       enableToolbar: true,
       showToolbar: true,
-      placeholder: 'Observação...',
+      placeholder: 'Insira o texto aqui...',
       defaultParagraphSeparator: '',
       defaultFontName: '',
       defaultFontSize: '',
@@ -77,6 +77,10 @@ export class InputTextareaComponent implements ControlValueAccessor, OnInit, OnD
   protected inputvalor!: any;
   protected control!: AbstractControl;
 
+  protected touched = false;
+
+  protected disabled = true;
+
   ngOnDestroy(): void {
     
   }
@@ -85,20 +89,18 @@ export class InputTextareaComponent implements ControlValueAccessor, OnInit, OnD
       
   }
 
-  onChange = (inputvalor:any) => {};
+  onChange = (inputvalor: any) => {};
 
   onTouched = () => {};
 
-  touched = false;
-
-  disabled = true;
-
   change() {
+    console.log(this.inputvalor);
     this.markAsTouched();
     if (!this.disabled) {     
       //console.log(this.inputvalor)
       this.onChange(this.inputvalor);
     }
+    
   }
 
   writeValue(inputvalor: any) {

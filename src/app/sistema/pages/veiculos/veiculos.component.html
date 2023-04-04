@@ -8,13 +8,13 @@
       <div class="card">
         <div class="card-header border-0">
           <div class="d-flex justify-content-between">
-            <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalcad" title="Cadastrar"><i class="fa fa-plus"></i></button>
+            <button *ngIf="user.perfil.veiculos_cad" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalcad" title="Cadastrar"><i class="fa fa-plus"></i></button>
           </div>
         </div>
         <div class="card-body">
         
           <!--INICIO TABLE-->
-          <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-hover table-head-fixed text-nowrap ">
+          <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-hover table-head-fixed  ">
             <thead>
               <tr>
                 <th>#</th>
@@ -24,6 +24,7 @@
                 <th>Chassi</th>
                 <th>Renavam</th>
                 <th>Cor</th>
+                <th>Proprietário</th>
                 <th>Informações</th>
                 <th>Opções</th>
               </tr>
@@ -37,11 +38,15 @@
                 <td><a [routerLink]="['/Veiculos', row.id]">{{row.placa | uppercase}}</a></td>
                 <td>{{row?.chassi}}</td>
                 <td>{{row?.renavam}}</td>    
-                <td>{{row.cor?.nome}}</td>        
+                <td>{{row.cor?.nome}}</td>     
+                <td>
+                  <span *ngIf="row.pessoa"><a [routerLink]="['/Pessoas', row.pessoa.id]">{{row.pessoa.nome}}</a></span>
+                  <span *ngIf="row.organizacao"><a [routerLink]="['/Organizacoes', row.organizacao.id]">{{row.organizacao.nome}}</a></span>
+                </td>   
                 <td>                  
                   <i
                     (click)="showInformacoes(row)"
-                   
+                    *ngIf="user.perfil.veiculos_edt"
                     data-bs-toggle="modal"
                     data-bs-target="#modalanalises"
                     title="Análises"
@@ -50,7 +55,7 @@
                   ></i>
                   <i
                     (click)="showInformacoes(row)"
-                   
+                    *ngIf="user.perfil.veiculos_edt"
                     data-bs-toggle="modal"
                     data-bs-target="#modalorganizacoes"
                     title="Organizações"
@@ -59,7 +64,7 @@
                   ></i>
                   <i
                     (click)="showInformacoes(row)"
-                   
+                    *ngIf="user.perfil.veiculos_edt"
                     data-bs-toggle="modal"
                     data-bs-target="#modalpessoas"
                     title="Pessoas"
@@ -69,6 +74,7 @@
                 </td>       
                 <td>                 
                   <a             
+                     *ngIf="user.perfil.veiculos_edt"
                       class="options ml-2"
                       (click)="edit(row)"
                       data-bs-toggle="modal"
@@ -81,6 +87,7 @@
                       ></i>
                     </a>
                     <a
+                      *ngIf="user.perfil.veiculos_del"
                       class="options ml-2"
                       (click)="delete(row)"
                       data-bs-toggle="modal"
@@ -174,7 +181,7 @@
                 <formulario-veiculos-analises [veiculo_id]="informacoes.id" (refresh)="refresh2()" />
 
                 <!--INICIO TABLE-->
-                <table  class="table table-hover table-head-fixed text-nowrap mt-2">
+                <table  class="table table-hover table-head-fixed  mt-2">
                   <thead>
                     <tr>
                       <th>#</th>
@@ -191,7 +198,7 @@
                       <td>{{row.pivot.id}}</td>
                       <td>{{row.analise_categoria.nome}}</td> 
                       <td>{{row.analise_tipo?.nome}}</td> 
-                      <td>{{row.nome}}</td> 
+                      <td><a data-bs-dismiss="modal" [routerLink]="['/Analises', row.id]">{{row.nome}}</a></td> 
                       <td>{{row.data | date: 'dd/MM/yyyy'}}</td> 
                       <td>{{row.hora}}</td> 
                       <td>                                        
@@ -232,7 +239,7 @@
                 <formulario-veiculos-organizacoes  [veiculo_id]="informacoes.id" (refresh)="refresh2()" />
 
                 <!--INICIO TABLE-->
-                <table  class="table table-hover table-head-fixed text-nowrap mt-2">
+                <table  class="table table-hover table-head-fixed  mt-2">
                   <thead>
                     <tr>
                       <th>#</th>
@@ -247,7 +254,7 @@
                     <tr *ngFor="let row of informacoes.organizacoes" class="optionshover">
                       <td>{{row.pivot.id}}</td>
                       <td>{{row.organizacao_tipo.nome}}</td> 
-                      <td>{{row.nome}}</td> 
+                      <td><a data-bs-dismiss="modal" [routerLink]="['/Organizacoes', row.id]">{{row.nome}}</a></td> 
                       <td>{{row?.telefone1}} </td> 
                       <td>{{row?.email}}</td> 
                       <td>                                        
@@ -288,7 +295,7 @@
                 <formulario-veiculos-pessoas  [veiculo_id]="informacoes.id" (refresh)="refresh2()" />
 
                 <!--INICIO TABLE-->
-                <table  class="table table-hover table-head-fixed text-nowrap mt-2">
+                <table  class="table table-hover table-head-fixed  mt-2">
                   <thead>
                     <tr>
                       <th>#</th>
@@ -302,7 +309,7 @@
                   <tbody *ngIf="informacoes" >
                     <tr *ngFor="let row of informacoes.pessoas" class="optionshover">
                       <td>{{row.pivot.id}}</td>
-                      <td>{{row.nome}}</td> 
+                      <td><a data-bs-dismiss="modal" [routerLink]="['/Pessoas', row.id]">{{row.nome}}</a></td> 
                       <td>{{row.cpf | mask: '000.000.000-00'}}</td> 
                       <td>{{row?.telefone1}} </td> 
                       <td>{{row?.email}}</td> 
