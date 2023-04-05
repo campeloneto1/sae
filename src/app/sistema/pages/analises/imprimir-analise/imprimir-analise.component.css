@@ -148,5 +148,9 @@ img {
         font-size: 200px;
         transform: rotate(90deg);
       }
+
+     .transparent{
+      background-color: rgba(210,130,240, 0) !important;
+     }
   }
   

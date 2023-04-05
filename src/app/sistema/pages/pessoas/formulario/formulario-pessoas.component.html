@@ -18,13 +18,19 @@
     <div class="row">  
         <app-input-text class="col-sm-4" formControlName="mae" label="Mãe" id="mae" tipo="text" />
         <app-input-text class="col-sm-4" formControlName="pai" label="Pai" id="pai" tipo="text" />
-        <app-input-select class="col-sm-2" formControlName="influencia_id" label="Influência" id="influencia_id" [data$]="influencias$" />
+        
+    </div>
+    <div class="row">  
+        <app-input-text class="col-sm-4" formControlName="cnh" label="CNH" id="cnh" tipo="text" />
+        <app-input-select class="col-sm-2" formControlName="cnh_categoria_id" label="Categoria CNH" id="cnh_categoria_id" [data$]="cnhcategorias$" />
+        <app-input-select class="col-sm-2" formControlName="escolaridade_id" label="Escolaridade" id="escolaridade_id" [data$]="escolaridades$" />
+        <app-input-select class="col-sm-2" formControlName="naturalidade_id" label="Naturalidade" id="naturalidade_id" [data$]="naturalidades$" />
+       
     </div>
     <div class="row">  
         <app-input-text class="col-sm-2" formControlName="telefone1" label="Telefone 1" id="telefone1" mascara="(00) 0000-0000||(00) 0 0000-0000" tipo="text" />
         <app-input-text class="col-sm-2" formControlName="telefone2" label="Telefone 2" id="telefone2" mascara="(00) 0000-0000||(00) 0 0000-0000" tipo="text" />
-        <app-input-text class="col-sm-4" formControlName="email" label="E-mail" id="email" tipo="email" />
-        
+        <app-input-text class="col-sm-4" formControlName="email" label="E-mail" id="email" tipo="email" />        
     </div>
     <div class="row">
         <app-input-select (ngModelChange)="getEstados()" class="col-sm-2" formControlName="pais_id" label="País" id="pais_id" [data$]="paises$" />

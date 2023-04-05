@@ -52,6 +52,11 @@ export class FormularioPerfisComponent implements OnInit{
                 'analises_edt': [0],
                 'analises_del': [0],
 
+                'investigacoes_sociais': [0],
+                'investigacoes_sociais_cad': [0],
+                'investigacoes_sociais_edt': [0],
+                'investigacoes_sociais_del': [0],
+
                 'organizacoes': [0],
                 'organizacoes_cad': [0],
                 'organizacoes_edt': [0],

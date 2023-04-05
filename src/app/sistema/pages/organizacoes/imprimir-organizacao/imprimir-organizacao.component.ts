@@ -29,7 +29,7 @@ export class ImprimirOrganizacaoComponent implements OnInit, OnDestroy {
   protected IMG = environment.image;
   protected id!: number;
   protected organizacao$!: Observable<Organizacao>;
-
+  protected cifra: string = '';
   protected user!: Usuario;
     protected date = new Date();
   protected subscription: any;
@@ -47,6 +47,7 @@ export class ImprimirOrganizacaoComponent implements OnInit, OnDestroy {
     this.organizacao$ = this.organizacoesService.show(this.id);
 
     this.user = this.sessionService.retornaUser();
+    this.cifra =  this.user.nome.split(" ")[0].substring(0,1) +  this.user.nome.split(" ")[this.user.nome.split(" ").length -1].substring(0,1) + this.user.cpf.substring(0,3);
   }
 
   ngOnDestroy(): void {

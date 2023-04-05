@@ -29,6 +29,7 @@ export class ImprimirAnaliseComponent implements OnInit, OnDestroy {
   protected IMG = environment.image;
   protected id!: number;
   protected analise$!: Observable<Analise>;
+  protected cifra: string = '';
 
   protected user!: Usuario;
     protected date = new Date();
@@ -47,6 +48,9 @@ export class ImprimirAnaliseComponent implements OnInit, OnDestroy {
     this.analise$ = this.analisesService.show(this.id);
 
     this.user = this.sessionService.retornaUser();
+    
+    this.cifra =  this.user.nome.split(" ")[0].substring(0,1) +  this.user.nome.split(" ")[this.user.nome.split(" ").length -1].substring(0,1) + this.user.cpf.substring(0,3);
+    //console.log(this.cifra);
   }
 
   ngOnDestroy(): void {

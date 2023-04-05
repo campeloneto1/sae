@@ -17,6 +17,11 @@ export interface Perfil{
     analises_edt: boolean,
     analises_del: boolean,
 
+    investigacoes_sociais: boolean,
+    investigacoes_sociais_cad: boolean,
+    investigacoes_sociais_edt: boolean,
+    investigacoes_sociais_del: boolean,
+
     organizacoes: boolean,
     organizacoes_cad: boolean,
     organizacoes_edt: boolean,

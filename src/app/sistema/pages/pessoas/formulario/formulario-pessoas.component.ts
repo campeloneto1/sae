@@ -1,7 +1,7 @@
 import { CommonModule } from "@angular/common";
 import { Component, EventEmitter, Output } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { Observable } from "rxjs";
+import { Observable, of } from "rxjs";
 import { SharedModule } from "src/app/sistema/shared/shared.module";
 import { SharedService } from "src/app/sistema/shared/shared.service";
 import { Sexos } from "../../sexos/sexos";
@@ -13,6 +13,11 @@ import { PessoasService } from "../pessoas.service";
 import { Paises } from "../../paises/paises";
 import { Estados } from "../../estados/estados";
 import { Cidades } from "../../cidades/cidades";
+import { Escolaridades } from "../../escolaridades/escolaridades";
+import { CnhCategorias } from "../../cnh-categorias/cnh-categorias";
+import { EscolaridadesService } from "../../escolaridades/escolaridades.service";
+import { CnhCategoriasService } from "../../cnh-categorias/cnh-categorias.service";
+import { CidadesService } from "../../cidades/cidades.service";
 
 @Component({
     selector: 'formulario-pessoas',
@@ -29,12 +34,16 @@ export class FormularioPessoasComponent{
     protected erroCpf: boolean = false;
 
     protected sexos$!: Observable<Sexos>;
+    protected cnhcategorias$!: Observable<CnhCategorias>;
+    protected escolaridades$!: Observable<Escolaridades>;
+    protected naturalidades$!: Observable<Cidades>;
     protected influencias$!: Observable<Influencias>;
     protected paises$!: Observable<Paises>;
     protected estados$!: Observable<Estados>;
     protected cidades$!: Observable<Cidades>;
 
     protected subscription: any;
+    protected subscription2: any;
    
     @Output('refresh') refresh: EventEmitter<Pessoa> = new EventEmitter();
     @Output('cancel') cancel: EventEmitter<Pessoa> = new EventEmitter();
@@ -44,6 +53,9 @@ export class FormularioPessoasComponent{
         private sharedService: SharedService,
         private sexosService: SexosService,
         private influenciasService: InfluenciasService,
+        private escolaridadesService: EscolaridadesService,
+        private cnhCategoriasService: CnhCategoriasService,
+        private cidadesService: CidadesService,
         private pessoasService: PessoasService
     ){}
    
@@ -111,6 +123,15 @@ export class FormularioPessoasComponent{
                 Validators.minLength(4),
                 Validators.maxLength(150)
             ])],
+
+            'cnh': ['', Validators.compose([
+                Validators.minLength(4),
+                Validators.maxLength(150)
+            ])],
+            'cnh_categoria_id': [''],
+            'escolaridade_id': [''],
+            'naturalidade_id': [''],
+
             'observacao': [''],
             'key': [''],
             'foto': [''],
@@ -118,13 +139,31 @@ export class FormularioPessoasComponent{
 
         this.sexos$ = this.sexosService.index();
         this.influencias$ = this.influenciasService.index();
-        this.paises$ = this.sharedService.getPaises();        
+        this.paises$ = this.sharedService.getPaises(); 
+        
+        this.escolaridades$ = this.escolaridadesService.index(); 
+        this.cnhcategorias$ = this.cnhCategoriasService.index(); 
+
+       this.subscription2 = this.cidadesService.index().subscribe({
+            next: (data) => {
+                data.forEach( (cidade) => {
+                    cidade.nome = `${cidade.nome} - ${cidade.estado.uf}`;
+                });
+                this.naturalidades$ = of(data);
+            },
+            error: (error) => {
+                this.sharedService.toast('Error!', error.erro as string, 2);
+            }
+        })
     }
 
     ngOnDestroy(): void {
         //this.editor.destroy();
         if(this.subscription){
             this.subscription.unsubscribe();
+        }
+        if(this.subscription2){
+            this.subscription2.unsubscribe();
         }
         
     }

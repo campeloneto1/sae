@@ -29,7 +29,7 @@
       </p>-->
       </div>
       <div class="col-sm-12 text-right">
-        {{user.key}}
+        <!--{{user.key}}-->
         <b>Data:</b> {{ date | date : "dd/MM/yyyy HH:mm" }}
       </div>
     </div>
@@ -54,7 +54,7 @@
           <div class="page">PAGE 2</div>-->
           <!--INICIO PAGE 1-->
           <div class="page">
-            <p class="marcadagua">Documento Sigiloso</p>
+            <p class="marcadagua">Documento Sigiloso {{cifra}}</p>
             <div class="noprint text-center">
               <!--<img src="assets/cabecalho.png" class="cabecalho" />-->
               <div class="text-center" style="position: relative; margin-top: 20px;">
@@ -142,7 +142,7 @@
           <!--FIM PAGE 1-->
           <!--INICIO PAGE 2 ANALISES-->
           <div class="page" *ngIf="(pessoa?.analises)!.length > 0">
-            <p class="marcadagua">Documento Sigiloso</p>
+            <p class="marcadagua">Documento Sigiloso {{cifra}}</p>
             <div class=" ">
               <h4 style="margin-top: 30px">Análises</h4>
             </div>
@@ -182,7 +182,7 @@
           <!--FIM PAGE 2 ANALISES-->
           <!--INICIO PAGE 3 ORGANIZACOES-->
           <div class="page" *ngIf="(pessoa?.organizacoes)!.length > 0">
-            <p class="marcadagua">Documento Sigiloso</p>
+            <p class="marcadagua">Documento Sigiloso {{cifra}}</p>
             <div class=" ">
               <h4 style="margin-top: 30px">Organizações</h4>
             </div>
@@ -223,7 +223,7 @@
           <!--FIM PAGE 3 ORGANIZACOES-->
           <!--INICIO PAGE 4 VEICULOS-->
           <div class="page" *ngIf="(pessoa?.veiculos)!.length > 0">
-            <p class="marcadagua">Documento Sigiloso</p>
+            <p class="marcadagua">Documento Sigiloso {{cifra}}</p>
             <div class=" ">
               <h4 style="margin-top: 30px">Veículos</h4>
             </div>
@@ -268,7 +268,7 @@
           <!--FIM PAGE 4 VEICULOS-->
           <!--INICIO PAGE 5 ARQUIVOS-->
           <div class="page" *ngIf="(pessoa?.arquivos)!.length > 0">
-            <p class="marcadagua">Documento Sigiloso</p>
+            <p class="marcadagua">Documento Sigiloso {{cifra}}</p>
             <div class=" ">
               <h4 style="margin-top: 30px">Arquivos</h4>
             </div>

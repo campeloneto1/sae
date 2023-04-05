@@ -50,7 +50,7 @@ export class FormularioAnalisesPessoasComponent{
         });
         this.form.get('analise_id')?.patchValue(this.analise_id);
         
-        this.pessoasService.index().subscribe({
+        this.subscription2 = this.pessoasService.index().subscribe({
             next: (data) => {
                 data.forEach((pessoa) => {
                     pessoa.nome = `${pessoa.nome} (${pessoa.cpf})`;
@@ -67,6 +67,10 @@ export class FormularioAnalisesPessoasComponent{
     ngOnDestroy(): void {
         if(this.subscription){
             this.subscription.unsubscribe();
+        }
+
+        if(this.subscription2){
+            this.subscription2.unsubscribe();
         }
        
     }

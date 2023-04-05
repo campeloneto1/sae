@@ -197,11 +197,16 @@ export class FormularioAnalisesComponent{
     }
 
     editar(data: Analise){
+        
         this.form.patchValue(data);
-        this.form.get('estado_id')?.patchValue(data.cidade?.estado_id);
-        this.form.get('pais_id')?.patchValue(data.cidade?.estado?.pais_id);
-        this.estados$ = this.sharedService.getEstados(this.form.value.pais_id);
-        this.cidades$ = this.sharedService.getCidades(this.form.value.estado_id);
+        if(data.cidade){
+            this.form.get('pais_id')?.patchValue(data.cidade?.estado?.pais_id);
+            this.form.get('estado_id')?.patchValue(data.cidade?.estado_id);
+            this.form.get('cidade_id')?.patchValue(data.cidade_id);
+            
+            this.estados$ = this.sharedService.getEstados(data.cidade?.estado?.pais_id || 0);
+            this.cidades$ = this.sharedService.getCidades(data.cidade?.estado_id || 0);
+        }
         this.getCategoria();
     }
 }

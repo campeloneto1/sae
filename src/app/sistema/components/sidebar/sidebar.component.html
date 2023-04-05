@@ -46,6 +46,16 @@
             <p>Análises</p>
           </a>
         </li>
+        <li class="nav-item" *ngIf="perfil.investigacoes_sociais">
+          <a
+            [routerLink]="['InvestigacoesSociais']"
+            routerLinkActive="active"
+            class="nav-link"
+          >
+            <i class="nav-icon fa fa-address-book"></i>
+            <p>Investigações Sociais</p>
+          </a>
+        </li>
         <li class="nav-item" *ngIf="perfil.organizacoes">
           <a
             [routerLink]="['Organizacoes']"
@@ -97,12 +107,32 @@
           <ul class="nav nav-treeview">
             <li class="nav-item">
               <a
+                [routerLink]="['Batalhoes']"
+                routerLinkActive="active"
+                class="nav-link"
+              >
+                <i class="far fa-circle nav-icon"></i>
+                <p>Batalhões</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a
                 [routerLink]="['Analises/Categorias']"
                 routerLinkActive="active"
                 class="nav-link"
               >
                 <i class="far fa-circle nav-icon"></i>
                 <p>Categorias de Análises</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a
+                [routerLink]="['Cnh/Categorias']"
+                routerLinkActive="active"
+                class="nav-link"
+              >
+                <i class="far fa-circle nav-icon"></i>
+                <p>Categorias de Cnh</p>
               </a>
             </li>
             <li class="nav-item">
@@ -117,6 +147,26 @@
             </li>
             <li class="nav-item">
               <a
+                [routerLink]="['Companhias']"
+                routerLinkActive="active"
+                class="nav-link"
+              >
+                <i class="far fa-circle nav-icon"></i>
+                <p>Companhias</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a
+                [routerLink]="['Comportamentos']"
+                routerLinkActive="active"
+                class="nav-link"
+              >
+                <i class="far fa-circle nav-icon"></i>
+                <p>Comportamentos</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a
                 [routerLink]="['Cores']"
                 routerLinkActive="active"
                 class="nav-link"
@@ -127,12 +177,32 @@
             </li>
             <li class="nav-item">
               <a
+                [routerLink]="['Escolaridades']"
+                routerLinkActive="active"
+                class="nav-link"
+              >
+                <i class="far fa-circle nav-icon"></i>
+                <p>Escolaridades</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a
                 [routerLink]="['Estados']"
                 routerLinkActive="active"
                 class="nav-link"
               >
                 <i class="far fa-circle nav-icon"></i>
                 <p>Estados</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a
+                [routerLink]="['Graduacoes']"
+                routerLinkActive="active"
+                class="nav-link"
+              >
+                <i class="far fa-circle nav-icon"></i>
+                <p>Graduações</p>
               </a>
             </li>
             <li class="nav-item">
@@ -195,6 +265,17 @@
                 <p>Sexos</p>
               </a>
             </li>
+           
+            <li class="nav-item">
+              <a
+                [routerLink]="['Situacoes/Funcionais']"
+                routerLinkActive="active"
+                class="nav-link"
+              >
+                <i class="far fa-circle nav-icon"></i>
+                <p>Situações Funcionais</p>
+              </a>
+            </li>
             <li class="nav-item">
               <a
                 [routerLink]="['Arquivos/Tipos']"
@@ -223,6 +304,16 @@
               >
                 <i class="far fa-circle nav-icon"></i>
                 <p>Tipos de Organizações</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a
+                [routerLink]="['Situacoes/Tipos']"
+                routerLinkActive="active"
+                class="nav-link"
+              >
+                <i class="far fa-circle nav-icon"></i>
+                <p>Tipos de Situações</p>
               </a>
             </li>
             <li class="nav-item">

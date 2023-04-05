@@ -1,5 +1,7 @@
 import { Analises } from "../analises/analises";
 import { Cidade } from "../cidades/cidades";
+import { CnhCategoria } from "../cnh-categorias/cnh-categorias";
+import { Escolaridade } from "../escolaridades/escolaridades";
 import { Estado } from "../estados/estados";
 import { Influencia } from "../influencias/influencias";
 import { Organizacoes } from "../organizacoes/organizacoes";
@@ -35,6 +37,15 @@ export interface Pessoa{
     estado?: Estado,
     cidade_id?: number,
     cidade?: Cidade,
+
+    cnh: string,
+    cnh_categoria_id: number,
+    cnh_categoria: CnhCategoria,
+    escolaridade_id: number,
+    escolaridade: Escolaridade,
+    naturalidade_id: number,
+    naturalidade: Cidade,
+    
     redes_sociais?: RedesSociais,
     veiculos?: Veiculos,
     analises?: Analises,

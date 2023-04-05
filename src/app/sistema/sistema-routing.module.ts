@@ -45,8 +45,28 @@ const routes: Routes = [
                 canActivate: [AlowedGuard]
             },
             {
+                path: 'Batalhoes',
+                loadComponent: () => import('./pages/batalhoes/batalhoes.component').then((c) => c.BatalhoesComponent),
+                canActivate: [AlowedGuard]
+            },
+            {
                 path: 'Cidades',
                 loadComponent: () => import('./pages/cidades/cidades.component').then((c) => c.CidadesComponent),
+                canActivate: [AlowedGuard]
+            },
+            {
+                path: 'Cnh/Categorias',
+                loadComponent: () => import('./pages/cnh-categorias/cnh-categorias.component').then((c) => c.CnhCategoriasComponent),
+                canActivate: [AlowedGuard]
+            },
+            {
+                path: 'Companhias',
+                loadComponent: () => import('./pages/companhias/companhias.component').then((c) => c.CompanhiasComponent),
+                canActivate: [AlowedGuard]
+            },
+            {
+                path: 'Comportamentos',
+                loadComponent: () => import('./pages/comportamentos/comportamentos.component').then((c) => c.ComportamentosComponent),
                 canActivate: [AlowedGuard]
             },
             {
@@ -55,13 +75,28 @@ const routes: Routes = [
                 canActivate: [AlowedGuard]
             },
             {
+                path: 'Escolaridades',
+                loadComponent: () => import('./pages/escolaridades/escolaridades.component').then((c) => c.EscolaridadesComponent),
+                canActivate: [AlowedGuard]
+            },
+            {
                 path: 'Estados',
                 loadComponent: () => import('./pages/estados/estados.component').then((c) => c.EstadosComponent),
                 canActivate: [AlowedGuard]
             },
             {
+                path: 'Graduacoes',
+                loadComponent: () => import('./pages/graduacoes/graduacoes.component').then((c) => c.GraduacoesComponent),
+                canActivate: [AlowedGuard]
+            },
+            {
                 path: 'Influencias',
                 loadComponent: () => import('./pages/influencias/influencias.component').then((c) => c.InfluenciasComponent),
+                canActivate: [AlowedGuard]
+            },
+            {
+                path: 'InvestigacoesSociais',
+                loadComponent: () => import('./pages/investigacoes-sociais/investigacoes-sociais.component').then((c) => c.InvestigacoesSociaisComponent),
                 canActivate: [AlowedGuard]
             },
             {
@@ -139,6 +174,17 @@ const routes: Routes = [
                 loadComponent: () => import('./pages/sexos/sexos.component').then((c) => c.SexosComponent),
                 canActivate: [AlowedGuard]
             },
+            {
+                path: 'Situacoes/Funcionais',
+                loadComponent: () => import('./pages/situacoes-funcionais/situacoes-funcionais.component').then((c) => c.SituacoesFuncionaisComponent),
+                canActivate: [AlowedGuard]
+            },
+            {
+                path: 'Situacoes/Tipos',
+                loadComponent: () => import('./pages/situacoes-tipos/situacoes-tipos.component').then((c) => c.SituacoesTiposComponent),
+                canActivate: [AlowedGuard]
+            },
+
             {
                 path: 'Usuarios',
                 loadComponent: () => import('./pages/usuarios/usuarios.component').then((c) => c.UsuariosComponent),
