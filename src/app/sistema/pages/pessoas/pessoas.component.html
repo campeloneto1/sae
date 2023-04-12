@@ -38,16 +38,25 @@
                 </td>
                 <td>
                   <i
-                    (click)="showRedesSociais(row)"
+                    (click)="showInformacoes(row)"
+                    *ngIf="user.perfil.pessoas_edt"
+                    data-bs-toggle="modal"
+                    data-bs-target="#modalvinculos"
+                    title="Vínculos"
+                    class="fa fa-sitemap text-primary point"
+                    aria-hidden="true"
+                  ></i>
+                  <i
+                    (click)="showInformacoes(row)"
                     *ngIf="user.perfil.pessoas_edt"
                     data-bs-toggle="modal"
                     data-bs-target="#modalredes"
                     title="Redes Sociais"
-                    class="fa fa-share-alt-square text-primary point"
+                    class="fa fa-share-alt-square text-primary point ml-2"
                     aria-hidden="true"
                   ></i>
                   <i
-                    (click)="showAnalises(row)"
+                    (click)="showInformacoes(row)"
                     *ngIf="user.perfil.pessoas_edt"
                     data-bs-toggle="modal"
                     data-bs-target="#modalanalises"
@@ -56,7 +65,7 @@
                     aria-hidden="true"
                   ></i>
                   <i
-                    (click)="showOrganizacoes(row)"
+                    (click)="showInformacoes(row)"
                     *ngIf="user.perfil.pessoas_edt"
                     data-bs-toggle="modal"
                     data-bs-target="#modalorganizacoes"
@@ -65,7 +74,7 @@
                     aria-hidden="true"
                   ></i>
                   <i
-                    (click)="showVeiculos(row)"
+                    (click)="showInformacoes(row)"
                     *ngIf="user.perfil.pessoas_edt"
                     data-bs-toggle="modal"
                     data-bs-target="#modalveiculos"
@@ -202,6 +211,58 @@
       <!-- /.modal-dialog -->
     </div>
     <!-- /.FIM MODAL FOTO -->
+
+    <!-- INICIO MODAL VINCULOS-->
+    <div class="modal fade" id="modalvinculos" style="display: none;" aria-hidden="true">
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <div class="modal-header border-0">
+            <h4 class="modal-title">Cadastrar Vínculo</h4>
+            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body" *ngIf="informacoes">
+              <formulario-pessoas-vinculos [pessoa_id]="informacoes.id" (refresh)="refresh2()" />
+
+              <!--INICIO TABLE-->
+              <table  class="table table-hover table-head-fixed  ">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Tipo</th>    
+                    <th>Nome</th>                      
+                    <th>CPF</th>                      
+                    <th>Opções</th>
+                  </tr>
+                </thead>
+                <tbody *ngIf="informacoes" >
+                  <tr *ngFor="let row of informacoes.vinculos" class="optionshover">
+                    <td>{{row.id}}</td> 
+                    <td>{{row.vinculo_tipo.nome}}</td>
+                    <td>{{row.nome}}</td> 
+                    <td>{{row.cpf | mask: '000.000.000-00'}}</td> 
+                    <td>                                        
+                        <a
+                          class="options ml-2"
+                          (click)="deleteVinculo(row.id || 0)"                           
+                          title="Excluir"
+                        >
+                          <i
+                            class="fas fa-trash text-danger point "
+                            aria-hidden="true"
+                          ></i
+                        ></a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <!--FIM TABLE-->
+          </div>           
+        </div>        
+      </div>        
+    </div>
+    <!--FIM MODAL VINCULOS-->
       
       <!-- INICIO MODAL REDES SOCIAIS-->
       <div class="modal fade" id="modalredes" style="display: none;" aria-hidden="true">

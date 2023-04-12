@@ -1,0 +1,10 @@
+<form [formGroup]="form" (ngSubmit)="cadastrar()" >
+    <div class="row">
+        <app-input-select class="col-sm-2" formControlName="vinculo_tipo_id" label="Vínculo" id="vinculo_tipo_id" [data$]="vinculostipos$" />
+        <app-input-text class="col-sm-4" formControlName="nome" label="Nome" id="nome" tipo="text" />
+        <app-input-text class="col-sm-2" formControlName="cpf" label="CPF" id="cpf" mascara="000.000.000-00" tipo="text" />
+        <div class="col-sm-2">
+            <button style="margin-top: 31px;" [disabled]="form.invalid"  type="submit" class="btn btn-primary">Cadastrar</button>
+        </div>        
+    </div>       
+</form>

@@ -4,8 +4,11 @@
     </div>
     <div class="row">
         <app-input-select class="col-sm-2" formControlName="graduacao_id" label="Graduação" id="graduacao_id" [data$]="graduacoes$" />        
-        <app-input-text class="col-sm-2" formControlName="matricula" label="Matrícula" id="matricula" mascara="000.000-00" tipo="text" />
         <app-input-text class="col-sm-2" formControlName="numeral" label="Numeral" id="numeral"  tipo="text" />
+        <app-input-text class="col-sm-2" formControlName="nome_guerra" label="Nome de Guerra" id="nome_guerra"  tipo="text" />
+        <app-input-text class="col-sm-2" formControlName="matricula" label="Matrícula" id="matricula" mascara="000.000-0A" tipo="text" />
+       
+       
         <app-input-text class="col-sm-2" formControlName="data_ingresso" label="Data Ingresso" id="data_ingresso" tipo="date" />
     </div>
     <div class="row">
@@ -13,9 +16,11 @@
         <app-input-select class="col-sm-2" formControlName="companhia_id" label="Companhia" id="companhia_id" [data$]="companhias$" />  
         <app-input-select class="col-sm-2" formControlName="situacao_funcional_id" label="Situação Funcional" id="situacao_funcional_id" [data$]="situacoesfuncionais$" />  
         <app-input-select class="col-sm-2" formControlName="situacao_tipo_id" label="Tipo de Situação" id="situacao_tipo_id" [data$]="situacoestipos$" />  
-        <app-input-select class="col-sm-2" formControlName="comportamento_id" label="comportamento_id" id="comportamento_id" [data$]="comportamentos$" />  
+        <app-input-select class="col-sm-2" formControlName="comportamento_id" label="Comportamento" id="comportamento_id" [data$]="comportamentos$" />  
     </div>
     <div class="row">
+        
+        <app-input-textarea class="col-sm-12" formControlName="cgd" label="CGD" id="cgd" tipo="textarea" />
         <app-input-textarea class="col-sm-12" formControlName="sip" label="SIP" id="sip" tipo="textarea" />
         <app-input-textarea class="col-sm-12" formControlName="sinesp" label="SINESP" id="sinesp" tipo="textarea" />
         <app-input-textarea class="col-sm-12" formControlName="tjce" label="TJCE" id="tjce" tipo="textarea" />

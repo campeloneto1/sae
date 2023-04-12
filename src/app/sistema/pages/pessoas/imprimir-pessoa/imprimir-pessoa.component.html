@@ -131,6 +131,13 @@
             <!--DIV 4-->
             <!--DIV 5-->
             <div class="row">
+              <div *ngFor="let vinculo of pessoa.vinculos" class="col-sm-4">
+                <strong>{{vinculo.vinculo_tipo.nome}}: </strong>{{vinculo.nome}} <span *ngIf="vinculo.cpf">({{vinculo.cpf}})</span>
+              </div>
+            </div>
+            <!--DIV 5-->
+            <!--DIV 5-->
+            <div class="row">
               <div *ngFor="let rede of pessoa.redes_sociais" class="col-sm-3">
                 <b>{{ rede.nome }}:</b> {{ rede.pivot?.nome }}
               </div>

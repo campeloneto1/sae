@@ -100,8 +100,23 @@ const routes: Routes = [
                 canActivate: [AlowedGuard]
             },
             {
+                path: 'InvestigacoesSociais/:id',
+                loadComponent: () => import('./pages/investigacoes-sociais/investigacao-social/investigacao-social.component').then((c) => c.InvestigacaoSocialComponent),
+                canActivate: [AlowedGuard]
+            },
+            {
+                path: 'InvestigacoesSociais/:id/Imprimir',
+                loadComponent: () => import('./pages/investigacoes-sociais/imprimir-investigacao-social/imprimir-investigacao-social.component').then((c) => c.ImprimirInvestigacaoSocialComponent),
+                canActivate: [AlowedGuard]
+            },
+            {
                 path: 'Logs',
                 loadComponent: () => import('./pages/logs/logs.component').then((c) => c.LogsComponent),
+                canActivate: [AlowedGuard]
+            },
+            {
+                path: 'Lotacoes/Tipos',
+                loadComponent: () => import('./pages/lotacoes-tipos/lotacoes-tipos.component').then((c) => c.LotacoesTiposComponent),
                 canActivate: [AlowedGuard]
             },
             {
@@ -208,6 +223,11 @@ const routes: Routes = [
             {
                 path: 'Veiculos/:id/Imprimir',
                 loadComponent: () => import('./pages/veiculos/imprimir-veiculo/imprimir-veiculo.component').then((c) => c.ImprimirVeiculoComponent),
+                canActivate: [AlowedGuard]
+            },
+            {
+                path: 'Vinculos/Tipos',
+                loadComponent: () => import('./pages/vinculos-tipos/vinculos-tipos.component').then((c) => c.VinculosTiposComponent),
                 canActivate: [AlowedGuard]
             },
             {

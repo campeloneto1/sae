@@ -10,6 +10,7 @@ export interface Veiculo{
     placa: string,
     renavam?: string,
     chassi?: string,
+    ano?: number,
     cor_id?: number,
     cor?: Cor,
     modelo_id?: number,

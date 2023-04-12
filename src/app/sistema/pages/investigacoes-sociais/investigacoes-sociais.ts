@@ -5,11 +5,14 @@ import { Graduacao } from "../graduacoes/graduacoes";
 import { Pessoa } from "../pessoas/pessoas";
 import { SituacaoFuncional } from "../situacoes-funcionais/situacoes-funcionais";
 import { SituacaoTipo } from "../situacoes-tipos/situacoes-tipos";
+import { InvestigacoesSociaisBoletins } from "./formulario-investigacoes-sociais-boletins/investigacoes-sociais-boletins";
+import { InvestigacoesSociaisLotacoes } from "./formulario-investigacoes-sociais-lotacoes/investigacoes-sociais-lotacoes";
 
 export interface InvestigacaoSocial{
     id?: number,
     pessoa_id: number,
     pessoa: Pessoa,
+    nome_guerra?: string,
     matricula?: string,
     numeral?: string,
     data_ingresso?: Date,
@@ -24,6 +27,9 @@ export interface InvestigacaoSocial{
     comportamento_id?: number,
     comportamento?: Comportamento,
 
+    lotacoes?: InvestigacoesSociaisLotacoes,
+    boletins?: InvestigacoesSociaisBoletins,
+    cgd?: string,
     sip?: string,
     sinesp?: string,
     tjce?: string,

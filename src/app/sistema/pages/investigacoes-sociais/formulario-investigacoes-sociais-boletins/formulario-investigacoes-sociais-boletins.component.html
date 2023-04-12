@@ -1,0 +1,11 @@
+<form  [formGroup]="form" (ngSubmit)="cadastrar()" >
+    <div class="row">
+        <app-input-text class="col-sm-4" formControlName="bcg" label="Boletim" id="bcg" tipo="text" />
+        <app-input-textarea class="col-sm-12" formControlName="descricao" label="Descrição" id="descricao" tipo="textarea" />        
+    </div>
+   
+    <div class="d-flex justify-content-end">      
+        <!--<a (click)="form.reset()" data-bs-dismiss="modal" class="btn btn-link text-danger">Cancelar</a>-->
+        <button [disabled]="form.invalid"  type="submit" class="btn btn-primary">Cadastrar</button>
+    </div>
+</form>

@@ -75,6 +75,10 @@ export class FormularioVeiculosComponent{
                 Validators.maxLength(150)
             ])],
             'cor_id': [''],
+            'ano': ['', Validators.compose([
+                Validators.min(1990),
+                Validators.max(2050)
+            ])],
             'marca_id': ['', Validators.compose([
                 Validators.required,
             ])],

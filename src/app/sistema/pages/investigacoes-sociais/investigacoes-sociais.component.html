@@ -20,10 +20,13 @@
                 <th>#</th>
                 <th>Graduação</th>
                 <th>Nome</th>
+                <th>Nome de Guerra</th>
                 <th>CPF</th>
                 <th>Matrícula</th>
                 <th>Criado</th>
                 <th>Modificado</th>
+                <th>Foto</th>
+                <th>Informações</th>
                 <th>Opções</th>
               </tr>
             </thead>
@@ -32,11 +35,53 @@
               <tr *ngFor="let row of data" class="optionshover">
                 <td>{{row.id}}</td>
                 <td>{{row.graduacao?.nome}}</td>  
-                <td>{{row.pessoa.nome}}</td>  
+                <td><a [routerLink]="[row.id]">{{row.pessoa.nome}}</a></td>  
+                <td>{{row.nome_guerra}}</td>  
                 <td>{{row.pessoa.cpf | mask: '000.000.000-00'}}</td> 
                 <td>{{row.matricula! | mask: '000.000-00'}}</td> 
                 <td>{{row.created_at | date: 'dd/MM/yyyy HH:mm'}}</td>      
-                <td>{{row.updated_at | date: 'dd/MM/yyyy HH:mm'}}</td>              
+                <td>{{row.updated_at | date: 'dd/MM/yyyy HH:mm'}}</td>  
+                <td>
+                  <i *ngIf="user.perfil.pessoas_edt" class="fas fa-portrait point" [ngClass]="row.pessoa.foto ? 'text-success' : 'text-danger'" (click)="showFoto(row.pessoa)" data-bs-toggle="modal" data-bs-target="#modalfoto"></i>
+                </td>
+                <td>
+                  <i
+                    (click)="showInformacoes(row.pessoa)"
+                    *ngIf="user.perfil.pessoas_edt"
+                    data-bs-toggle="modal"
+                    data-bs-target="#modalvinculos"
+                    title="Vínculos"
+                    class="fa fa-sitemap text-primary point"
+                    aria-hidden="true"
+                  ></i>
+                  <i
+                    (click)="showInformacoes(row.pessoa)"
+                    *ngIf="user.perfil.pessoas_edt"
+                    data-bs-toggle="modal"
+                    data-bs-target="#modalredes"
+                    title="Redes Sociais"
+                    class="fa fa-share-alt-square text-primary point ml-2"
+                    aria-hidden="true"
+                  ></i>                
+                  <i
+                    (click)="showInformacoes(row.pessoa)"
+                    *ngIf="user.perfil.pessoas_edt"
+                    data-bs-toggle="modal"
+                    data-bs-target="#modalveiculos"
+                    title="Veículos"
+                    class="fa fa-car text-primary point ml-2"
+                    aria-hidden="true"
+                  ></i>
+                  <i
+                    (click)="showInformacoes2(row)"
+                    *ngIf="user.perfil.investigacoes_sociais_edt"
+                    data-bs-toggle="modal"
+                    data-bs-target="#modalboletins"
+                    title="Boletins"
+                    class="fa fa-file-text text-primary point ml-2"
+                    aria-hidden="true"
+                  ></i>
+                </td>            
                 <td>                 
                   <a             
                       class="options ml-2"
@@ -126,7 +171,262 @@
         </div>
         
       </div>
-      <!--FIM MODAL EXCLUIR-->     
+      <!--FIM MODAL EXCLUIR-->    
+      
+       <!-- /.INICIO MODAL foto -->
+    <div class="modal fade" id="modalfoto" style="display: none;" aria-hidden="true">
+      <div class="modal-dialog ">
+        <div class="modal-content" *ngIf="foto">
+          <div class="modal-header">
+            <h4 class="modal-title">Cadastrar foto do usuário <b>{{foto.nome}}</b></h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          
+          <div class="modal-body text-center" >                
+            <h1 style="font-size: 90px;" *ngIf="!foto?.foto"><i class="fas fa-portrait" [ngClass]="foto.foto ? 'text-success' : 'text-danger'" ></i></h1>
+            <img [src]="IMG+foto.foto" *ngIf="foto?.foto" alt="user-avatar"  height="120px" class="img-circle img-fluid">
+            <form >
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="form-group">
+                    <label for="foto">Foto<span class="text-danger">*</span></label>
+                    <input type="file"  class="form-control form-control-border" accept="image/x-png,image/gif,image/jpeg" (change)="fileEvent($event)"  id="foto" required >                          
+                  </div>
+                </div>
+              </div>
+            </form>  
+          </div>
+          <div class="modal-footer ">
+          
+            <button type="button" class="btn btn-link" data-bs-dismiss="modal">Fechar</button>                  
+          </div>
+        </div>
+        <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+    </div>
+    <!-- /.FIM MODAL FOTO -->
+
+      <!-- INICIO MODAL VINCULOS-->
+    <div class="modal fade" id="modalvinculos" style="display: none;" aria-hidden="true">
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <div class="modal-header border-0">
+            <h4 class="modal-title">Cadastrar Vínculo</h4>
+            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body" *ngIf="informacoes">
+              <formulario-pessoas-vinculos [pessoa_id]="informacoes.id" (refresh)="refresh2()" />
+
+              <!--INICIO TABLE-->
+              <table  class="table table-hover table-head-fixed  ">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Tipo</th>    
+                    <th>Nome</th>                      
+                    <th>CPF</th>                      
+                    <th>Opções</th>
+                  </tr>
+                </thead>
+                <tbody *ngIf="informacoes" >
+                  <tr *ngFor="let row of informacoes.vinculos" class="optionshover">
+                    <td>{{row.id}}</td> 
+                    <td>{{row.vinculo_tipo.nome}}</td>
+                    <td>{{row.nome}}</td> 
+                    <td>{{row.cpf | mask: '000.000.000-00'}}</td> 
+                    <td>                                        
+                        <a
+                          class="options ml-2"
+                          (click)="deleteVinculo(row.id || 0)"                           
+                          title="Excluir"
+                        >
+                          <i
+                            class="fas fa-trash text-danger point "
+                            aria-hidden="true"
+                          ></i
+                        ></a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <!--FIM TABLE-->
+          </div>           
+        </div>        
+      </div>        
+    </div>
+    <!--FIM MODAL VINCULOS-->
+      
+      <!-- INICIO MODAL REDES SOCIAIS-->
+      <div class="modal fade" id="modalredes" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+          <div class="modal-content">
+            <div class="modal-header border-0">
+              <h4 class="modal-title">Cadastrar Rede Social</h4>
+              <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class="modal-body" *ngIf="informacoes">
+                <formulario-pessoas-redes-sociais [pessoa_id]="informacoes.id" (refresh)="refresh2()" />
+
+                <!--INICIO TABLE-->
+                <table  class="table table-hover table-head-fixed  ">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Rede Social</th>    
+                      <th>Link</th>                      
+                      <th>Opções</th>
+                    </tr>
+                  </thead>
+                  <tbody *ngIf="informacoes" >
+                    <tr *ngFor="let row of informacoes.redes_sociais" class="optionshover">
+                      <td>{{row.pivot.id}}</td>
+                      <td>{{row.nome}}</td> 
+                      <td><a [href]="row.pivot.nome" target="_blank">{{row.pivot.nome}}</a></td> 
+                      <td>                                        
+                          <a
+                            class="options ml-2"
+                            (click)="deleteRedeSocial(row.pivot.id)"                           
+                            title="Excluir"
+                          >
+                            <i
+                              class="fas fa-trash text-danger point "
+                              aria-hidden="true"
+                            ></i
+                          ></a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <!--FIM TABLE-->
+            </div>           
+          </div>        
+        </div>        
+      </div>
+      <!--FIM MODAL REDES SOCIAIS-->
+
+      <!-- INICIO MODAL VEICULOS-->
+      <div class="modal fade" id="modalveiculos" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+          <div class="modal-content">
+            <div class="modal-header border-0">
+              <h4 class="modal-title">
+                Cadastrar Veículo 
+                <button (click)="cadveiculo = true;" class="btn btn-outline-primary" title="Cadastrar"><i class="fa fa-plus"></i></button>
+              </h4>
+              <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class="modal-body" *ngIf="informacoes">
+                <formulario-veiculos *ngIf="cadveiculo" (refresh)="cadVeiculo()" (cancel)="cancelVeiculo()"/>
+                <formulario-pessoas-veiculos *ngIf="!cadveiculo" [pessoa_id]="informacoes.id" (refresh)="refresh2()" />
+
+                <!--INICIO TABLE-->
+                <table  class="table table-hover table-head-fixed  mt-2">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Tipo</th> 
+                      <th>Marca - Modelo</th>    
+                      <th>Placa</th>    
+                      <th>Chassi</th>   
+                      <th>Renavam</th>   
+                      <th>Proprietário</th>                      
+                      <th>Opções</th>
+                    </tr>
+                  </thead>
+                  <tbody *ngIf="informacoes" >
+                    <tr *ngFor="let row of informacoes.veiculos" class="optionshover">
+                      <td>{{row.pivot.id}}</td>
+                      <td>{{row.veiculo_tipo.nome}}</td> 
+                      <td>{{row.modelo?.marca?.nome}} - {{row.modelo?.nome}}</td> 
+                      <td><a data-bs-dismiss="modal" [routerLink]="['/Veiculos', row.id]">{{row.placa}}</a></td> 
+                      <td>{{row.chassi}}</td> 
+                      <td>{{row.renavam}}</td> 
+                      <td>
+                        <span *ngIf="row.pessoa"><a [routerLink]="['/Pessoas', row.pessoa.id]">{{row.pessoa.nome}}</a></span>
+                          <span *ngIf="row.organizacao"><a [routerLink]="['/Organizacoes', row.organizacao.id]">{{row.organizacao.nome}}</a></span>
+                      </td> 
+                      <td>                                        
+                          <a
+                            class="options ml-2"
+                            (click)="deleteVeiculo(row.pivot.id)"                           
+                            title="Excluir"
+                          >
+                            <i
+                              class="fas fa-trash text-danger point "
+                              aria-hidden="true"
+                            ></i
+                          ></a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <!--FIM TABLE-->
+            </div>           
+          </div>        
+        </div>        
+      </div>
+      <!--FIM MODAL VEICULOS-->
+
+      <!-- INICIO MODAL VEICULOS-->
+      <div class="modal fade" id="modalboletins" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+          <div class="modal-content">
+            <div class="modal-header border-0">
+              <h4 class="modal-title">
+                Cadastrar Boletins 
+              </h4>
+              <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class="modal-body" *ngIf="informacoes2">
+                <formulario-investigacoes-sociais-boletins [investigacao_social_id]="informacoes2.id" (refresh)="refresh3()" />
+
+                <!--INICIO TABLE-->
+                <table  class="table table-hover table-head-fixed  mt-2">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Boletim</th> 
+                      <th>Descrição</th>                                        
+                      <th>Opções</th>
+                    </tr>
+                  </thead>
+                  <tbody *ngIf="informacoes2" >
+                    <tr *ngFor="let row of informacoes2.boletins" class="optionshover">
+                      <td>{{row.id}}</td>
+                      <td>{{row.bcg}}</td> 
+                      <td [innerHTML]="row.descricao"> </td> 
+                      <td>                                        
+                          <a
+                            class="options ml-2"
+                            (click)="deleteBoletim(row.id || 0)"                           
+                            title="Excluir"
+                          >
+                            <i
+                              class="fas fa-trash text-danger point "
+                              aria-hidden="true"
+                            ></i
+                          ></a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <!--FIM TABLE-->
+            </div>           
+          </div>        
+        </div>        
+      </div>
+      <!--FIM MODAL VEICULOS-->
       
     </section>
     <!--FIM SECTION content-->

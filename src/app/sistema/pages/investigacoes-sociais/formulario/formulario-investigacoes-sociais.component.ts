@@ -64,6 +64,10 @@ export class FormularioInvestigacoesSociaisComponent{
             'pessoa_id': ['', Validators.compose([
                 Validators.required,               
             ])], 
+            'nome_guerra': ['', Validators.compose([
+                Validators.minLength(4),    
+                Validators.maxLength(40),               
+            ])], 
             'matricula': ['', Validators.compose([
                 Validators.minLength(8),    
                 Validators.maxLength(8),               
@@ -79,7 +83,8 @@ export class FormularioInvestigacoesSociaisComponent{
             'situacao_funcional_id': [''],            
             'situacao_tipo_id': [''],
             'comportamento_id': [''],
-
+            
+            'cgd': [''],
             'sip': [''],
             'sinesp': [''],
             'tjce': [''],

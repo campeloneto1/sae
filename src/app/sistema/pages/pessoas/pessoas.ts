@@ -10,6 +10,7 @@ import { RedesSociais } from "../redes-sociais/redes-sociais";
 import { Sexo } from "../sexos/sexos";
 import { Veiculos } from "../veiculos/veiculos";
 import { PessoasArquivos } from "./formulario-pessoas-arquivos/pessoas-arquivos";
+import { PessoasVinculos } from "./formulario-pessoas-vinculos/pessoas-vinculos";
 
 export interface Pessoa{
     id?: number,
@@ -46,6 +47,7 @@ export interface Pessoa{
     naturalidade_id: number,
     naturalidade: Cidade,
     
+    vinculos?: PessoasVinculos,
     redes_sociais?: RedesSociais,
     veiculos?: Veiculos,
     analises?: Analises,

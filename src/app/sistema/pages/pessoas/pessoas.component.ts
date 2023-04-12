@@ -22,6 +22,8 @@ import { environment } from "src/environments/environments";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Usuario } from "../usuarios/usuarios";
 import { SessionService } from "../../shared/session.service";
+import { FormularioPessoasVinculosComponent } from "./formulario-pessoas-vinculos/formulario-pessoas-vinculos.component";
+import { PessoasVinculosService } from "./formulario-pessoas-vinculos/pessoas-vinculos.service";
 @Component({
     selector: 'pessoas',
     templateUrl: './pessoas.component.html',
@@ -37,7 +39,8 @@ import { SessionService } from "../../shared/session.service";
         FormularioPessoasVeiculosComponent, 
         FormularioVeiculosComponent,
         FormularioPessoasAnalisesComponent,
-        FormularioPessoasOrganizacoesComponent
+        FormularioPessoasOrganizacoesComponent,
+        FormularioPessoasVinculosComponent
     ]
 })
 
@@ -76,6 +79,7 @@ export class PessoasComponent implements OnInit, OnDestroy{
         private pessoasService: PessoasService,
         private pessoasRedesSociaisService: PessoasRedesSociaisService,
         private pessoasVeiculosService: PessoasVeiculosService,
+        private pessoasVinculosService: PessoasVinculosService,
         private analisesPessoasService: AnalisesPessoasService,
         private organizacoesPessoasService: OrganizacoesPessoasService,
         private http: HttpClient){
@@ -207,8 +211,9 @@ export class PessoasComponent implements OnInit, OnDestroy{
           });  
       }
 
-    showRedesSociais(data: Pessoa){
-        this.informacoes = data;
+      showInformacoes(data: Pessoa){
+        this.informacoes = {} as Pessoa;
+        this.getPessoa(data.id || 0);
     }
 
     deleteRedeSocial(data: number){
@@ -224,11 +229,6 @@ export class PessoasComponent implements OnInit, OnDestroy{
             });
         }
         
-    }
-
-    showVeiculos(data: Pessoa){
-        this.informacoes = {} as Pessoa;
-        this.getPessoa(data.id || 0);
     }
 
     deleteVeiculo(data: number){
@@ -254,11 +254,6 @@ export class PessoasComponent implements OnInit, OnDestroy{
         this.cadveiculo = false;
     }
 
-    showAnalises(data: Pessoa){
-        this.informacoes = {} as Pessoa;
-        this.getPessoa(data.id || 0);
-    }
-
     deleteAnalise(data: number){
         if (confirm("Tem certeza que deseja excluir a análise?")){
             this.analisesPessoasService.destroy(data).subscribe({
@@ -273,14 +268,25 @@ export class PessoasComponent implements OnInit, OnDestroy{
         }
     }
 
-    showOrganizacoes(data: Pessoa){
-        this.informacoes = {} as Pessoa;
-        this.getPessoa(data.id || 0);
-    }
+   
 
     deleteOrganizacao(data: number){
         if (confirm("Tem certeza que deseja excluir a organização?")){
             this.organizacoesPessoasService.destroy(data).subscribe({
+                next: (data) => {
+                    this.sharedService.toast("Sucesso", data as string, 3);
+                    this.refresh2();
+                },
+                error: (error) => {
+                    this.sharedService.toast('Error!', error.erro as string, 2);
+                }
+            });
+        }
+    }
+
+    deleteVinculo(data: number){
+        if (confirm("Tem certeza que deseja excluir o vínculo?")){
+            this.pessoasVinculosService.destroy(data).subscribe({
                 next: (data) => {
                     this.sharedService.toast("Sucesso", data as string, 3);
                     this.refresh2();

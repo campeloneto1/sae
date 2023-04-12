@@ -1,0 +1,14 @@
+<form  [formGroup]="form" (ngSubmit)="cadastrar()" >
+    <div class="row">
+        <app-input-text class="col-sm-2" formControlName="bcg" label="Boletim" id="bcg" tipo="text" />
+        <app-input-select class="col-sm-2" formControlName="lotacao_tipo_id" label="Tipo" id="lotacao_tipo_id" [data$]="lotacoestipos$" />  
+        <app-input-text class="col-sm-2" formControlName="data" label="Data" id="data" tipo="date" />
+        <app-input-select (ngModelChange)="getCompanhias()" class="col-sm-2" formControlName="batalhao_id" label="Batalhão" id="batalhao_id" [data$]="batalhoes$" />   
+        <app-input-select class="col-sm-2" formControlName="companhia_id" label="Companhia" id="companhia_id" [data$]="companhias$" />  
+    </div>
+   
+    <div class="d-flex justify-content-end">      
+        <!--<a (click)="form.reset()" data-bs-dismiss="modal" class="btn btn-link text-danger">Cancelar</a>-->
+        <button [disabled]="form.invalid"  type="submit" class="btn btn-primary">Cadastrar</button>
+    </div>
+</form>

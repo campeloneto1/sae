@@ -47,6 +47,7 @@ export class InputTextareaComponent implements ControlValueAccessor, OnInit, OnD
         {class: 'calibri', name: 'Calibri'},
         {class: 'comic-sans-ms', name: 'Comic Sans MS'}
       ],
+     
       customClasses: [
       {
         name: 'quote',
@@ -61,6 +62,26 @@ export class InputTextareaComponent implements ControlValueAccessor, OnInit, OnD
         class: 'titleText',
         tag: 'h1',
       },
+      {
+        name: 'table 1x2',
+        class: '<!--',
+        tag: 'table class="table table-bordered"><tr><td>&nbsp;</td><td>&nbsp;</td></tr></table> <!-- '
+      },
+      {
+        name: 'table 2x2',
+        class: '<!--',
+        tag: 'table class="table table-bordered"><tr><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td></tr></table> <!-- '
+      },  
+      {
+        name: 'table 2x3',
+        class: '<!--',
+        tag: 'table class="table table-bordered"><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr></table> <!-- '
+      },       
+      {
+        name: 'table 3x3',
+        class: '<!--',
+        tag: 'table class="table table-bordered"><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr></table> <!-- '
+      }
     ],
     uploadUrl: environment.url+'/upload-image',
     //upload: (file: File) => { console.log(file) },

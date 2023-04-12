@@ -29,6 +29,7 @@ export class SessionService{
         'Analises/Tipos', 
         'Organizacoes/Tipos', 
         'Veiculos/Tipos', 
+        'Vinculos/Tipos', 
         
       ];
       
