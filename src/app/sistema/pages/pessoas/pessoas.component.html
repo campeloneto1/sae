@@ -189,7 +189,7 @@
           
           <div class="modal-body text-center" >                
             <h1 style="font-size: 90px;" *ngIf="!foto?.foto"><i class="fas fa-portrait" [ngClass]="foto.foto ? 'text-success' : 'text-danger'" ></i></h1>
-            <img [src]="IMG+foto.foto" *ngIf="foto?.foto" alt="user-avatar"  height="120px" class="img-circle img-fluid">
+            <img [src]="urlfoto(foto)" *ngIf="foto?.foto" alt="user-avatar"  height="120px" class="img-circle img-fluid">
             <form >
               <div class="row">
                 <div class="col-sm-12">
@@ -283,7 +283,8 @@
                     <tr>
                       <th>#</th>
                       <th>Rede Social</th>    
-                      <th>Link</th>                      
+                      <th>Link</th>     
+                      <th>Foto</th>                 
                       <th>Opções</th>
                     </tr>
                   </thead>
@@ -292,6 +293,9 @@
                       <td>{{row.pivot.id}}</td>
                       <td>{{row.nome}}</td> 
                       <td><a [href]="row.pivot.nome" target="_blank">{{row.pivot.nome}}</a></td> 
+                      <td>
+                        <img *ngIf="row.pivot.foto" [src]="urlfoto2(row)" alt="user-avatar"  height="120px" class="img-circle img-fluid">
+                      </td>
                       <td>                                        
                           <a
                             class="options ml-2"

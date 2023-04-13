@@ -25,12 +25,15 @@
               <li class="list-group-item">
                 <b>CPF</b> <a class="float-right">{{investigacao.pessoa.cpf | mask: '000.000.000-00'}}</a>
               </li>
-              <li *ngIf="investigacao.pessoa.alcunha" class="list-group-item">
+              <li *ngIf="investigacao.pessoa.data_nascimento" class="list-group-item">
                 <b>Data Nascimento</b> <a class="float-right">{{investigacao.pessoa.data_nascimento | date: 'dd/MM/yyyy'}}</a>
               </li>
               <li *ngIf="investigacao.pessoa.sexo_id" class="list-group-item">
                 <b>Sexo</b> <a class="float-right">{{investigacao.pessoa.sexo?.nome}}</a>
-              </li>              
+              </li>
+              <li *ngIf="investigacao.pessoa.naturalidade_id" class="list-group-item">
+                <b>Naturalidade</b> <a class="float-right">{{investigacao.pessoa.naturalidade.nome}} - {{investigacao.pessoa.naturalidade.estado.uf}}</a>
+              </li> 
               <li *ngIf="investigacao.pessoa.email" class="list-group-item">
                 <b>E-mail</b> <a class="float-right">{{investigacao.pessoa.email}}</a>
               </li> 
@@ -40,9 +43,16 @@
               <li *ngIf="investigacao.pessoa.telefone2" class="list-group-item">
                 <b>Telefone 2</b> <a class="float-right">{{investigacao.pessoa.telefone2}}</a>
               </li> 
-              <li *ngIf="investigacao.pessoa.influencia_id" class="list-group-item">
-                <b>Influência</b> <a class="float-right">{{investigacao.pessoa.influencia?.nome}}</a>
-              </li>  
+
+              <li *ngIf="investigacao.pessoa.cnh" class="list-group-item">
+                <b>CNH</b> <a class="float-right">{{investigacao.pessoa.cnh}}</a>
+              </li> 
+              <li *ngIf="investigacao.pessoa.cnh_categoria_id" class="list-group-item">
+                <b>Categoria CNH</b> <a class="float-right">{{investigacao.pessoa.cnh_categoria.nome}}</a>
+              </li> 
+              <li *ngIf="investigacao.pessoa.escolaridade_id" class="list-group-item">
+                <b>Escolaridade</b> <a class="float-right">{{investigacao.pessoa.escolaridade.nome}}</a>
+              </li> 
               
               <li *ngIf="investigacao.graduacao_id" class="list-group-item">
                 <b>Graduação</b> <a class="float-right">{{investigacao.graduacao?.nome}}</a>
@@ -78,22 +88,7 @@
 
           
         </div>
-
-        <div class="card ">
-          <div class="card-header border-0">Vínculos</div>
-          <div class="card-body box-profile">
-            <ul class="list-unstyled">
-                <li *ngFor="let vinculo of investigacao.pessoa.vinculos"><strong>{{vinculo.vinculo_tipo.nome}}: </strong>{{vinculo.nome}} <span *ngIf="vinculo.cpf">({{vinculo.cpf}})</span></li>
-            </ul>
-        </div>
-          <div class="card-header border-0">Redes Sociais</div>
-          <div class="card-body box-profile">
-              <ul class="list-unstyled">
-                  <li *ngFor="let rede of investigacao.pessoa.redes_sociais"><a [href]="rede.pivot.nome" target="_blank">{{rede.nome}}</a></li>
-              </ul>
-          </div>
-        </div>
-
+        
         <div class="card " *ngIf="investigacao.pessoa.rua">
           <div class="card-header border-0">Endereço</div>
           <div class="card-body box-profile">
@@ -114,8 +109,10 @@
           
           <div class="card-header border-0 p-2">
             <ul class="nav nav-pills">
-                <!--<li class="nav-item"><a class="nav-link active" href="#informacoes" data-bs-toggle="tab">Informações</a></li>-->
-                <li class="nav-item"><a class="nav-link active" href="#observacao" data-bs-toggle="tab">Observação</a></li>
+                <!--<li class="nav-item"><a class="nav-link active" href="#informacoes" data-bs-toggle="tab">Informações</a></li>
+                <li class="nav-item"><a class="nav-link active" href="#observacao" data-bs-toggle="tab">Observação</a></li>-->
+                <li class="nav-item"><a class="nav-link active" href="#vinculos" data-bs-toggle="tab">Vínculos</a></li>  
+                <li class="nav-item"><a class="nav-link" href="#redessociais" data-bs-toggle="tab">Redes Sociais</a></li>  
                 <li class="nav-item"><a class="nav-link" href="#lotacoes" data-bs-toggle="tab">Lotações</a></li>                
                 <li class="nav-item"><a class="nav-link" href="#boletins" data-bs-toggle="tab">Boletins</a></li>                
                 <li class="nav-item"><a class="nav-link" href="#cgd" data-bs-toggle="tab">CGD</a></li>   
@@ -123,35 +120,174 @@
                 <li class="nav-item"><a class="nav-link" href="#sinesp" data-bs-toggle="tab">Sinesp</a></li>        
                 <li class="nav-item"><a class="nav-link" href="#tjce" data-bs-toggle="tab">TJCE</a></li>                
                 <li class="nav-item"><a class="nav-link" href="#fontesabertas" data-bs-toggle="tab">Fontes Abertas</a></li>       
-                <li class="nav-item"><a class="nav-link" href="#informacoesadc" data-bs-toggle="tab">Informações Adicionais</a></li>         
+                <li class="nav-item"><a class="nav-link" href="#informacoesadc" data-bs-toggle="tab">Inf. Adicionais</a></li>         
                 <li class="nav-item"><a class="nav-link" href="#veiculos" data-bs-toggle="tab">Veículos</a></li>    
-                <li class="nav-item"><a class="nav-link" href="#arquivos" data-bs-toggle="tab">Arquivos</a></li>
+                <!--<li class="nav-item"><a class="nav-link" href="#arquivos" data-bs-toggle="tab">Arquivos</a></li>-->
             </ul>
           </div>
           <div class="card-body table-responsive p-2">
               <div class="tab-content">
                 
-                <!--INICIO TAB OBSERVACAO-->
+                <!--INICIO TAB OBSERVACAO
                 <div class="active tab-pane" id="observacao">
                     <div [innerHTML]="investigacao.pessoa.observacao"></div>
-                </div>
+                </div>-->
                 <!--FIM TAB OBSERVACAO-->
+
+                <!--INICIO TAB vinculos-->
+                <div class="tab-pane active" id="vinculos">
+                     <!--INICIO TABLE-->
+                      <table  class="table table-hover table-head-fixed  ">
+                        <thead>
+                          <tr>
+                            <th>#</th>
+                            <th>Tipo</th>    
+                            <th>Nome</th>                      
+                            <th>CPF</th>                      
+                            <th>Opções</th>
+                          </tr>
+                        </thead>
+                        <tbody *ngIf="investigacao.pessoa.vinculos" >
+                          <tr *ngFor="let row of investigacao.pessoa.vinculos" class="optionshover">
+                            <td>{{row.id}}</td> 
+                            <td>{{row.vinculo_tipo.nome}}</td>
+                            <td>{{row.nome}}</td> 
+                            <td>{{row.cpf | mask: '000.000.000-00'}}</td> 
+                            <td>                                        
+                                <a
+                                  class="options ml-2"
+                                  (click)="deleteVinculo(row.id || 0)"                           
+                                  title="Excluir"
+                                >
+                                  <i
+                                    class="fas fa-trash text-danger point "
+                                    aria-hidden="true"
+                                  ></i
+                                ></a>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <!--FIM TABLE-->
+                </div>
+                <!--FIM TAB vinculos-->
+
+                <!--INICIO TAB redessociais-->
+                <div class="tab-pane" id="redessociais">
+                    <!--INICIO TABLE-->
+                    <table  class="table table-hover table-head-fixed  ">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Rede Social</th>    
+                          <th>Link</th> 
+                          <th>Foto</th>                      
+                          <th>Opções</th>
+                        </tr>
+                      </thead>
+                      <tbody *ngIf="investigacao.pessoa.redes_sociais" >
+                        <tr *ngFor="let row of investigacao.pessoa.redes_sociais" class="optionshover">
+                          <td>{{row.pivot.id}}</td>
+                          <td>{{row.nome}}</td> 
+                          <td><a [href]="row.pivot.nome" target="_blank">{{row.pivot.nome}}</a></td> 
+                          <td></td>
+                          <td>                                        
+                              <a
+                                class="options ml-2"
+                                (click)="deleteRedeSocial(row.pivot.id)"                           
+                                title="Excluir"
+                              >
+                                <i
+                                  class="fas fa-trash text-danger point "
+                                  aria-hidden="true"
+                                ></i
+                              ></a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <!--FIM TABLE-->
+                </div>
+                <!--FIM TAB redessociais-->
 
                 <!--INICIO TAB LOTACOES-->
                 <div class="tab-pane" id="lotacoes">
-                    <div [innerHTML]="investigacao.lotacoes"></div>
+                   <!--INICIO TABLE-->
+                  <table  class="table table-hover table-head-fixed  mt-2">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Boletim</th> 
+                        <th>Tipo</th> 
+                        <th>Data</th>   
+                        <th>Companhia/Batalhão</th>                                        
+                      </tr>
+                    </thead>
+                    <tbody *ngIf="investigacao" >
+                      <tr *ngFor="let row of investigacao.lotacoes" class="optionshover">
+                        <td>{{row.id}}</td>
+                        <td>{{row.bcg}}</td> 
+                        <td>{{row.lotacao_tipo.nome}}</td> 
+                        <td>{{row.data | date: 'dd/MM/yyyy'}}</td> 
+                        <td>{{row.companhia.abreviatura}}/{{row.companhia.batalhao.abreviatura}}</td> 
+                      </tr>
+                    </tbody>
+                  </table>
+                  <!--FIM TABLE-->
                 </div>
                 <!--FIM TAB LOTACOES-->
 
                 <!--INICIO TAB boletins-->
                 <div class="tab-pane" id="boletins">
-                    <div [innerHTML]="investigacao.boletins"></div>
+                     <!--INICIO TABLE-->
+                      <table  class="table table-hover table-head-fixed  mt-2">
+                        <thead>
+                          <tr>
+                            <th>#</th>
+                            <th>Boletim</th> 
+                            <th>Descrição</th>                                        
+                          </tr>
+                        </thead>
+                        <tbody *ngIf="investigacao" >
+                          <tr *ngFor="let row of investigacao.boletins" class="optionshover">
+                            <td>{{row.id}}</td>
+                            <td>{{row.bcg}}</td> 
+                            <td [innerHTML]="row.descricao"> </td>                             
+                          </tr>
+                        </tbody>
+                      </table>
+                      <!--FIM TABLE-->
                 </div>
                 <!--FIM TAB boletins-->
 
                  <!--INICIO TAB cgd-->
                  <div class="tab-pane" id="cgd">
-                    <div [innerHTML]="investigacao.cgd"></div>
+                    <!--INICIO TABLE-->
+                    <table  class="table table-hover table-head-fixed  mt-2">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>SPU</th> 
+                          <th>Envolvimento</th> 
+                          <th>Tipo</th>   
+                          <th>Situação</th> 
+                          <th>Teor</th>                                        
+                          
+                        </tr>
+                      </thead>
+                      <tbody  >
+                        <tr *ngFor="let row of investigacao.cgds" class="optionshover">
+                          <td>{{row.id}}</td>
+                          <td>{{row.spu}}</td> 
+                          <td>{{row.cgd_envolvimento_tipo.nome}}</td> 
+                          <td>{{row.cgd_processo_tipo.nome}}</td> 
+                          <td>{{row.cgd_situacao_tipo.nome}}</td> 
+                          <td [innerHTML]="row.observacao"></td> 
+                          
+                        </tr>
+                      </tbody>
+                    </table>
+                    <!--FIM TABLE-->
                 </div>
                 <!--FIM TAB cgd-->
 

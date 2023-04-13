@@ -12,6 +12,7 @@ import { environment } from 'src/environments/environments';
 import { DomSanitizer } from "@angular/platform-browser"; 
 import { Usuario } from '../../usuarios/usuarios';
 import { SessionService } from 'src/app/sistema/shared/session.service';
+import { RedeSocial } from '../../redes-sociais/redes-sociais';
 
 @Component({
   selector: 'imprimir-pessoa',
@@ -66,6 +67,10 @@ export class ImprimirPessoaComponent implements OnInit, OnDestroy {
  
   urlarq(data:PessoaArquivo):any{
     return this.sanitizer.bypassSecurityTrustResourceUrl(`${this.IMG}/${data.arquivo}`);
+  }
+
+  urlfoto2(data:RedeSocial):any{
+    return this.sanitizer.bypassSecurityTrustResourceUrl(`${this.IMG}/${data.pivot.foto}`);
   }
 
   print(){

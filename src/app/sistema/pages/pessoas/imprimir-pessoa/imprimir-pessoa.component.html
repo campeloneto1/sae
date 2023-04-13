@@ -2,38 +2,18 @@
   <div class="page-header" style="text-align: center; margin-bottom: 10px">
     <!--<img src="assets/cabecalho.png" class="cabecalho" />-->
     <div class="text-center" style="position: relative; ">
-      <h1 style="padding-top: 50px;">
+      <h1 style="padding-top: 20px;">
         {{ pessoa.nome }}
       </h1>
-     
-      <img
-        style="height: 150px; width: 150px; position: absolute; top: 10px; left:10px;"
-        *ngIf="pessoa.foto"
-        class="profile-user-img img-fluid img-circle"
-        [src]="urlfoto(pessoa)"
-        alt="User profile picture"
-      />
-      
     </div>
   </div>
 
   <div class="page-footer">
-    <div style="margin-bottom: 40px" class="row rodape2" *ngIf="user">
-      <div class="col-sm-6 text-right">
-        <!--<p>
-        1ª CPG – CM<br />
-        Rua Ten. Amauri Pio, 168 - Meireles | CEP: 60.000-000 Fortaleza / CE
-        <br />
-        Fones: 85 40010001 | E-mail: email@email.com<br />
-        <b>“Raça de Fortes, Povo de Bravos”</b>
-      </p>-->
-      </div>
-      <div class="col-sm-12 text-right">
-        <!--{{user.key}}-->
+    <div style="margin-bottom: 40px" class="row rodape2" *ngIf="user">      
+      <div class="col-sm-12 text-right">       
         <b>Data:</b> {{ date | date : "dd/MM/yyyy HH:mm" }}
       </div>
-    </div>
-    <img src="assets/rodape.png" class="rodape" />
+    </div>    
   </div>
 
   <table style="width: 100%; min-width: 100%">
@@ -47,35 +27,34 @@
     </thead>
 
     <tbody>
-      <tr>
+      <tr class="page">
         <td>
           <!--*** CONTENT GOES HERE ***
           <div class="page">PAGE 1</div>
           <div class="page">PAGE 2</div>-->
           <!--INICIO PAGE 1-->
-          <div class="page">
-            <p class="marcadagua">Documento Sigiloso {{cifra}}</p>
-            <div class="noprint text-center">
-              <!--<img src="assets/cabecalho.png" class="cabecalho" />-->
-              <div class="text-center" style="position: relative; margin-top: 20px;">
-                <h1>
-                  {{ pessoa.nome }}
-                </h1>
-                
-                <img
-                  style="height: 150px; width: 150px; position: absolute; top: 10px; left:10px;"
-                  *ngIf="pessoa.foto"
-                  class="profile-user-img img-fluid img-circle"
-                  [src]="urlfoto(pessoa)"
-                  alt="User profile picture"
-                />
+          <div class="main">
+            <div class="row">
+              <img
+          
+                *ngIf="pessoa.foto"
+                class="profile-user-img img-fluid img-circle imgpessoa"
+                [src]="urlfoto(pessoa)"
+                alt="User profile picture"
+              />
+              <div class="noprint text-center">
+                <!--<img src="assets/cabecalho.png" class="cabecalho" />-->
+                <div class="text-center" style="position: relative; margin-top: 20px;">
+                  <h1>
+                    {{ pessoa.nome }}
+                  </h1>                                               
+                </div>
                 
               </div>
-              
             </div>
 
             <!--DIV 1-->
-            <div class="row marg-noprint">
+            <div style="margin-top: 100px;" class="row ">
               <div class="col-sm-3">
                 <b>CPF:</b> {{ pessoa.cpf | mask : "000.000.000-00" }}
               </div>
@@ -91,21 +70,36 @@
               </div>
             </div>
             <!--DIV 1-->
+
             <!--DIV 2-->
             <div class="row">
-              <div class="col-sm-6" *ngIf="pessoa?.mae">
-                <b>Mãe:</b> {{ pessoa.mae }}
+              <div class="col-sm-3" *ngIf="pessoa?.cnh">
+                <b>CNH:</b> {{ pessoa.cnh }}
               </div>
-              <div class="col-sm-6" *ngIf="pessoa?.pai">
-                <b>Pai:</b> {{ pessoa.pai }}
+              <div class="col-sm-3" *ngIf="pessoa?.cnh_categoria_id">
+                <b>Categoria CNH:</b>
+                {{ pessoa?.cnh_categoria?.nome }}
               </div>
+              
             </div>
             <!--DIV 2-->
-            <!--DIV 3-->
+
+            <!--DIV 2-->
             <div class="row">
+              <div class="col-sm-4" *ngIf="pessoa?.escolaridade_id">
+                <b>Escolaridade:</b> {{ pessoa.escolaridade.nome }}
+              </div>
+              <div class="col-sm-4" *ngIf="pessoa?.naturalidade_id">
+                <b>Naturalidade:</b> {{ pessoa.naturalidade.nome }} - {{ pessoa.naturalidade.estado.uf }}
+              </div>
               <div class="col-sm-3" *ngIf="pessoa?.influencia">
                 <b>Influência:</b> {{ pessoa.influencia?.nome }}
               </div>
+            </div>
+            <!--DIV 2-->
+          
+            <!--DIV 3-->
+            <div class="row">
               <div class="col-sm-3" *ngIf="pessoa?.telefone1">
                 <b>Telefone 1:</b> {{ pessoa?.telefone1 }}
               </div>
@@ -129,34 +123,88 @@
               </div>
             </div>
             <!--DIV 4-->
-            <!--DIV 5-->
-            <div class="row">
-              <div *ngFor="let vinculo of pessoa.vinculos" class="col-sm-4">
-                <strong>{{vinculo.vinculo_tipo.nome}}: </strong>{{vinculo.nome}} <span *ngIf="vinculo.cpf">({{vinculo.cpf}})</span>
-              </div>
-            </div>
-            <!--DIV 5-->
-            <!--DIV 5-->
-            <div class="row">
-              <div *ngFor="let rede of pessoa.redes_sociais" class="col-sm-3">
-                <b>{{ rede.nome }}:</b> {{ rede.pivot?.nome }}
-              </div>
-            </div>
-            <!--DIV 5-->
+            
 
-            <div style="margin-top: 20px" [innerHTML]="pessoa.observacao"></div>
+          <div style="margin-top: 20px" [innerHTML]="pessoa.observacao"></div>
+          
+          <!--INICIO PAGE 2 VINCULOS-->
+          <div  *ngIf="(pessoa?.vinculos)!.length > 0">
+           
+            <div class=" ">
+              <h4 style="margin-top: 30px">Vínculos</h4>
+            </div>
+            <!--DIV 1 -->
+            <div style="margin-top: 20px" class="row">
+              <!--INICIO TABLE-->
+              <table class="table table-bordered table-sm">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Tipo</th>    
+                    <th>Nome</th>                      
+                    <th>CPF</th>                      
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let row of pessoa.vinculos" class="optionshover">
+                    <td>{{row.id}}</td> 
+                    <td>{{row.vinculo_tipo.nome}}</td>
+                    <td>{{row.nome}}</td> 
+                    <td>{{row.cpf | mask: '000.000.000-00'}}</td> 
+                  </tr>
+                </tbody>
+              </table>
+              <!--FIM TABLE-->
+            </div>
+            <!--DIV 1-->
           </div>
-          <!--FIM PAGE 1-->
+          <!--FIM PAGE 2 VINCULOS-->
+
+          <!--INICIO PAGE 2 REDES SOCIAIS-->
+          <div  *ngIf="(pessoa?.redes_sociais)!.length > 0">
+           
+            <div class=" ">
+              <h4 style="margin-top: 30px">Redes Sociais</h4>
+            </div>
+            <!--DIV 1 -->
+            <div style="margin-top: 20px" class="row">
+              <!--INICIO TABLE-->
+              <table class="table table-bordered table-sm">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Rede Social</th>    
+                    <th>Link</th>     
+                    <th>Foto</th>                 
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let row of pessoa.redes_sociais" class="optionshover">
+                    <td>{{row.pivot.id}}</td>
+                    <td>{{row.nome}}</td> 
+                    <td><a [href]="row.pivot.nome" target="_blank">{{row.pivot.nome}}</a></td> 
+                    <td>
+                      <img *ngIf="row.pivot.foto" [src]="urlfoto2(row)" alt="user-avatar"  height="120px" class="img-circle img-fluid">
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <!--FIM TABLE-->
+            </div>
+            <!--DIV 1-->
+          </div>
+          <!--FIM PAGE 2 REDES SOCIAIS-->
+         
           <!--INICIO PAGE 2 ANALISES-->
-          <div class="page" *ngIf="(pessoa?.analises)!.length > 0">
-            <p class="marcadagua">Documento Sigiloso {{cifra}}</p>
+          <div  *ngIf="(pessoa?.analises)!.length > 0">
+           
             <div class=" ">
               <h4 style="margin-top: 30px">Análises</h4>
             </div>
             <!--DIV 1 -->
             <div style="margin-top: 20px" class="row">
               <!--INICIO TABLE-->
-              <table class="table table-head-fixed  mt-2">
+              <table class="table table-bordered table-sm">
                 <thead>
                   <tr>
                     <th>#</th>
@@ -187,16 +235,16 @@
             <!--DIV 1-->
           </div>
           <!--FIM PAGE 2 ANALISES-->
-          <!--INICIO PAGE 3 ORGANIZACOES-->
-          <div class="page" *ngIf="(pessoa?.organizacoes)!.length > 0">
-            <p class="marcadagua">Documento Sigiloso {{cifra}}</p>
+          <!--INICIO PAGE 3 ORGANIZACOES <p class="marcadagua">Documento Sigiloso {{cifra}}</p>-->
+          <div  *ngIf="(pessoa?.organizacoes)!.length > 0">
+            
             <div class=" ">
               <h4 style="margin-top: 30px">Organizações</h4>
             </div>
             <!--DIV 1 -->
             <div style="margin-top: 20px" class="row">
               <!--INICIO TABLE-->
-              <table class="table table-head-fixed  mt-2">
+              <table class="table table-bordered table-sm">
                 <thead>
                   <tr>
                     <th>#</th>
@@ -229,15 +277,15 @@
           </div>
           <!--FIM PAGE 3 ORGANIZACOES-->
           <!--INICIO PAGE 4 VEICULOS-->
-          <div class="page" *ngIf="(pessoa?.veiculos)!.length > 0">
-            <p class="marcadagua">Documento Sigiloso {{cifra}}</p>
+          <div  *ngIf="(pessoa?.veiculos)!.length > 0">
+        
             <div class=" ">
               <h4 style="margin-top: 30px">Veículos</h4>
             </div>
             <!--DIV 1 -->
             <div style="margin-top: 20px" class="row">
               <!--INICIO TABLE-->
-              <table class="table table-head-fixed ">
+              <table class="table table-bordered table-sm ">
                 <thead>
                   <tr>
                     <th>#</th>
@@ -274,45 +322,47 @@
           </div>
           <!--FIM PAGE 4 VEICULOS-->
           <!--INICIO PAGE 5 ARQUIVOS-->
-          <div class="page" *ngIf="(pessoa?.arquivos)!.length > 0">
-            <p class="marcadagua">Documento Sigiloso {{cifra}}</p>
-            <div class=" ">
-              <h4 style="margin-top: 30px">Arquivos</h4>
+          <div  *ngIf="(pessoa?.arquivos)!.length > 0">
+             
+              <div class=" ">
+                <h4 style="margin-top: 30px">Arquivos</h4>
+              </div>
+              <!--DIV 1 -->
+              <div style="margin-top: 20px" class="row">
+                <!--INICIO TABLE-->
+                <table class="table table-bordered table-sm">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Tipo</th>
+                      <th>Nome</th>
+                      <th>Arquivo</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let row of pessoa.arquivos" class="optionshover">
+                      <td>{{ row.id }}</td>
+                      <td>{{ row.arquivo_tipo.nome }}</td>
+                      <td>{{ row.nome }}</td>
+                      <td>
+                        <a
+                          *ngIf="row.arquivo_tipo.foto"
+                        >
+                          <img width="100px" [src]="urlarq(row)" />
+                        </a>
+                        <span *ngIf="row.arquivo_tipo.link">{{ row.arquivo }}</span>
+                        <!--<a (click)="showArquivo(row)" data-bs-toggle="modal" data-bs-target="#modalshowarquivos">{{row.nome}}</a>-->
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <!--FIM TABLE-->
+              </div>
+              <!--DIV 1-->
             </div>
-            <!--DIV 1 -->
-            <div style="margin-top: 20px" class="row">
-              <!--INICIO TABLE-->
-              <table class="table table-head-fixed  mt-2">
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Tipo</th>
-                    <th>Nome</th>
-                    <th>Arquivo</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let row of pessoa.arquivos" class="optionshover">
-                    <td>{{ row.id }}</td>
-                    <td>{{ row.arquivo_tipo.nome }}</td>
-                    <td>{{ row.nome }}</td>
-                    <td>
-                      <a
-                        *ngIf="row.arquivo_tipo.foto"
-                      >
-                        <img width="100px" [src]="urlarq(row)" />
-                      </a>
-                      <span *ngIf="row.arquivo_tipo.link">{{ row.arquivo }}</span>
-                      <!--<a (click)="showArquivo(row)" data-bs-toggle="modal" data-bs-target="#modalshowarquivos">{{row.nome}}</a>-->
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-              <!--FIM TABLE-->
-            </div>
-            <!--DIV 1-->
+            <!--FIM PAGE 5 ARQUIVOS-->
           </div>
-          <!--FIM PAGE 5 ARQUIVOS-->
+          <!--FIM PAGE -->
         </td>
       </tr>
     </tbody>

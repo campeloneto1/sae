@@ -15,12 +15,15 @@ import { FormularioPessoasVeiculosComponent } from "../pessoas/formulario-pessoa
 import { PessoasVeiculosService } from "../pessoas/formulario-pessoas-veiculos/pessoas-veiculos.service";
 import { FormularioPessoasVinculosComponent } from "../pessoas/formulario-pessoas-vinculos/formulario-pessoas-vinculos.component";
 import { PessoasVinculosService } from "../pessoas/formulario-pessoas-vinculos/pessoas-vinculos.service";
+import { FormularioPessoasComponent } from "../pessoas/formulario/formulario-pessoas.component";
 import { Pessoa } from "../pessoas/pessoas";
 import { PessoasService } from "../pessoas/pessoas.service";
 import { Usuario } from "../usuarios/usuarios";
 import { FormularioVeiculosComponent } from "../veiculos/formulario/formulario-veiculos.component";
 import { FormularioInvestigacoesSociaisBoletinsComponent } from "./formulario-investigacoes-sociais-boletins/formulario-investigacoes-sociais-boletins.component";
 import { InvestigacoesSociaisBoletinsService } from "./formulario-investigacoes-sociais-boletins/investigacoes-sociais-boletins.service";
+import { FormularioInvestigacoesSociaisCgdsComponent } from "./formulario-investigacoes-sociais-cgds/formulario-investigacoes-sociais-cgds.component";
+import { InvestigacoesSociaisCgdsService } from "./formulario-investigacoes-sociais-cgds/investigacoes-sociais-cgds.service";
 import { FormularioInvestigacoesSociaisLotacoesComponent } from "./formulario-investigacoes-sociais-lotacoes/formulario-investigacoes-sociais-lotacoes.component";
 import { InvestigacoesSociaisLotacoesService } from "./formulario-investigacoes-sociais-lotacoes/investigacoes-sociais-lotacoes.service";
 import { FormularioInvestigacoesSociaisComponent } from "./formulario/formulario-investigacoes-sociais.component";
@@ -37,12 +40,14 @@ import { InvestigacoesSociaisService } from "./investigacoes-sociais.service";
         SharedModule, 
         TituloComponent, 
         FormularioInvestigacoesSociaisComponent,
+        FormularioPessoasComponent,
         FormularioPessoasVeiculosComponent,
         FormularioPessoasRedesSociaisComponent,
         FormularioPessoasVinculosComponent,
         FormularioVeiculosComponent,
         FormularioInvestigacoesSociaisBoletinsComponent,
-        FormularioInvestigacoesSociaisLotacoesComponent
+        FormularioInvestigacoesSociaisLotacoesComponent,
+         FormularioInvestigacoesSociaisCgdsComponent
     ]
 })
 
@@ -51,16 +56,11 @@ export class InvestigacoesSociaisComponent implements OnInit, OnDestroy{
     protected data$!: Observable<InvestigacoesSociais>;
 
     protected excluir!: InvestigacaoSocial;
-
     protected informacoes!: Pessoa;
     protected informacoes2!: InvestigacaoSocial;
-
     protected foto!: Pessoa;
-
     protected cadveiculo:boolean = false;
-
     protected dtOptions: DataTables.Settings = {};    
-
     protected user!: Usuario;
 
     @ViewChild(DataTableDirective, { static: false })  dtElement!: DataTableDirective;
@@ -82,6 +82,7 @@ export class InvestigacoesSociaisComponent implements OnInit, OnDestroy{
         private investigacoesSociaisService: InvestigacoesSociaisService,
         private investigacoesSociaisBoletinsService: InvestigacoesSociaisBoletinsService,
         private investigacoesSociaisLotacoesService: InvestigacoesSociaisLotacoesService,
+        private investigacoesSociaisCgdsService: InvestigacoesSociaisCgdsService,
         private pessoasRedesSociaisService: PessoasRedesSociaisService,
         private pessoasVeiculosService: PessoasVeiculosService,
         private pessoasVinculosService: PessoasVinculosService
@@ -187,6 +188,18 @@ export class InvestigacoesSociaisComponent implements OnInit, OnDestroy{
         
     }
 
+    getInvestigacaoSocial(data: number){
+        this.subscription3 = this.investigacoesSociaisService.show(data).subscribe({
+            next: (data) => {
+                this.informacoes2 = data;                
+            },
+            error: (error) => {
+                this.sharedService.toast('Error!', error.erro as string, 2);
+            }
+        });
+        
+    }
+
     showFoto(data: Pessoa){
         this.foto = data;
     }
@@ -278,12 +291,42 @@ export class InvestigacoesSociaisComponent implements OnInit, OnDestroy{
 
 
     showInformacoes2(data: InvestigacaoSocial){
-        this.informacoes2 = data;
+        //this.informacoes2 = data;
+        this.informacoes2 = {} as InvestigacaoSocial;
+        this.getInvestigacaoSocial(data.id || 0);
     }
 
     deleteBoletim(data: number){
         if (confirm("Tem certeza que deseja excluir o boletim?")){
             this.investigacoesSociaisBoletinsService.destroy(data).subscribe({
+                next: (data) => {
+                    this.sharedService.toast("Sucesso", data as string, 3);
+                    this.refresh3();
+                },
+                error: (error) => {
+                    this.sharedService.toast('Error!', error.erro as string, 2);
+                }
+            });
+        }
+    }
+
+    deleteLotacao(data: number){
+        if (confirm("Tem certeza que deseja excluir a lotação?")){
+            this.investigacoesSociaisLotacoesService.destroy(data).subscribe({
+                next: (data) => {
+                    this.sharedService.toast("Sucesso", data as string, 3);
+                    this.refresh3();
+                },
+                error: (error) => {
+                    this.sharedService.toast('Error!', error.erro as string, 2);
+                }
+            });
+        }
+    }
+
+    deleteCgd(data: number){
+        if (confirm("Tem certeza que deseja excluir a cgd?")){
+            this.investigacoesSociaisCgdsService.destroy(data).subscribe({
                 next: (data) => {
                     this.sharedService.toast("Sucesso", data as string, 3);
                     this.refresh3();

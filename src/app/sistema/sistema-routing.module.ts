@@ -55,6 +55,21 @@ const routes: Routes = [
                 canActivate: [AlowedGuard]
             },
             {
+                path: 'CgdsEnvolvimentos/Tipos',
+                loadComponent: () => import('./pages/cgds-envolvimentos-tipos/cgds-envolvimentos-tipos.component').then((c) => c.CgdsEnvolvimentoTiposComponent),
+                canActivate: [AlowedGuard]
+            },
+            {
+                path: 'CgdsProcessos/Tipos',
+                loadComponent: () => import('./pages/cgds-processos-tipos/cgds-processos-tipos.component').then((c) => c.CgdsProcessosTiposComponent),
+                canActivate: [AlowedGuard]
+            },
+            {
+                path: 'CgdsSituacoes/Tipos',
+                loadComponent: () => import('./pages/cgds-situacoes-tipos/cgds-situacoes-tipos.component').then((c) => c.CgdsProcessosTiposComponent),
+                canActivate: [AlowedGuard]
+            },
+            {
                 path: 'Cnh/Categorias',
                 loadComponent: () => import('./pages/cnh-categorias/cnh-categorias.component').then((c) => c.CnhCategoriasComponent),
                 canActivate: [AlowedGuard]

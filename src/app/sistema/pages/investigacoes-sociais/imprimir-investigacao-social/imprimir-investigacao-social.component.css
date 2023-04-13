@@ -1,29 +1,31 @@
 /* Styles go here */
+
+@page {
+  margin: 0;
+  -webkit-print-color-adjust: exact; 
+  counter-increment: page;  
+}
+
 img {
   pointer-events: none;
 }
 
 .page-header, .page-header-space {
-  height: 100px;
+  height: 80px;
   display: none;
 }
 
-.page-footer, .page-footer-space {
-  height: 110px;
-  display: none;
-}
-
-.page-footer {
-  position: fixed;
-  bottom: 0;
-  width: 100%;  
+.cotpag { 
+ 
+  position: absolute;
+  top: 10px;
+  right: 10px;
 }
 
 .page-header {
   position: fixed;
   top: 0mm;
   width: 100%;
-
 }
 
 .page {
@@ -31,26 +33,59 @@ img {
   padding: 0 10mm 0 20mm;
   text-align: justify;
   position: relative;
+  word-break: break-all;
+}
+
+.main{
+  padding: 0 10mm 0 20mm;
+  text-align: justify;
 }
 
 .sessao{
   margin-top: 1rem;
+  word-break: break-all;
+
 }
 
-@page {
-  margin: 0;
-  -webkit-print-color-adjust: exact; 
+.page-footer, .page-footer-space {
+  height: 60px;
+  display: none;
 }
+
+.page-footer {
+  position: fixed;
+  bottom: 0mm;
+  width: 100%;  
+}
+
 
 @media print {
    .thead {display: table-header-group;} 
    .tfoot {display: table-footer-group; }
 
+   .noprint{
+    display: none;
+   }
+
    body {
     margin: 0;
+  }
+
+  .page{
+    overflow: hidden;
+  }
+  
+   .page-header, .page-header-space {
+    height: 80px;
+    display: block;
+  }
+  
+  .page-footer, .page-footer-space {  
+    height: 40px;
+    display: block;
     
   }
-   
+
   /*
   .marcadagua{
     display: block;
@@ -62,16 +97,6 @@ img {
     font-size: 200px;
     transform: rotate(90deg);
   }*/
-
-   .page-header, .page-header-space {
-    height: 100px;
-    display: block;
-  }
-  
-  .page-footer, .page-footer-space {    
-    height: 110px;
-    display: block;
-  }
 
   .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6,
   .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12 {

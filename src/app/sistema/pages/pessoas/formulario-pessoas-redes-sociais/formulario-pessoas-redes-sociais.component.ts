@@ -1,9 +1,11 @@
 import { CommonModule } from "@angular/common";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Observable } from "rxjs";
 import { SharedModule } from "src/app/sistema/shared/shared.module";
 import { SharedService } from "src/app/sistema/shared/shared.service";
+import { environment } from "src/environments/environments";
 import { RedesSociais } from "../../redes-sociais/redes-sociais";
 import { RedesSociaisService } from "../../redes-sociais/redes-sociais.service";
 import { PessoaRedeSocial } from "./pessoas-redes-sociais";
@@ -31,6 +33,7 @@ export class FormularioPessoasRedesSociaisComponent{
 
     constructor(
         private formBuilder: FormBuilder,
+        private http: HttpClient,
         private sharedService: SharedService,
         private redesSociaisService: RedesSociaisService,
         private pessoasRedesSociaisService: PessoasRedesSociaisService
@@ -49,6 +52,8 @@ export class FormularioPessoasRedesSociaisComponent{
             'rede_social_id': ['', Validators.compose([
                 Validators.required,
             ])],
+            'foto': [''],
+            'file': [''],
         });
         this.form.get('pessoa_id')?.patchValue(this.pessoa_id);
         this.redessociais$ = this.redesSociaisService.index();
@@ -95,4 +100,29 @@ export class FormularioPessoasRedesSociaisComponent{
     editar(data: PessoaRedeSocial){
         this.form.patchValue(data);
     }
+
+    fileEvent(e: any){
+        var filedata = e.target.files[0];
+        //console.log(this.filedata);
+    
+        var myFormData = new FormData();
+          const headers = new HttpHeaders();
+          headers.append('Content-Type', 'multipart/form-data');
+          headers.append('Accept', 'application/json');
+          myFormData.append('file', filedata);
+          myFormData.append('id', this.pessoa_id+'');
+          /* Image Post Request */
+          this.http.post(`${environment.url}/upload-arquivo`, myFormData, {
+          headers: headers
+          }).subscribe({
+            next: data => {       
+                //console.log(data);
+                this.form.get('foto')?.patchValue(data);
+             },
+             error: (error) => {
+              //console.log(error)
+               this.sharedService.toast('Error!', error.error.erro as string, 4);
+             }
+          });  
+      }
 }

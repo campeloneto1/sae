@@ -16,6 +16,8 @@ import { InvestigacoesSociaisService } from '../investigacoes-sociais.service';
 import { PessoasVeiculosService } from '../../pessoas/formulario-pessoas-veiculos/pessoas-veiculos.service';
 import { PessoaArquivo } from '../../pessoas/formulario-pessoas-arquivos/pessoas-arquivos';
 import { Pessoa } from '../../pessoas/pessoas';
+import { PessoasRedesSociaisService } from '../../pessoas/formulario-pessoas-redes-sociais/pessoas-redes-sociais.service';
+import { PessoasVinculosService } from '../../pessoas/formulario-pessoas-vinculos/pessoas-vinculos.service';
 
 @Component({
   selector: 'investigacao-social',
@@ -54,6 +56,8 @@ export class InvestigacaoSocialComponent implements OnInit, OnDestroy {
     private sessionService: SessionService,
     private investigacoesSociaisService: InvestigacoesSociaisService,
     private pessoasVeiculosService: PessoasVeiculosService,
+    private pessoasRedesSociaisService: PessoasRedesSociaisService,
+    private pessoasVinculosService: PessoasVinculosService,
     private sanitizer: DomSanitizer
   ) {}
 
@@ -114,6 +118,34 @@ export class InvestigacaoSocialComponent implements OnInit, OnDestroy {
   deleteVeiculo(data: number) {
     if (confirm("Tem certeza que deseja excluir o veículo?")){
       this.subscription = this.pessoasVeiculosService.destroy(data).subscribe({
+        next: (data) => {
+          this.sharedService.toast('Sucesso', data as string, 3);
+          this.refresh();
+        },
+        error: (error) => {
+          this.sharedService.toast('Error!', error.erro as string, 2);
+        },
+      });
+    }
+  }
+
+  deleteRedeSocial(data: number) {
+    if (confirm("Tem certeza que deseja excluir a rede social?")){
+      this.subscription = this.pessoasRedesSociaisService.destroy(data).subscribe({
+        next: (data) => {
+          this.sharedService.toast('Sucesso', data as string, 3);
+          this.refresh();
+        },
+        error: (error) => {
+          this.sharedService.toast('Error!', error.erro as string, 2);
+        },
+      });
+    }
+  }
+
+  deleteVinculo(data: number) {
+    if (confirm("Tem certeza que deseja excluir o vínculo?")){
+      this.subscription = this.pessoasVinculosService.destroy(data).subscribe({
         next: (data) => {
           this.sharedService.toast('Sucesso', data as string, 3);
           this.refresh();

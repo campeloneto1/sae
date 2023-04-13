@@ -83,8 +83,6 @@ export class FormularioInvestigacoesSociaisComponent{
             'situacao_funcional_id': [''],            
             'situacao_tipo_id': [''],
             'comportamento_id': [''],
-            
-            'cgd': [''],
             'sip': [''],
             'sinesp': [''],
             'tjce': [''],

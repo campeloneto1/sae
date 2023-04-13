@@ -81,8 +81,37 @@
                     class="fa fa-file-text text-primary point ml-2"
                     aria-hidden="true"
                   ></i>
+                  <i
+                    (click)="showInformacoes2(row)"
+                    *ngIf="user.perfil.investigacoes_sociais_edt"
+                    data-bs-toggle="modal"
+                    data-bs-target="#modalcgds"
+                    title="CGDs"
+                    class="fa fa-binoculars text-primary point ml-2"
+                    aria-hidden="true"
+                  ></i>
+                  <i
+                    (click)="showInformacoes2(row)"
+                    *ngIf="user.perfil.investigacoes_sociais_edt"
+                    data-bs-toggle="modal"
+                    data-bs-target="#modallotacoes"
+                    title="Lotações"
+                    class="fa fa-taxi text-primary point ml-2"
+                    aria-hidden="true"
+                  ></i>
                 </td>            
-                <td>                 
+                <td>        
+                  <a             
+                    class="options ml-2"
+                   [routerLink]="[row.id, 'Imprimir']"
+                    title="Editar"
+                    target="_blank"
+                  >
+                    <i
+                      class="fa fa-print text-primary point"
+                      aria-hidden="true"
+                    ></i>
+                  </a>         
                   <a             
                       class="options ml-2"
                       (click)="edit(row)"
@@ -280,7 +309,8 @@
                     <tr>
                       <th>#</th>
                       <th>Rede Social</th>    
-                      <th>Link</th>                      
+                      <th>Link</th> 
+                      <th>Foto</th>                      
                       <th>Opções</th>
                     </tr>
                   </thead>
@@ -289,6 +319,7 @@
                       <td>{{row.pivot.id}}</td>
                       <td>{{row.nome}}</td> 
                       <td><a [href]="row.pivot.nome" target="_blank">{{row.pivot.nome}}</a></td> 
+                      <td></td>
                       <td>                                        
                           <a
                             class="options ml-2"
@@ -376,7 +407,7 @@
       </div>
       <!--FIM MODAL VEICULOS-->
 
-      <!-- INICIO MODAL VEICULOS-->
+      <!-- INICIO MODAL BOLETINS-->
       <div class="modal fade" id="modalboletins" style="display: none;" aria-hidden="true">
         <div class="modal-dialog modal-xl">
           <div class="modal-content">
@@ -426,7 +457,121 @@
           </div>        
         </div>        
       </div>
-      <!--FIM MODAL VEICULOS-->
+      <!--FIM MODAL BOLETINS-->
+
+      <!-- INICIO MODAL CGDS-->
+      <div class="modal fade" id="modalcgds" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+          <div class="modal-content">
+            <div class="modal-header border-0">
+              <h4 class="modal-title">
+                Cadastrar CGDs 
+              </h4>
+              <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class="modal-body" *ngIf="informacoes2">
+                <formulario-investigacoes-sociais-cgds [investigacao_social_id]="informacoes2.id" (refresh)="refresh3()" />
+
+                <!--INICIO TABLE-->
+                <table  class="table table-hover table-head-fixed  mt-2">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>SPU</th> 
+                      <th>Envolvimento</th> 
+                      <th>Tipo</th>   
+                      <th>Situação</th> 
+                      <th>Teor</th>                                        
+                      <th>Opções</th>
+                    </tr>
+                  </thead>
+                  <tbody *ngIf="informacoes2" >
+                    <tr *ngFor="let row of informacoes2.cgds" class="optionshover">
+                      <td>{{row.id}}</td>
+                      <td>{{row.spu}}</td> 
+                      <td>{{row.cgd_envolvimento_tipo.nome}}</td> 
+                      <td>{{row.cgd_processo_tipo.nome}}</td> 
+                      <td>{{row.cgd_situacao_tipo.nome}}</td> 
+                      <td [innerHTML]="row.observacao"></td> 
+                      <td>                                        
+                          <a
+                            class="options ml-2"
+                            (click)="deleteCgd(row.id || 0)"                           
+                            title="Excluir"
+                          >
+                            <i
+                              class="fas fa-trash text-danger point "
+                              aria-hidden="true"
+                            ></i
+                          ></a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <!--FIM TABLE-->
+            </div>           
+          </div>        
+        </div>        
+      </div>
+      <!--FIM MODAL CGDS-->
+
+       <!-- INICIO MODAL LOTACOES-->
+       <div class="modal fade" id="modallotacoes" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+          <div class="modal-content">
+            <div class="modal-header border-0">
+              <h4 class="modal-title">
+                Cadastrar Lotação 
+              </h4>
+              <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class="modal-body" *ngIf="informacoes2">
+                <formulario-investigacoes-sociais-lotacoes [investigacao_social_id]="informacoes2.id" (refresh)="refresh3()" />
+
+                <!--INICIO TABLE-->
+                <table  class="table table-hover table-head-fixed  mt-2">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Boletim</th> 
+                      <th>Tipo</th> 
+                      <th>Data</th>   
+                      <th>Companhia/Batalhão</th>                                        
+                      <th>Opções</th>
+                    </tr>
+                  </thead>
+                  <tbody *ngIf="informacoes2" >
+                    <tr *ngFor="let row of informacoes2.lotacoes" class="optionshover">
+                      <td>{{row.id}}</td>
+                      <td>{{row.bcg}}</td> 
+                      <td>{{row.lotacao_tipo.nome}}</td> 
+                      <td>{{row.data | date: 'dd/MM/yyyy'}}</td> 
+                      <td>{{row.companhia.abreviatura}}/{{row.companhia.batalhao.abreviatura}}</td> 
+                      <td>                                        
+                          <a
+                            class="options ml-2"
+                            (click)="deleteLotacao(row.id || 0)"                           
+                            title="Excluir"
+                          >
+                            <i
+                              class="fas fa-trash text-danger point "
+                              aria-hidden="true"
+                            ></i
+                          ></a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <!--FIM TABLE-->
+            </div>           
+          </div>        
+        </div>        
+      </div>
+      <!--FIM MODAL LOTACOES-->
       
     </section>
     <!--FIM SECTION content-->

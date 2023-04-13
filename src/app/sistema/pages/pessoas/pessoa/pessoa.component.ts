@@ -21,6 +21,11 @@ import { environment } from 'src/environments/environments';
 import { DomSanitizer } from "@angular/platform-browser"; 
 import { SessionService } from 'src/app/sistema/shared/session.service';
 import { Usuario } from '../../usuarios/usuarios';
+import { FormularioPessoasRedesSociaisComponent } from '../formulario-pessoas-redes-sociais/formulario-pessoas-redes-sociais.component';
+import { RedeSocial } from '../../redes-sociais/redes-sociais';
+import { PessoasRedesSociaisService } from '../formulario-pessoas-redes-sociais/pessoas-redes-sociais.service';
+import { PessoasVinculosService } from '../formulario-pessoas-vinculos/pessoas-vinculos.service';
+import { FormularioPessoasVinculosComponent } from '../formulario-pessoas-vinculos/formulario-pessoas-vinculos.component';
 
 
 @Component({
@@ -33,9 +38,11 @@ import { Usuario } from '../../usuarios/usuarios';
     SharedModule,
     TituloComponent,
     FormularioPessoasVeiculosComponent,
+    FormularioPessoasVinculosComponent,
     FormularioVeiculosComponent,
     FormularioPessoasAnalisesComponent,
     FormularioPessoasOrganizacoesComponent,
+    FormularioPessoasRedesSociaisComponent,
     FormularioPessoasArquivosComponent,
     RouterModule
   ],
@@ -52,8 +59,11 @@ export class PessoaComponent implements OnInit, OnDestroy {
   protected arquivo!: PessoaArquivo;
 
   @ViewChild('fecharmodalanalises') closebuttonAnalises: any;
-  @ViewChild('fecharmodalveiculo') closebuttonVeiculos: any;
+  
   @ViewChild('fecharmodalorganizacoes') closebuttonOrganizacao: any;
+  @ViewChild('fecharmodalredessociais') closebuttonRedesSociais: any;
+  @ViewChild('fecharmodalveiculo') closebuttonVeiculos: any;
+  @ViewChild('fecharmodalvinculos') closebuttonVinculos: any;
   @ViewChild('fecharmodalarquivos') closebuttonArquivos: any;
 
   constructor(
@@ -62,6 +72,8 @@ export class PessoaComponent implements OnInit, OnDestroy {
     private sessionService: SessionService,
     private pessoasService: PessoasService,
     private pessoasVeiculosService: PessoasVeiculosService,
+    private pessoasVinculosService: PessoasVinculosService,
+    private pessoasRedesSociaisService: PessoasRedesSociaisService,
     private analisesPessoasService: AnalisesPessoasService,
     private organizacoesPessoasService: OrganizacoesPessoasService,
     private pessoasArquivosService: PessoasArquivosService,
@@ -103,6 +115,11 @@ export class PessoaComponent implements OnInit, OnDestroy {
     this.refresh();
   }
 
+  sudmitRedeSocial(){
+    this.closebuttonRedesSociais.nativeElement.click();
+    this.refresh();
+  }
+
   sudmitVeiculo(){
     this.closebuttonVeiculos.nativeElement.click();
     this.refresh();
@@ -110,6 +127,11 @@ export class PessoaComponent implements OnInit, OnDestroy {
 
   sudmitArquivo(){
     this.closebuttonArquivos.nativeElement.click();
+    this.refresh();
+  }
+
+  sudmitVinculo(){
+    this.closebuttonVinculos.nativeElement.click();
     this.refresh();
   }
 
@@ -131,19 +153,11 @@ export class PessoaComponent implements OnInit, OnDestroy {
     return this.sanitizer.bypassSecurityTrustResourceUrl(`${this.IMG}/${data.arquivo}`);
   }
 
-  deleteVeiculo(data: number) {
-    if (confirm("Tem certeza que deseja excluir o veículo?")){
-      this.subscription = this.pessoasVeiculosService.destroy(data).subscribe({
-        next: (data) => {
-          this.sharedService.toast('Sucesso', data as string, 3);
-          this.refresh();
-        },
-        error: (error) => {
-          this.sharedService.toast('Error!', error.erro as string, 2);
-        },
-      });
-    }
+  urlfoto2(data:RedeSocial):any{
+    return this.sanitizer.bypassSecurityTrustResourceUrl(`${this.IMG}/${data.pivot.foto}`);
   }
+
+  
 
   deleteAnalise(data: number) {
     if (confirm("Tem certeza que deseja excluir a análise?")){
@@ -169,6 +183,48 @@ export class PessoaComponent implements OnInit, OnDestroy {
           error: (error) => {
               this.sharedService.toast('Error!', error.erro as string, 2);
           }
+      });
+    }
+  }
+
+  deleteRedeSocial(data: number) {
+    if (confirm("Tem certeza que deseja excluir a rede social?")){
+      this.subscription = this.pessoasRedesSociaisService.destroy(data).subscribe({
+        next: (data) => {
+          this.sharedService.toast('Sucesso', data as string, 3);
+          this.refresh();
+        },
+        error: (error) => {
+          this.sharedService.toast('Error!', error.erro as string, 2);
+        },
+      });
+    }
+  }
+
+  deleteVeiculo(data: number) {
+    if (confirm("Tem certeza que deseja excluir o veículo?")){
+      this.subscription = this.pessoasVeiculosService.destroy(data).subscribe({
+        next: (data) => {
+          this.sharedService.toast('Sucesso', data as string, 3);
+          this.refresh();
+        },
+        error: (error) => {
+          this.sharedService.toast('Error!', error.erro as string, 2);
+        },
+      });
+    }
+  }
+
+  deleteVinculo(data: number) {
+    if (confirm("Tem certeza que deseja excluir o vínculo?")){
+      this.subscription = this.pessoasVinculosService.destroy(data).subscribe({
+        next: (data) => {
+          this.sharedService.toast('Sucesso', data as string, 3);
+          this.refresh();
+        },
+        error: (error) => {
+          this.sharedService.toast('Error!', error.erro as string, 2);
+        },
       });
     }
   }

@@ -13,6 +13,7 @@ import { InvestigacaoSocial } from '../investigacoes-sociais';
 import { InvestigacoesSociaisService } from '../investigacoes-sociais.service';
 import { Pessoa } from '../../pessoas/pessoas';
 import { PessoaArquivo } from '../../pessoas/formulario-pessoas-arquivos/pessoas-arquivos';
+import { RedeSocial } from '../../redes-sociais/redes-sociais';
 
 @Component({
   selector: 'imprimir-investigacao-social',
@@ -27,6 +28,7 @@ import { PessoaArquivo } from '../../pessoas/formulario-pessoas-arquivos/pessoas
 })
 export class ImprimirInvestigacaoSocialComponent implements OnInit, OnDestroy {
   
+  protected pagecount = 0;
   protected IMG = environment.image;
   protected id!: number;
   protected investigacaosocial$!: Observable<InvestigacaoSocial>;
@@ -69,8 +71,12 @@ export class ImprimirInvestigacaoSocialComponent implements OnInit, OnDestroy {
     return this.sanitizer.bypassSecurityTrustResourceUrl(`${this.IMG}/${data.arquivo}`);
   }
 
-  print(){
+  urlfoto2(data:RedeSocial):any{
+    return this.sanitizer.bypassSecurityTrustResourceUrl(`${this.IMG}/${data.pivot.foto}`);
+  }
 
+  countpage(){
+    
   }
 
  

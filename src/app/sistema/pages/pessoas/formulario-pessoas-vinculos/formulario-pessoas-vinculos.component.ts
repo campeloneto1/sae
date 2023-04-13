@@ -54,6 +54,7 @@ export class FormularioPessoasVinculosComponent{
                 Validators.minLength(11),
                 Validators.maxLength(11)
             ])],
+            'observacao': [''],
         });
         this.form.get('pessoa_id')?.patchValue(this.pessoa_id);
         this.vinculostipos$ = this.vinculosTiposService.index();

@@ -2,6 +2,7 @@
     <div class="row">
         <app-input-select class="col-sm-2" formControlName="rede_social_id" label="Rede Social" id="rede_social_id" [data$]="redessociais$" />
         <app-input-text class="col-sm-4" formControlName="nome" label="Nome" id="nome" tipo="text" />
+        <app-input-text (change)="fileEvent($event)" class="col-sm-4" formControlName="file" label="Arquivo" id="file" tipo="file" />
         <div class="col-sm-2">
             <button style="margin-top: 31px;" [disabled]="form.invalid"  type="submit" class="btn btn-primary">Cadastrar</button>
         </div>

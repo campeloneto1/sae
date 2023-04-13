@@ -24,6 +24,8 @@ import { Usuario } from "../usuarios/usuarios";
 import { SessionService } from "../../shared/session.service";
 import { FormularioPessoasVinculosComponent } from "./formulario-pessoas-vinculos/formulario-pessoas-vinculos.component";
 import { PessoasVinculosService } from "./formulario-pessoas-vinculos/pessoas-vinculos.service";
+import { DomSanitizer } from "@angular/platform-browser";
+import { RedeSocial } from "../redes-sociais/redes-sociais";
 @Component({
     selector: 'pessoas',
     templateUrl: './pessoas.component.html',
@@ -82,7 +84,9 @@ export class PessoasComponent implements OnInit, OnDestroy{
         private pessoasVinculosService: PessoasVinculosService,
         private analisesPessoasService: AnalisesPessoasService,
         private organizacoesPessoasService: OrganizacoesPessoasService,
-        private http: HttpClient){
+        private http: HttpClient,
+        private sanitizer: DomSanitizer
+    ){
 
     }
 
@@ -136,6 +140,10 @@ export class PessoasComponent implements OnInit, OnDestroy{
             }
         });        
     }
+
+    urlfoto(data:Pessoa):any{
+        return this.sanitizer.bypassSecurityTrustResourceUrl(`${this.IMG}/${data.foto}`);
+      }
 
     submitCadastro(){
         this.modelCadastro.nativeElement.click();
@@ -215,6 +223,10 @@ export class PessoasComponent implements OnInit, OnDestroy{
         this.informacoes = {} as Pessoa;
         this.getPessoa(data.id || 0);
     }
+
+    urlfoto2(data:RedeSocial):any{
+        return this.sanitizer.bypassSecurityTrustResourceUrl(`${this.IMG}/${data.pivot.foto}`);
+      }
 
     deleteRedeSocial(data: number){
         if (confirm("Tem certeza que deseja excluir a rede social?")){

@@ -6,6 +6,7 @@ import { Pessoa } from "../pessoas/pessoas";
 import { SituacaoFuncional } from "../situacoes-funcionais/situacoes-funcionais";
 import { SituacaoTipo } from "../situacoes-tipos/situacoes-tipos";
 import { InvestigacoesSociaisBoletins } from "./formulario-investigacoes-sociais-boletins/investigacoes-sociais-boletins";
+import { InvestigacoesSociaisCgds } from "./formulario-investigacoes-sociais-cgds/investigacoes-sociais-cgds";
 import { InvestigacoesSociaisLotacoes } from "./formulario-investigacoes-sociais-lotacoes/investigacoes-sociais-lotacoes";
 
 export interface InvestigacaoSocial{
@@ -29,7 +30,7 @@ export interface InvestigacaoSocial{
 
     lotacoes?: InvestigacoesSociaisLotacoes,
     boletins?: InvestigacoesSociaisBoletins,
-    cgd?: string,
+    cgds?: InvestigacoesSociaisCgds,
     sip?: string,
     sinesp?: string,
     tjce?: string,

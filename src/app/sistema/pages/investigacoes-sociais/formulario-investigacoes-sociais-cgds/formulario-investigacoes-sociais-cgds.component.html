@@ -1,0 +1,17 @@
+<form  [formGroup]="form" (ngSubmit)="cadastrar()" >
+    <div class="row">
+        <app-input-text class="col-sm-2" formControlName="spu" label="SPU" id="spu" tipo="text" />
+        <app-input-select class="col-sm-2" formControlName="cgd_envolvimento_tipo_id" label="Envolvimento" id="cgd_envolvimento_tipo_id" [data$]="cgdsenvolvimentostipos$" />  
+        <app-input-select class="col-sm-2" formControlName="cgd_processo_tipo_id" label="Processo" id="cgd_processo_tipo_id" [data$]="cgdsprocessostipos$" />  
+        <app-input-select class="col-sm-2" formControlName="cgd_situacao_tipo_id" label="Situações" id="cgd_situacao_tipo_id" [data$]="cgdssituacoestipos$" />  
+        
+    </div>
+    <div class="row">
+        <app-input-textarea class="col-sm-12" formControlName="observacao" label="Observação" id="observacao" tipo="textarea" />
+    </div>
+   
+    <div class="d-flex justify-content-end">      
+        <!--<a (click)="form.reset()" data-bs-dismiss="modal" class="btn btn-link text-danger">Cancelar</a>-->
+        <button [disabled]="form.invalid"  type="submit" class="btn btn-primary">Cadastrar</button>
+    </div>
+</form>

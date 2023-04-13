@@ -29,8 +29,4 @@ export class PessoasRedesSociaisService{
     destroy(id: number){
       return this.http.delete(`${API}/pessoas-redes-sociais/${id}`);
     }
-
-    checkCpf(id: number) {
-      return this.http.get(`${API}/pessoas-redes-sociais/${id}/checkCpf`);
-    } 
 }
