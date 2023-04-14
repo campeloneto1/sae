@@ -9,6 +9,8 @@ import { TituloComponent } from "../../components/titulo/titulo.component";
 import { SessionService } from "../../shared/session.service";
 import { SharedModule } from "../../shared/shared.module";
 import { SharedService } from "../../shared/shared.service";
+import { InvestigacoesSociaisStatus } from "../investigacoes-sociais-status/investigacoes-sociais-status";
+import { InvestigacoesSociaisStatusService } from "../investigacoes-sociais-status/investigacoes-sociais-status.service";
 import { FormularioPessoasRedesSociaisComponent } from "../pessoas/formulario-pessoas-redes-sociais/formulario-pessoas-redes-sociais.component";
 import { PessoasRedesSociaisService } from "../pessoas/formulario-pessoas-redes-sociais/pessoas-redes-sociais.service";
 import { FormularioPessoasVeiculosComponent } from "../pessoas/formulario-pessoas-veiculos/formulario-pessoas-veiculos.component";
@@ -26,6 +28,7 @@ import { FormularioInvestigacoesSociaisCgdsComponent } from "./formulario-invest
 import { InvestigacoesSociaisCgdsService } from "./formulario-investigacoes-sociais-cgds/investigacoes-sociais-cgds.service";
 import { FormularioInvestigacoesSociaisLotacoesComponent } from "./formulario-investigacoes-sociais-lotacoes/formulario-investigacoes-sociais-lotacoes.component";
 import { InvestigacoesSociaisLotacoesService } from "./formulario-investigacoes-sociais-lotacoes/investigacoes-sociais-lotacoes.service";
+import { FormularioInvestigacoesSociaisStatusComponent } from "./formulario-investigacoes-sociais-status/formulario-investigacoes-sociais-status.component";
 import { FormularioInvestigacoesSociaisComponent } from "./formulario/formulario-investigacoes-sociais.component";
 import { InvestigacaoSocial, InvestigacoesSociais } from "./investigacoes-sociais";
 import { InvestigacoesSociaisService } from "./investigacoes-sociais.service";
@@ -47,21 +50,25 @@ import { InvestigacoesSociaisService } from "./investigacoes-sociais.service";
         FormularioVeiculosComponent,
         FormularioInvestigacoesSociaisBoletinsComponent,
         FormularioInvestigacoesSociaisLotacoesComponent,
-         FormularioInvestigacoesSociaisCgdsComponent
+        FormularioInvestigacoesSociaisCgdsComponent,
+        FormularioInvestigacoesSociaisStatusComponent
     ]
 })
 
 export class InvestigacoesSociaisComponent implements OnInit, OnDestroy{
     protected IMG = environment.image;
     protected data$!: Observable<InvestigacoesSociais>;
+    protected investigacoessociaisstatus$!: Observable<InvestigacoesSociaisStatus>;
 
     protected excluir!: InvestigacaoSocial;
+    protected status!: InvestigacaoSocial;
     protected informacoes!: Pessoa;
     protected informacoes2!: InvestigacaoSocial;
     protected foto!: Pessoa;
     protected cadveiculo:boolean = false;
     protected dtOptions: DataTables.Settings = {};    
     protected user!: Usuario;
+    protected cadpessoa:boolean = false;
 
     @ViewChild(DataTableDirective, { static: false })  dtElement!: DataTableDirective;
 
@@ -74,6 +81,7 @@ export class InvestigacoesSociaisComponent implements OnInit, OnDestroy{
     protected subscription: any;
     protected subscription2: any;
     protected subscription3: any;
+    protected subscription4: any;
 
     constructor(private sharedService: SharedService,
         private http: HttpClient,
@@ -83,6 +91,7 @@ export class InvestigacoesSociaisComponent implements OnInit, OnDestroy{
         private investigacoesSociaisBoletinsService: InvestigacoesSociaisBoletinsService,
         private investigacoesSociaisLotacoesService: InvestigacoesSociaisLotacoesService,
         private investigacoesSociaisCgdsService: InvestigacoesSociaisCgdsService,
+        private investigacoesSociaisStatussService: InvestigacoesSociaisStatusService,
         private pessoasRedesSociaisService: PessoasRedesSociaisService,
         private pessoasVeiculosService: PessoasVeiculosService,
         private pessoasVinculosService: PessoasVinculosService
@@ -96,6 +105,8 @@ export class InvestigacoesSociaisComponent implements OnInit, OnDestroy{
         this.user = this.sessionService.retornaUser();
         this.dtOptions = this.sharedService.getDtOptions();
         this.dtOptions = { ...this.dtOptions, order: [1, 'asc'] };        
+
+        this.investigacoessociaisstatus$ = this.investigacoesSociaisStatussService.index();
 
         this.data$ = this.investigacoesSociaisService.index().pipe(
             tap(() => {
@@ -154,6 +165,10 @@ export class InvestigacoesSociaisComponent implements OnInit, OnDestroy{
             }
         });   
     }
+   
+    sudmitPessoa(){
+        this.cadpessoa = false;
+    }
 
     edit(data: InvestigacaoSocial){
         this.formulario.editar(data);
@@ -174,6 +189,14 @@ export class InvestigacoesSociaisComponent implements OnInit, OnDestroy{
                 this.sharedService.toast('Error!', error.erro as string, 2);
             }
         });
+    }
+
+    changeStatus(data: InvestigacaoSocial){
+        this.status = data;
+    }
+
+    submitStatus(){
+        this.refresh();
     }
 
     getPessoa(data: number){

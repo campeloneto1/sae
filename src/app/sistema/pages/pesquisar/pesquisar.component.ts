@@ -40,10 +40,14 @@ export class PesquisarComponent implements OnInit, OnDestroy{
             'organizacoes': [0],
             'pessoas': [0],
             'veiculos': [0],
+            'investigacoes_sociais': [0],
         });
 
         if(this.user.perfil.analises){
             this.form.get('analises')?.patchValue(1);
+        }
+        if(this.user.perfil.investigacoes_sociais){
+            this.form.get('investigacoes_sociais')?.patchValue(1);
         }
         if(this.user.perfil.organizacoes){
             this.form.get('organizacoes')?.patchValue(1);

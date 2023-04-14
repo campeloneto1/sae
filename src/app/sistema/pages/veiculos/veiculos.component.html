@@ -11,10 +11,10 @@
             <button *ngIf="user.perfil.veiculos_cad" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalcad" title="Cadastrar"><i class="fa fa-plus"></i></button>
           </div>
         </div>
-        <div class="card-body">
+        <div class="card-body table-responsive">
         
           <!--INICIO TABLE-->
-          <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-hover table-head-fixed  ">
+          <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-hover table-head-fixed">
             <thead>
               <tr>
                 <th>#</th>
@@ -43,7 +43,7 @@
                   <span *ngIf="row.pessoa"><a [routerLink]="['/Pessoas', row.pessoa.id]">{{row.pessoa.nome}}</a></span>
                   <span *ngIf="row.organizacao"><a [routerLink]="['/Organizacoes', row.organizacao.id]">{{row.organizacao.nome}}</a></span>
                 </td>   
-                <td>                  
+                <td class="text-nowrap">                  
                   <i
                     (click)="showInformacoes(row)"
                     *ngIf="user.perfil.veiculos_edt"
@@ -68,11 +68,23 @@
                     data-bs-toggle="modal"
                     data-bs-target="#modalpessoas"
                     title="Pessoas"
-                    class="fa fa-users text-primary point ml-2"
+                    class="fa fa-users text-primary point ml-2 "
                     aria-hidden="true"
                   ></i>
                 </td>       
-                <td>                 
+                <td class="text-nowrap">          
+                  <a            
+                  *ngIf="user.perfil.veiculos" 
+                   class="options ml-2"
+                    [routerLink]="[row.id, 'Imprimir']"
+                  
+                   title="Imprimir"
+                 >
+                   <i
+                     class="fas fa-print text-primary point"
+                     aria-hidden="true"
+                   ></i>
+                 </a>              
                   <a             
                      *ngIf="user.perfil.veiculos_edt"
                       class="options ml-2"

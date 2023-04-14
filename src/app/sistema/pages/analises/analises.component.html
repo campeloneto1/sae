@@ -11,10 +11,10 @@
             <button *ngIf="user.perfil.analises_cad" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalcad" title="Cadastrar"><i class="fa fa-plus"></i></button>
           </div>
         </div>
-        <div class="card-body">
+        <div class="card-body ">
         
           <!--INICIO TABLE-->
-          <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-hover table-head-fixed  ">
+          <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-hover table-head-fixed ">
             <thead>
               <tr>
                 <th>#</th>
@@ -33,7 +33,7 @@
               <tr *ngFor="let row of data" class="optionshover">
                 <td>{{row.id}}</td>
                 <td>{{row?.analise_categoria?.nome}}</td> 
-                <td>
+                <td style="max-width: 500px;">
                   <a *ngIf="(row.analise_categoria.restrito && user.perfil.restrito) || !row.analise_categoria.restrito" [routerLink]="['/Analises', row.id]">{{row.nome}}</a>
                   <span *ngIf="row.analise_categoria.restrito && !user.perfil.restrito">{{row.nome}}</span>
                 </td> 
@@ -67,7 +67,19 @@
                   <i title="Síntese em branco" *ngIf="row?.analise_categoria?.sintese && !row?.sintese" class="fa fa-square ml-1" style="color: darkgrey;" aria-hidden="true"></i>
                   <i title="Síntese preenchida" *ngIf="row?.analise_categoria?.sintese && row?.sintese" class="fa fa-check-square ml-1" style="color: green;" aria-hidden="true"></i>
                 </td>
-                <td >                 
+                <td class="text-nowrap">     
+                  <a            
+                  *ngIf="user.perfil.analises" 
+                   class="options ml-2"
+                    [routerLink]="[row.id, 'Imprimir']"
+                  
+                   title="Imprimir"
+                 >
+                   <i
+                     class="fas fa-print text-primary point"
+                     aria-hidden="true"
+                   ></i>
+                 </a>                   
                   <a  
                     *ngIf="((row.analise_categoria.restrito && user.perfil.restrito) || !row.analise_categoria.restrito) && user.perfil.analises_edt"           
                       class="options ml-2"

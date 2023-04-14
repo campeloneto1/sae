@@ -15,4 +15,12 @@ export class InicioService{
     quant_analises(){
         return this.http.get(`${API}/inicio-quantanalises`);
     }
+
+    quant_investigacoes(){
+        return this.http.get(`${API}/inicio-quantinvestigacoes`);
+    }
+
+    ultimas_investigacoes(){
+        return this.http.get(`${API}/inicio-ultimasinvestigacoes`);
+    }
 }

@@ -15,7 +15,7 @@ export interface InvestigacaoSocialCgd{
     cgd_situacao_tipo_id: number,
     cgd_situacao_tipo: CgdSituacaoTipo,
     spu: string,
-    observacao: string,
+    descricao: string,
 
     created_at: Date,
     updated_at: Date

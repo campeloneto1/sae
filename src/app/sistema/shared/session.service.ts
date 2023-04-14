@@ -16,9 +16,15 @@ export class SessionService{
 
       pathadministrador = [
         'Analises/Categorias',
+        'Batalhoes',
         'Cidades',
+        'Cnh/Categorias',
+        'Companhias',
+        'Comportamentos',
         'Cores',
+        'Escolaridades',
         'Estados',
+        'Graduacoes',
         'Logs',
         'Marcas',
         'Modelos',
@@ -27,7 +33,12 @@ export class SessionService{
         'Sexos',
         'Arquivos/Tipos', 
         'Analises/Tipos', 
+        'Envolvimentos/Tipos', 
+        'Lotacoes/Tipos', 
         'Organizacoes/Tipos', 
+        'Processos/Tipos', 
+        'Situacoes/Tipos',
+        'CgdsSituacoes/Tipos',
         'Veiculos/Tipos', 
         'Vinculos/Tipos', 
         
@@ -43,6 +54,12 @@ export class SessionService{
         'Analises',
         'Analises/:id',
         'Analises/:id/Imprimir',
+      ]; 
+
+      pathinvestigacoes = [        
+        'InvestigacoesSociais',
+        'InvestigacoesSociais/:id',
+        'InvestigacoesSociais/:id/Imprimir',
       ]; 
 
       pathorganizacoes = [        
@@ -147,6 +164,10 @@ export class SessionService{
       }
 
       if(this.pathanalises.includes(data.routeConfig.path) && !this.user.perfil?.analises){
+        return false;
+      }
+
+      if(this.pathinvestigacoes.includes(data.routeConfig.path) && !this.user.perfil?.investigacoes_sociais){
         return false;
       }
 

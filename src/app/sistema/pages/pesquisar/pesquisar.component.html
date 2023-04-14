@@ -10,10 +10,16 @@
                 <app-input-text class="col-sm-8 offset-sm-2" formControlName="pesquisar" label="Pesquisar" id="pesquisar" tipo="text" />
             </div>
             <div class="row">
-                <div  class="col-sm-2 offset-sm-2">
+                <div  class="col-sm-2 offset-sm-1">
                     <div *ngIf="user.perfil.analises" class="form-check text-center">
                         <input class="form-check-input" type="checkbox"  id="analises" formControlName="analises">
                         <label class="form-check-label" for="analises">Análises</label>
+                    </div>
+                </div>
+                <div  class="col-sm-2">
+                    <div *ngIf="user.perfil.investigacoes_sociais" class="form-check text-center">
+                        <input class="form-check-input" type="checkbox"  id="investigacoes_sociais" formControlName="investigacoes_sociais">
+                        <label class="form-check-label" for="investigacoes_sociais">Investigações Sociais</label>
                     </div>
                 </div>
                 <div  class="col-sm-2">
@@ -55,6 +61,12 @@
                         Análises 
                         <span class="right badge badge-danger">{{resultado.analises?.length}}</span>
                     </a>
+                </li>
+                <li *ngIf="user.perfil.investigacoes_sociais" class="nav-item">
+                  <a [ngClass]="!form.value.investigacoes_sociais ? 'disabled' : ''" class="nav-link" href="#tabinvestigacoes" data-bs-toggle="tab">
+                      Investigações Sociais 
+                      <span class="right badge badge-danger">{{resultado.investigacoes_sociais?.length}}</span>
+                  </a>
                 </li>
                 <li *ngIf="user.perfil.organizacoes" class="nav-item">
                     <a [ngClass]="!form.value.organizacoes ? 'disabled' : ''" class="nav-link" href="#taborganizacoes" data-bs-toggle="tab">
@@ -104,6 +116,39 @@
                     </table>
                 </div>
                 <!--FIM TAB analises-->
+                 <!--INICIO TAB investigacoes-->
+                 <div class="active tab-pane" id="tabinvestigacoes">
+                  <table  class="table table-hover table-head-fixed text-nowrap mt-2">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Graduação</th>
+                          <th>Nome</th>
+                          <th>CPF</th>
+                          <th>Matrícula</th>
+                          <th>Criado</th>
+                          <th>Modificado</th>
+                         
+                        </tr>
+                      </thead>
+                      <tbody  >
+                        <tr *ngFor="let row of resultado.investigacoes_sociais">
+                          <td>{{row.id}}</td>
+                          <td>{{row.graduacao?.nome}}</td>  
+                          <td>
+                            <a [routerLink]="['/InvestigacoesSociais', row.id]">{{row.pessoa.nome}}
+                            <span *ngIf="row.nome_guerra"> ({{row.nome_guerra}})</span></a>
+                          </td>  
+                          <td>{{row.pessoa.cpf | mask: '000.000.000-00'}}</td> 
+                          <td>{{row.matricula! | mask: '000.000-00'}}</td> 
+                          <td>{{row.created_at | date: 'dd/MM/yyyy HH:mm'}}</td>      
+                          <td>{{row.updated_at | date: 'dd/MM/yyyy HH:mm'}}</td>  
+                          
+                        </tr>
+                      </tbody>
+                  </table>
+              </div>
+              <!--FIM TAB investigacoes-->
                 <!--INICIO TAB organizacoes-->
                 <div class="tab-pane" id="taborganizacoes">
                     <!--INICIO TABLE-->

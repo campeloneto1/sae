@@ -83,7 +83,7 @@
                 <b>Comportamento</b> <a class="float-right">{{investigacao.comportamento?.nome}} </a>
               </li> 
             </ul>      
-            <a [routerLink]="['Imprimir']" target="_blank" class="btn btn-primary btn-block"><i class="fa fa-print" aria-hidden="true"></i> Imprimir</a>     
+            <a *ngIf="!investigacao.investigacao_social_status.andamento"  [routerLink]="['Imprimir']" target="_blank" class="btn btn-primary btn-block"><i class="fa fa-print" aria-hidden="true"></i> Imprimir</a>     
           </div>
 
           
@@ -282,7 +282,7 @@
                           <td>{{row.cgd_envolvimento_tipo.nome}}</td> 
                           <td>{{row.cgd_processo_tipo.nome}}</td> 
                           <td>{{row.cgd_situacao_tipo.nome}}</td> 
-                          <td [innerHTML]="row.observacao"></td> 
+                          <td [innerHTML]="row.descricao"></td> 
                           
                         </tr>
                       </tbody>

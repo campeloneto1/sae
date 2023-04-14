@@ -11,22 +11,22 @@
             <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalcad" title="Cadastrar"><i class="fa fa-plus"></i></button>
           </div>
         </div>
-        <div class="card-body">
+        <div class="card-body table-responsive">
         
           <!--INICIO TABLE-->
-          <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-hover table-head-fixed text-nowrap ">
+          <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-hover table-head-fixed  ">
             <thead>
               <tr>
                 <th>#</th>
-                <th>Graduação</th>
+                <th>Grad.</th>
                 <th>Nome</th>
-                <th>Nome de Guerra</th>
                 <th>CPF</th>
-                <th>Matrícula</th>
+                <th>Mat.</th>
                 <th>Criado</th>
                 <th>Modificado</th>
                 <th>Foto</th>
                 <th>Informações</th>
+                <th>Status</th>
                 <th>Opções</th>
               </tr>
             </thead>
@@ -34,9 +34,11 @@
             <tbody *ngIf="data$ | async as data; else loading" >
               <tr *ngFor="let row of data" class="optionshover">
                 <td>{{row.id}}</td>
-                <td>{{row.graduacao?.nome}}</td>  
-                <td><a [routerLink]="[row.id]">{{row.pessoa.nome}}</a></td>  
-                <td>{{row.nome_guerra}}</td>  
+                <td>{{row.graduacao?.abreviatura}}</td>  
+                <td>
+                  <a [routerLink]="[row.id]">{{row.pessoa.nome}}
+                  <span *ngIf="row.nome_guerra"> ({{row.nome_guerra}})</span></a>
+                </td>  
                 <td>{{row.pessoa.cpf | mask: '000.000.000-00'}}</td> 
                 <td>{{row.matricula! | mask: '000.000-00'}}</td> 
                 <td>{{row.created_at | date: 'dd/MM/yyyy HH:mm'}}</td>      
@@ -44,7 +46,7 @@
                 <td>
                   <i *ngIf="user.perfil.pessoas_edt" class="fas fa-portrait point" [ngClass]="row.pessoa.foto ? 'text-success' : 'text-danger'" (click)="showFoto(row.pessoa)" data-bs-toggle="modal" data-bs-target="#modalfoto"></i>
                 </td>
-                <td>
+                <td class="text-nowrap">
                   <i
                     (click)="showInformacoes(row.pessoa)"
                     *ngIf="user.perfil.pessoas_edt"
@@ -100,11 +102,34 @@
                     aria-hidden="true"
                   ></i>
                 </td>            
-                <td>        
-                  <a             
+                <td>
+                  <span *ngIf="row.investigacao_social_status.andamento" class="badge badge-light">{{row.investigacao_social_status.nome}}</span>
+                  <span *ngIf="row.investigacao_social_status.concluido" class="badge badge-secondary">{{row.investigacao_social_status.nome}}</span>
+                  <span *ngIf="row.investigacao_social_status.aprovado" class="badge badge-info">{{row.investigacao_social_status.nome}}</span>
+                  <span *ngIf="row.investigacao_social_status.encaminhado" class="badge badge-primary" title="Encaminhou: {{row.encaminhou.nome}}">{{row.investigacao_social_status.nome}}</span>
+                  <span *ngIf="row.investigacao_social_status.aguardando" class="badge badge-primary" title="Encaminhou: {{row.encaminhou.nome}}">{{row.investigacao_social_status.nome}}</span>
+                  <span *ngIf="row.investigacao_social_status.transferido" class="badge badge-success" title="{{row.bcg_transferencia}}">{{row.investigacao_social_status.nome}}</span>
+                  <span *ngIf="row.investigacao_social_status.recusado" class="badge badge-danger">{{row.investigacao_social_status.nome}}</span>
+                </td>
+                <td class="text-nowrap">    
+                  <a     
+                    *ngIf="!row.investigacao_social_status.transferido && !row.investigacao_social_status.recusado"        
+                    class="options ml-2"
+                    title="Alterar Status"
+                    (click)="changeStatus(row)"
+                    data-bs-toggle="modal"
+                    data-bs-target="#modalstatus"
+                  >
+                    <i
+                      class="fa fa-refresh text-primary point"
+                      aria-hidden="true"
+                    ></i>
+                  </a>      
+                  <a     
+                    *ngIf="!row.investigacao_social_status.andamento"        
                     class="options ml-2"
                    [routerLink]="[row.id, 'Imprimir']"
-                    title="Editar"
+                    title="Imprimir"
                     target="_blank"
                   >
                     <i
@@ -165,13 +190,17 @@
         <div class="modal-dialog modal-xl">
           <div class="modal-content">
             <div class="modal-header border-0">
-              <h4 class="modal-title">Cadastrar</h4>
+              <h4 class="modal-title">
+                Cadastrar 
+                <button (click)="cadpessoa = true;" class="btn btn-outline-primary" title="Cadastrar Pessoa"><i class="fa fa-plus"></i></button>
+              </h4>
               <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
               </button>
             </div>
             <div class="modal-body">
-                <formulario-investigacoes-sociais (refresh)="refresh()" />
+                <formulario-pessoas *ngIf="cadpessoa" (refresh)="sudmitPessoa()" />
+                <formulario-investigacoes-sociais *ngIf="!cadpessoa" (refresh)="refresh()" />
             </div>           
           </div>        
         </div>        
@@ -201,6 +230,26 @@
         
       </div>
       <!--FIM MODAL EXCLUIR-->    
+
+      <!-- INICIO MODAL STATUS-->
+      <div class="modal fade" id="modalstatus" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+          <div class="modal-content">
+            <div class="modal-header border-0">
+              <h4 class="modal-title">Alterar Status</h4>
+              <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class="modal-body" *ngIf="status">
+              <formulario-investigacoes-sociais-status [investigacao_social_id]="status.id" (refresh)="submitStatus()" />               
+            </div>            
+          </div>
+        
+        </div>
+        
+      </div>
+      <!--FIM MODAL STATUS-->
       
        <!-- /.INICIO MODAL foto -->
     <div class="modal fade" id="modalfoto" style="display: none;" aria-hidden="true">
@@ -483,7 +532,7 @@
                       <th>Envolvimento</th> 
                       <th>Tipo</th>   
                       <th>Situação</th> 
-                      <th>Teor</th>                                        
+                      <th>Descrição</th>                                        
                       <th>Opções</th>
                     </tr>
                   </thead>
@@ -494,7 +543,7 @@
                       <td>{{row.cgd_envolvimento_tipo.nome}}</td> 
                       <td>{{row.cgd_processo_tipo.nome}}</td> 
                       <td>{{row.cgd_situacao_tipo.nome}}</td> 
-                      <td [innerHTML]="row.observacao"></td> 
+                      <td [innerHTML]="row.descricao"></td> 
                       <td>                                        
                           <a
                             class="options ml-2"

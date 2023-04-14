@@ -1,122 +1,112 @@
 <div *ngIf="analise$ | async as analise; else loading">
-    <div class="page-header" style="text-align: center; margin-bottom: 10px">
-      <!--<img src="assets/cabecalho.png" class="cabecalho" />-->
-      <div class="text-center" >
-        <h2 style="padding-top: 50px;">
-          {{ analise.nome }}
-        </h2>       
-        
-      </div>
+  <div class="page-header" style="text-align: center; margin-bottom: 10px">
+    <!--<img src="assets/cabecalho.png" class="cabecalho" />-->
+    <div class="text-center">
+      <h2 style="padding-top: 50px">
+        {{ analise.nome }}
+      </h2>
     </div>
-  
-    <div class="page-footer">
-      <div style="margin-bottom: 40px" class="row rodape2" *ngIf="user">
-        <div class="col-sm-2 text-right">
-          <!--<p>
-          1ª CPG – CM<br />
-          Rua Ten. Amauri Pio, 168 - Meireles | CEP: 60.000-000 Fortaleza / CE
-          <br />
-          Fones: 85 40010001 | E-mail: email@email.com<br />
-          <b>“Raça de Fortes, Povo de Bravos”</b>
-        </p>-->
-        </div>
-        <div class="col-sm-10 text-right">
-          <!--<b>Usuário:</b> {{ user.nome }}
+  </div>
+
+  <div class="page-footer">
+    <div style="margin-bottom: 40px" class="row rodape2" *ngIf="user">
+      
+      <div class="col-sm-12 text-right">
+        <!--<b>Usuário:</b> {{ user.nome }}
           {{user.key}} -->
-          <b>Data:</b> {{ date | date : "dd/MM/yyyy HH:mm" }}
-        </div>
+        <b>Data:</b> {{ date | date : "dd/MM/yyyy HH:mm" }}
       </div>
-      <img src="assets/rodape.png" class="rodape" />
     </div>
-  
-    <table style="width: 100%; min-width: 100%">
-      <thead class="thead">
-        <tr>
-          <td>
-            <!--place holder for the fixed-position header-->
-            <div class="page-header-space"></div>
-          </td>
-        </tr>
-      </thead>
-  
-      <tbody>
-        <tr>
-          <td>
-            <!--*** CONTENT GOES HERE ***
+    <!-- <img src="assets/rodape.png" class="rodape" /> -->
+  </div>
+
+  <table style="width: 100%; min-width: 100%">
+    <thead class="thead">
+      <tr>
+        <td>
+          <!--place holder for the fixed-position header-->
+          <div class="page-header-space"></div>
+        </td>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr class="page">
+        <td>
+          <!--*** CONTENT GOES HERE ***
             <div class="page">PAGE 1</div>
             <div class="page">PAGE 2</div>-->
-            <!--INICIO PAGE 1-->
-            <div class="page background">
-              <p class="marcadagua">Documento Sigiloso {{cifra}}</p>
-              <div class="noprint text-center">
-                <!--<img src="assets/cabecalho.png" class="cabecalho" />-->
-                <div class="text-center">
-                  <h2>
-                    {{ analise.nome }}
-                  </h2>                                   
-                </div>
-                
-              </div>
-  
-              <!--DIV 1-->
-              <div class="row marg-noprint">
-                <div class="col-sm-3">
-                    <b>Categoria:</b> {{ analise.analise_categoria.nome }}
-                  </div>
-                <div class="col-sm-3" *ngIf="analise.analise_tipo">
-                    <b>Tipo:</b> {{ analise.analise_tipo.nome }}
-                  </div>
-                <div class="col-sm-3" *ngIf="analise.data">
-                  <b>Data:</b> {{ analise.data | date: 'dd/MM/yyyy'}}
-                </div>
-                <div class="col-sm-3" *ngIf="analise.hora">
-                  <b>Hora:</b> {{ analise.hora }}
-                </div>            
-               
-              </div>
-              <!--DIV 1-->
-
-               <!--DIV 2-->
-               <div class="row">
-                <div class="col-sm-12" *ngIf="analise?.rua">
-                  <b>Endereço:</b> 
-                  {{ analise.rua }}
-                  <span *ngIf="analise.numero">, {{analise.numero}}</span>
-                  <span *ngIf="analise.bairro">, {{analise.bairro}}</span>
-                  <span *ngIf="analise.complemento">, {{analise.complemento}}</span>
-                  <span *ngIf="analise.cidade">, {{analise.cidade.nome}} - {{analise.cidade.estado.uf}}</span>
-                </div>
-              </div>
-              <!--DIV 2-->
-                        
-  
-              <div style="margin-top: 40px" [innerHTML]="analise.observacao"></div>
+          <!--INICIO MAIN <p class="marcadagua">Documento Sigiloso {{cifra}}</p>-->
+          <div class="main ">
+            <div class="noprint text-center">
+             
+                <h2>
+                  {{ analise.nome }}
+                </h2>
+              
             </div>
-            <!--FIM PAGE 1-->
+
+            <!--DIV 1-->
+            <div class="row mt-3">
+              <div class="col-sm-3">
+                <b>Categoria:</b> {{ analise.analise_categoria.nome }}
+              </div>
+              <div class="col-sm-3" *ngIf="analise.analise_tipo">
+                <b>Tipo:</b> {{ analise.analise_tipo.nome }}
+              </div>
+              <div class="col-sm-3" *ngIf="analise.data">
+                <b>Data:</b> {{ analise.data | date : "dd/MM/yyyy" }}
+              </div>
+              <div class="col-sm-3" *ngIf="analise.hora">
+                <b>Hora:</b> {{ analise.hora }}
+              </div>
+            </div>
+            <!--DIV 1-->
+
+            <!--DIV 2-->
+            <div class="row">
+              <div class="col-sm-12" *ngIf="analise?.rua">
+                <b>Endereço:</b>
+                {{ analise.rua }}
+                <span *ngIf="analise.numero">, {{ analise.numero }}</span>
+                <span *ngIf="analise.bairro">, {{ analise.bairro }}</span>
+                <span *ngIf="analise.complemento"
+                  >, {{ analise.complemento }}</span
+                >
+                <span *ngIf="analise.cidade"
+                  >, {{ analise.cidade.nome }} -
+                  {{ analise.cidade.estado.uf }}</span
+                >
+              </div>
+            </div>
+            <!--DIV 2-->
+
+            <div
+              style="margin-top: 40px"
+              [innerHTML]="analise.observacao"
+            ></div>
 
             <!--INICIO PAGE 2 previa-->
-            <div class="page" *ngIf="(analise?.previa)">
-              <p class="marcadagua">Documento Sigiloso {{cifra}}</p>
-                <div class=" ">
-                    <h4 style="margin-top: 30px">Prévia</h4>
-                  </div>
-                <div  [innerHTML]="analise.previa"></div>
+            <div *ngIf="analise?.previa">
+              <div class=" ">
+                <h4 style="margin-top: 30px">Prévia</h4>
+              </div>
+              <div [innerHTML]="analise.previa"></div>
             </div>
             <!--fim PAGE 2 previa-->
 
             <!--INICIO PAGE 2 sintese-->
-            <div class="page" *ngIf="(analise?.sintese)">
-              <p class="marcadagua">Documento Sigiloso {{cifra}}</p>
-                <div class=" ">
-                    <h4 style="margin-top: 30px">Síntese</h4>
-                  </div>
-                <div  [innerHTML]="analise.sintese"></div>
+            <div *ngIf="analise?.sintese">
+              <div class=" ">
+                <h4 style="margin-top: 30px">Síntese</h4>
+              </div>
+              <div [innerHTML]="analise.sintese"></div>
             </div>
             <!--fim PAGE 2 sintese-->
 
-            <!--INICIO PAGE 3 pessoas-->
-            <div class="page" *ngIf="analise?.pessoas!.length > 0">
-              <p class="marcadagua">Documento Sigiloso {{cifra}}</p>
+            <!--INICIO PAGE 3 pessoas <p class="marcadagua">Documento Sigiloso {{ cifra }}</p>-->
+            <div *ngIf="(analise?.pessoas)!.length > 0">
+              
               <div class=" ">
                 <h4 style="margin-top: 30px">Pessoas</h4>
               </div>
@@ -124,26 +114,29 @@
               <div style="margin-top: 20px" class="row">
                 <!--INICIO TABLE-->
                 <table class="table table-head-fixed transparent">
-                  <thead >
-                    <tr >
-                        <th>#</th>
-                        <th>Nome</th> 
-                        <th>CPF</th>    
-                        <th>Telefone 1</th>    
-                        <th>E-mail</th>   
-                        <th>Líder</th>   
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Nome</th>
+                      <th>CPF</th>
+                      <th>Telefone 1</th>
+                      <th>E-mail</th>
+                      <th>Líder</th>
                     </tr>
                   </thead>
-                  <tbody >
-                    <tr *ngFor="let row of analise.pessoas" class="optionshover">
-                        <td >{{row.pivot.id}}</td>
-                        <td>{{row.nome}}</td> 
-                        <td>{{row.cpf | mask: '000.000.000-00'}}</td> 
-                        <td>{{row?.telefone1}} </td> 
-                        <td>{{row?.email}}</td> 
-                        <td>
-                            <span *ngIf="row.pivot?.lider">Sim</span>
-                        </td>
+                  <tbody>
+                    <tr
+                      *ngFor="let row of analise.pessoas"
+                      class="optionshover"
+                    >
+                      <td>{{ row.pivot.id }}</td>
+                      <td>{{ row.nome }}</td>
+                      <td>{{ row.cpf | mask : "000.000.000-00" }}</td>
+                      <td>{{ row?.telefone1 }}</td>
+                      <td>{{ row?.email }}</td>
+                      <td>
+                        <span *ngIf="row.pivot?.lider">Sim</span>
+                      </td>
                     </tr>
                   </tbody>
                 </table>
@@ -153,56 +146,64 @@
             </div>
             <!--FIM PAGE 3 PESSOAS-->
             <!--INICIO PAGE 4 veiculos-->
-            <div class="page" *ngIf="analise?.veiculos!.length > 0">
-              <p class="marcadagua">Documento Sigiloso {{cifra}}</p>
-                <div class=" ">
-                  <h4 style="margin-top: 30px">Veículos</h4>
-                </div>
-                <!--DIV 1 -->
-                <div style="margin-top: 20px" class="row">
-                  <!--INICIO TABLE-->
-                  <table class="table table-head-fixed ">
-                    <thead>
-                      <tr>
-                        <th>#</th>
-                        <th>Tipo</th> 
-                        <th>Marca - Modelo</th>    
-                        <th>Placa</th>    
-                        <th>Chassi</th>   
-                        <th>Renavam</th>   
-                        <th>Proprietário</th>                      
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr *ngFor="let row of analise.veiculos" class="optionshover">
-                            <td>{{row.pivot.id}}</td>
-                            <td>{{row.veiculo_tipo.nome}}</td> 
-                            <td>{{row.modelo?.marca?.nome}} - {{row.modelo?.nome}}</td> 
-                            <td>{{row.placa}}</td> 
-                            <td>{{row.chassi}}</td> 
-                            <td>{{row.renavam}}</td> 
-                            <td>
-                                <span *ngIf="row.pessoa">{{row.pessoa.nome}} (CPF: {{ row.pessoa.cpf | mask: '000.000.000-00' }})</span>
-                                <span *ngIf="row.organizacao">{{row.organizacao.nome}}</span>
-                            </td> 
-                      </tr>
-                    </tbody>
-                  </table>
-                  <!--FIM TABLE-->
-                </div>
-                <!--DIV 1-->
+            <div *ngIf="(analise?.veiculos)!.length > 0">
+              <div class=" ">
+                <h4 style="margin-top: 30px">Veículos</h4>
               </div>
-              <!--FIM PAGE 4 veiculos-->
+              <!--DIV 1 -->
+              <div style="margin-top: 20px" class="row">
+                <!--INICIO TABLE-->
+                <table class="table table-head-fixed">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Tipo</th>
+                      <th>Marca - Modelo</th>
+                      <th>Placa</th>
+                      <th>Chassi</th>
+                      <th>Renavam</th>
+                      <th>Proprietário</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      *ngFor="let row of analise.veiculos"
+                      class="optionshover"
+                    >
+                      <td>{{ row.pivot.id }}</td>
+                      <td>{{ row.veiculo_tipo.nome }}</td>
+                      <td>
+                        {{ row.modelo?.marca?.nome }} - {{ row.modelo?.nome }}
+                      </td>
+                      <td>{{ row.placa }}</td>
+                      <td>{{ row.chassi }}</td>
+                      <td>{{ row.renavam }}</td>
+                      <td>
+                        <span *ngIf="row.pessoa"
+                          >{{ row.pessoa.nome }} (CPF:
+                          {{ row.pessoa.cpf | mask : "000.000.000-00" }})</span
+                        >
+                        <span *ngIf="row.organizacao">{{
+                          row.organizacao.nome
+                        }}</span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <!--FIM TABLE-->
+              </div>
+              <!--DIV 1-->
+            </div>
+            <!--FIM PAGE 4 veiculos-->
             <!--INICIO PAGE 5 ARQUIVOS-->
-            <div class="page" *ngIf="(analise?.arquivos)!.length > 0">
-              <p class="marcadagua">Documento Sigiloso {{cifra}}</p>
+            <div *ngIf="(analise?.arquivos)!.length > 0">
               <div class=" ">
                 <h4 style="margin-top: 30px">Arquivos</h4>
               </div>
               <!--DIV 1 -->
               <div style="margin-top: 20px" class="row">
                 <!--INICIO TABLE-->
-                <table class="table table-head-fixed  mt-2">
+                <table class="table table-head-fixed mt-2">
                   <thead>
                     <tr>
                       <th>#</th>
@@ -212,17 +213,20 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let row of analise.arquivos" class="optionshover">
+                    <tr
+                      *ngFor="let row of analise.arquivos"
+                      class="optionshover"
+                    >
                       <td>{{ row.id }}</td>
                       <td>{{ row.arquivo_tipo.nome }}</td>
                       <td>{{ row.nome }}</td>
                       <td>
-                        <a
-                          *ngIf="row.arquivo_tipo.foto"
-                        >
+                        <a *ngIf="row.arquivo_tipo.foto">
                           <img width="100px" [src]="urlarq(row)" />
                         </a>
-                        <span *ngIf="row.arquivo_tipo.link">{{ row.arquivo }}</span>
+                        <span *ngIf="row.arquivo_tipo.link">{{
+                          row.arquivo
+                        }}</span>
                         <!--<a (click)="showArquivo(row)" data-bs-toggle="modal" data-bs-target="#modalshowarquivos">{{row.nome}}</a>-->
                       </td>
                     </tr>
@@ -233,26 +237,27 @@
               <!--DIV 1-->
             </div>
             <!--FIM PAGE 5 ARQUIVOS-->
-          </td>
-        </tr>
-      </tbody>
-  
-      <tfoot class="tfoot">
-        <tr>
-          <td>
-            <!--place holder for the fixed-position footer-->
-            <div class="page-footer-space"></div>
-          </td>
-        </tr>
-      </tfoot>
-    </table>
+          </div>
+          <!--FIM MAIN-->
+        </td>
+      </tr>
+    </tbody>
+
+    <tfoot class="tfoot">
+      <tr>
+        <td>
+          <!--place holder for the fixed-position footer-->
+          <div class="page-footer-space"></div>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+</div>
+
+<ng-template #loading>
+  <div class="text-center">
+    <i class="fa fa-exclamation-triangle fa-4x" aria-hidden="true"></i>
+    <h2>Análise não encontrada</h2>
+    <a routerLink="['/Inicio']">Voltar para o Início</a>
   </div>
-  
-  <ng-template #loading>
-    <div class="text-center">
-      <i class="fa fa-exclamation-triangle fa-4x" aria-hidden="true"></i>
-      <h2>Análise não encontrada</h2>
-      <a routerLink="['/Inicio']">Voltar para o Início</a>
-    </div>
-  </ng-template>
-  
+</ng-template>

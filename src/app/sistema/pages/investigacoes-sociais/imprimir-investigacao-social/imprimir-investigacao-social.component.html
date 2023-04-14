@@ -63,6 +63,7 @@
                   <h1 class="noprint">
                     {{ investigacao.pessoa.nome }}
                   </h1>
+                  <span *ngIf="investigacao.pessoa.alcunha"><strong>Alcunha:</strong> {{ investigacao.pessoa.alcunha }}</span><br />
                   <span *ngIf="investigacao.graduacao"><strong>Graduação:</strong> {{ investigacao.graduacao.abreviatura }} </span>
                   <span *ngIf="investigacao.numeral"><strong>Nº:</strong> {{ investigacao.numeral }} </span>
                   <span *ngIf="investigacao.matricula"><strong>Mat.:</strong> {{ investigacao.matricula | mask: '000.000-0A' }}</span><br />
@@ -74,7 +75,8 @@
                   <span *ngIf="investigacao.data_ingresso"><strong>Tempo de Serviço:</strong> {{ investigacao.data_ingresso | date: 'dd/MM/yyyy' }}</span><br />
 
                   <span *ngIf="investigacao.pessoa.data_nascimento"><strong>Data Nascimento:</strong> {{ investigacao.pessoa.data_nascimento | date: 'dd/MM/yyyy' }} </span>
-                  <span *ngIf="investigacao.pessoa.data_nascimento"><strong>Naturalidade:</strong> {{ investigacao.pessoa.naturalidade.nome }} - {{ investigacao.pessoa.naturalidade.estado.uf }}</span><br />
+                  <span *ngIf="investigacao.pessoa.sexo_id"><strong>Sexo:</strong> {{ investigacao.pessoa.sexo?.nome }} </span>
+                  <span *ngIf="investigacao.pessoa.naturalidade"><strong>Naturalidade:</strong> {{ investigacao.pessoa.naturalidade.nome }} - {{ investigacao.pessoa.naturalidade.estado.uf }}</span><br />
                   <span *ngIf="investigacao.pessoa.escolaridade"><strong>Escolaridade:</strong> {{ investigacao.pessoa.escolaridade.nome }}</span><br />
                   <span *ngIf="investigacao.pessoa.cpf"><strong>CPF:</strong> {{ investigacao.pessoa.cpf | mask: '000.000.000-00'}}</span><br />
                   <span *ngIf="investigacao.pessoa.cnh"><strong>CNH:</strong> {{ investigacao.pessoa.cnh }} </span>
@@ -82,6 +84,7 @@
                   <span *ngIf="investigacao.pessoa.telefone1"><strong>Telefone 1:</strong> {{ investigacao.pessoa.telefone1 | mask: '(00) 0 0000-0000' }} </span>
                   <span *ngIf="investigacao.pessoa.telefone2"><strong>Telefone 2:</strong> {{ investigacao.pessoa.telefone2 | mask: '(00) 0 0000-0000'}} </span>
                   <span *ngIf="investigacao.pessoa.email"><strong>E-mail:</strong> {{ investigacao.pessoa.email }}</span><br />
+                  <span *ngIf="investigacao.pessoa.influencia_id"><strong>Influência:</strong> {{ investigacao.pessoa.influencia?.nome }}</span><br />
                   <span *ngIf="investigacao.pessoa.rua">
                     <strong>Endereço:</strong> 
                     {{ investigacao.pessoa.rua }}
@@ -163,7 +166,7 @@
                       <td>{{ rede.nome }}</td>
                       <td>{{ rede.pivot.nome }}</td>
                       <td>
-                        <img *ngIf="rede.pivot.foto" [src]="urlfoto2(rede)" [alt]="rede.nome"  height="120px" class="img-circle img-fluid">
+                        <img style="max-height: 350px;" *ngIf="rede.pivot.foto" [src]="urlfoto2(rede)" [alt]="rede.nome" class="img-circle img-fluid">
                       </td>
                      </tr>
                   </tbody>
@@ -232,18 +235,19 @@
                       <th>Envolvimento</th> 
                       <th>Tipo</th>   
                       <th>Situação</th> 
-                      <th>Teor</th>    
+                        
                     </tr>
                   </thead>              
-                  <tbody>
-                    <tr  *ngFor="let cgd of investigacao.cgds">
+                  <tbody *ngFor="let cgd of investigacao.cgds">
+                      <tr>
                         <td>{{cgd.id}}</td>
                         <td>{{cgd.spu}}</td> 
                         <td>{{cgd.cgd_envolvimento_tipo.nome}}</td> 
                         <td>{{cgd.cgd_processo_tipo.nome}}</td> 
-                        <td>{{cgd.cgd_situacao_tipo.nome}}</td> 
-                        <td style="max-width: 400px;" [innerHTML]="cgd.observacao"></td> 
-                        
+                        <td>{{cgd.cgd_situacao_tipo.nome}}</td>
+                     </tr>
+                     <tr>
+                        <td colspan="5" [innerHTML]="cgd.descricao"></td> 
                      </tr>
                   </tbody>
                 </table>

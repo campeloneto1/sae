@@ -62,7 +62,7 @@ export class FormularioInvestigacoesSociaisCgdsComponent{
             'cgd_situacao_tipo_id': ['', Validators.compose([
                 Validators.required,
             ])],
-            'observacao': ['', Validators.compose([
+            'descricao': ['', Validators.compose([
                 Validators.required,
             ])],
             'investigacao_social_id': [''],

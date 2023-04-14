@@ -88,6 +88,7 @@ export class FormularioInvestigacoesSociaisComponent{
             'tjce': [''],
             'fontes_abertas': [''],
             'informacoes_adicionais': [''],
+            'indicou_id': [''],
         });
     
 

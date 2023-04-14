@@ -8,7 +8,7 @@
       <div class="col-sm-3" *ngIf="user.perfil.analises">
         <!--INICIO INFO BOX-->
         <div class="info-box">
-          <span class="info-box-icon bg-info elevation-1"
+          <span class="info-box-icon bg-olive elevation-1"
             ><i class="fa fa-warning"></i
           ></span>
           <div class="info-box-content">
@@ -22,11 +22,80 @@
         <!--FIM INFO BOX-->
       </div>
       <!--FIM DIV col-sm 3 quant analises mes-->
-      <!--INICIO DIV col-sm 3 acessos no mes-->
-      <div class="col-sm-2"></div>
-      <!--FIM DIV col-sm 3 acessos no mes-->
+      
+      <!--INICIO DIV col-sm 3 quant analises mes-->
+      <div class="col-sm-3" *ngIf="user.perfil.investigacoes_sociais">
+        <!--INICIO INFO BOX-->
+        <div class="info-box">
+          <span class="info-box-icon bg-olive elevation-1"
+            ><i class="fa fa-address-book"></i
+          ></span>
+          <div class="info-box-content">
+            <span class="info-box-text">ISs no mês</span>
+            <span class="info-box-number">
+              {{quantinvestigacoes}}
+              
+            </span>
+          </div>
+        </div>
+        <!--FIM INFO BOX-->
+      </div>
+      <!--FIM DIV col-sm 3 quant analises mes-->
+
     </div>
     <!--Fim DIV ROW-->
+
+     <!--INICIO DIV ROW-->
+     <div class="row">
+        <div class="col-sm-6">
+
+          <div class="card">
+            <div class="card-header border-0">
+              <div class="d-flex justify-content-between">
+                <h3 class="card-title">Investigações Sociais</h3>
+                <a [routerLink]="['/InvestigacoesSociais']">Ver mais</a>
+              </div>
+            </div>
+            <div class="card-body table-responsive p-0">
+              <table class="table table-hover table-valign-middle">
+                <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Grad</th>
+                      <th>Nome</th>
+                      <th>CPF</th>
+                      <th>Mat.</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let row of ultimasinvestigacoes">
+                      <td>{{row.id}}</td>
+                      <td>{{row.graduacao?.abreviatura}}</td>  
+                      <td>
+                        <a [routerLink]="['/InvestigacoesSociais',row.id]">{{row.pessoa.nome}}
+                        <span *ngIf="row.nome_guerra"> ({{row.nome_guerra}})</span></a>
+                      </td>  
+                      <td>{{row.pessoa.cpf | mask: '000.000.000-00'}}</td> 
+                      <td>{{row.matricula! | mask: '000.000-00'}}</td> 
+                      <td>
+                        <span *ngIf="row.investigacao_social_status.andamento" class="badge badge-light">{{row.investigacao_social_status.nome}}</span>
+                        <span *ngIf="row.investigacao_social_status.concluido" class="badge badge-secondary">{{row.investigacao_social_status.nome}}</span>
+                        <span *ngIf="row.investigacao_social_status.aprovado" class="badge badge-info">{{row.investigacao_social_status.nome}}</span>
+                        <span *ngIf="row.investigacao_social_status.encaminhado" class="badge badge-primary" title="Encaminhou: {{row.encaminhou.nome}}">{{row.investigacao_social_status.nome}}</span>
+                        <span *ngIf="row.investigacao_social_status.aguardando" class="badge badge-primary" title="Encaminhou: {{row.encaminhou.nome}}">{{row.investigacao_social_status.nome}}</span>
+                        <span *ngIf="row.investigacao_social_status.transferido" class="badge badge-success" title="{{row.bcg_transferencia}}">{{row.investigacao_social_status.nome}}</span>
+                        <span *ngIf="row.investigacao_social_status.recusado" class="badge badge-danger">{{row.investigacao_social_status.nome}}</span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+          </div>
+
+        </div>
+     </div>
+      <!--FIM DIV ROW-->
   </section>
   <!--FIM SECTION content-->
 </div>

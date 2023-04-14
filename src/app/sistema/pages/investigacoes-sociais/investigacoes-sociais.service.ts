@@ -29,4 +29,8 @@ export class InvestigacoesSociaisService{
     destroy(id: number){
       return this.http.delete(`${API}/investigacoes-sociais/${id}`);
     }
+
+    change_status(data: any){
+      return this.http.post(`${API}/investigacoes-sociais-changestatus`,data);
+    }
 }
