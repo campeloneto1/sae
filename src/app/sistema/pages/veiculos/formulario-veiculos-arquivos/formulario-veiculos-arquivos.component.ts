@@ -57,6 +57,7 @@ export class FormularioVeiculosArquivosComponent{
             'file': ['', Validators.compose([
                 Validators.required,
             ])],
+            'restrito': [''],
         });
         this.form.get('veiculo_id')?.patchValue(this.veiculo_id);
         this.arquivostipos$ = this.arquivosTipoService.index();

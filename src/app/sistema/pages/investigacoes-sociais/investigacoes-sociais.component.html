@@ -368,7 +368,15 @@
                       <td>{{row.pivot.id}}</td>
                       <td>{{row.nome}}</td> 
                       <td><a [href]="row.pivot.nome" target="_blank">{{row.pivot.nome}}</a></td> 
-                      <td></td>
+                      <td>
+                        <img
+                          *ngIf="row.pivot.foto"
+                          [src]="urlfoto2(row)"
+                          alt="user-avatar"
+                          style="height: 200px;"
+                          class="img-circle img-fluid"
+                        />
+                      </td>
                       <td>                                        
                           <a
                             class="options ml-2"

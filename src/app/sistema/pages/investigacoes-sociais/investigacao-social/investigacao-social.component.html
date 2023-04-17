@@ -122,7 +122,7 @@
                 <li class="nav-item"><a class="nav-link" href="#fontesabertas" data-bs-toggle="tab">Fontes Abertas</a></li>       
                 <li class="nav-item"><a class="nav-link" href="#informacoesadc" data-bs-toggle="tab">Inf. Adicionais</a></li>         
                 <li class="nav-item"><a class="nav-link" href="#veiculos" data-bs-toggle="tab">Veículos</a></li>    
-                <!--<li class="nav-item"><a class="nav-link" href="#arquivos" data-bs-toggle="tab">Arquivos</a></li>-->
+                <li class="nav-item"><a class="nav-link" href="#arquivos" data-bs-toggle="tab">Arquivos</a></li>
             </ul>
           </div>
           <div class="card-body table-responsive p-2">
@@ -136,6 +136,28 @@
 
                 <!--INICIO TAB vinculos-->
                 <div class="tab-pane active" id="vinculos">
+                  <button *ngIf="user.perfil.pessoas_edt" class="btn btn-outline-primary mb-2" data-bs-toggle="modal" data-bs-target="#modalvinculos" title="Cadastrar"><i class="fa fa-plus"></i></button>
+                  <!-- INICIO MODAL VINCULOS-->
+                  <div class="modal fade" id="modalvinculos" style="display: none;" aria-hidden="true">
+                    <div class="modal-dialog modal-xl">
+                      <div class="modal-content">
+                        <div class="modal-header border-0">
+                          <h4 class="modal-title">
+                            Cadastrar Vínculo
+                          
+                          </h4>
+                          <button type="button" class="close" #fecharmodalvinculo id="fecharmodal" data-bs-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">×</span>
+                          </button>
+                        </div>
+                        <div class="modal-body" >                            
+                            <formulario-pessoas-vinculos  [pessoa_id]="investigacao.pessoa_id" (refresh)="sudmitVinculo()" />
+                        </div>           
+                      </div>        
+                    </div>        
+                  </div>
+                  <!--FIM MODAL VINCULOS-->
+
                      <!--INICIO TABLE-->
                       <table  class="table table-hover table-head-fixed  ">
                         <thead>
@@ -174,6 +196,27 @@
 
                 <!--INICIO TAB redessociais-->
                 <div class="tab-pane" id="redessociais">
+                  <button *ngIf="user.perfil.pessoas_edt" class="btn btn-outline-primary mb-2" data-bs-toggle="modal" data-bs-target="#modalredes" title="Cadastrar"><i class="fa fa-plus"></i></button>
+                  <!-- INICIO MODAL REDES SOCIAIS-->
+                  <div class="modal fade" id="modalredes" style="display: none;" aria-hidden="true">
+                    <div class="modal-dialog modal-xl">
+                      <div class="modal-content">
+                        <div class="modal-header border-0">
+                          <h4 class="modal-title">
+                            Cadastrar Rede Social
+                          
+                          </h4>
+                          <button type="button" class="close" #fecharmodalredes id="fecharmodal" data-bs-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">×</span>
+                          </button>
+                        </div>
+                        <div class="modal-body" >                            
+                            <formulario-pessoas-redes-sociais  [pessoa_id]="investigacao.pessoa_id" (refresh)="sudmitRedes()" />
+                        </div>           
+                      </div>        
+                    </div>        
+                  </div>
+                  <!--FIM MODAL REDES SOCIAIS-->
                     <!--INICIO TABLE-->
                     <table  class="table table-hover table-head-fixed  ">
                       <thead>
@@ -190,7 +233,15 @@
                           <td>{{row.pivot.id}}</td>
                           <td>{{row.nome}}</td> 
                           <td><a [href]="row.pivot.nome" target="_blank">{{row.pivot.nome}}</a></td> 
-                          <td></td>
+                          <td>
+                            <img
+                              *ngIf="row.pivot.foto"
+                              [src]="urlfoto2(row)"
+                              alt="user-avatar"
+                              style="height: 200px;"
+                              class="img-circle img-fluid"
+                            />
+                          </td>
                           <td>                                        
                               <a
                                 class="options ml-2"
@@ -212,6 +263,27 @@
 
                 <!--INICIO TAB LOTACOES-->
                 <div class="tab-pane" id="lotacoes">
+                  <button *ngIf="user.perfil.investigacoes_sociais_edt" class="btn btn-outline-primary mb-2" data-bs-toggle="modal" data-bs-target="#modallotacoes" title="Cadastrar"><i class="fa fa-plus"></i></button>
+                  <!-- INICIO MODAL lotacoes-->
+                  <div class="modal fade" id="modallotacoes" style="display: none;" aria-hidden="true">
+                    <div class="modal-dialog modal-xl">
+                      <div class="modal-content">
+                        <div class="modal-header border-0">
+                          <h4 class="modal-title">
+                            Cadastrar Lotação
+                          
+                          </h4>
+                          <button type="button" class="close" #fecharmodallotacoes id="fecharmodal" data-bs-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">×</span>
+                          </button>
+                        </div>
+                        <div class="modal-body" >                            
+                            <formulario-investigacoes-sociais-lotacoes  [investigacao_social_id]="investigacao.id" (refresh)="sudmitLotacoes()" />
+                        </div>           
+                      </div>        
+                    </div>        
+                  </div>
+                  <!--FIM MODAL lotacoes-->
                    <!--INICIO TABLE-->
                   <table  class="table table-hover table-head-fixed  mt-2">
                     <thead>
@@ -220,7 +292,8 @@
                         <th>Boletim</th> 
                         <th>Tipo</th> 
                         <th>Data</th>   
-                        <th>Companhia/Batalhão</th>                                        
+                        <th>Companhia/Batalhão</th>       
+                        <th>Opções</th>                                 
                       </tr>
                     </thead>
                     <tbody *ngIf="investigacao" >
@@ -230,6 +303,18 @@
                         <td>{{row.lotacao_tipo.nome}}</td> 
                         <td>{{row.data | date: 'dd/MM/yyyy'}}</td> 
                         <td>{{row.companhia.abreviatura}}/{{row.companhia.batalhao.abreviatura}}</td> 
+                        <td>                                        
+                          <a
+                            class="options ml-2"
+                            (click)="deleteLotacao(row.id || 0)"                           
+                            title="Excluir"
+                          >
+                            <i
+                              class="fas fa-trash text-danger point "
+                              aria-hidden="true"
+                            ></i
+                          ></a>
+                      </td>
                       </tr>
                     </tbody>
                   </table>
@@ -239,20 +324,54 @@
 
                 <!--INICIO TAB boletins-->
                 <div class="tab-pane" id="boletins">
+                  <button *ngIf="user.perfil.investigacoes_sociais_edt" class="btn btn-outline-primary mb-2" data-bs-toggle="modal" data-bs-target="#modalboletins" title="Cadastrar"><i class="fa fa-plus"></i></button>
+                  <!-- INICIO MODAL boletins-->
+                  <div class="modal fade" id="modalboletins" style="display: none;" aria-hidden="true">
+                    <div class="modal-dialog modal-xl">
+                      <div class="modal-content">
+                        <div class="modal-header border-0">
+                          <h4 class="modal-title">
+                            Cadastrar Boletim
+                          
+                          </h4>
+                          <button type="button" class="close" #fecharmodalboletins id="fecharmodal" data-bs-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">×</span>
+                          </button>
+                        </div>
+                        <div class="modal-body" >                            
+                            <formulario-investigacoes-sociais-boletins  [investigacao_social_id]="investigacao.id" (refresh)="sudmitBoletins()" />
+                        </div>           
+                      </div>        
+                    </div>        
+                  </div>
+                  <!--FIM MODAL boletins-->
                      <!--INICIO TABLE-->
                       <table  class="table table-hover table-head-fixed  mt-2">
                         <thead>
                           <tr>
                             <th>#</th>
                             <th>Boletim</th> 
-                            <th>Descrição</th>                                        
+                            <th>Descrição</th> 
+                            <th>Opções</th>                                      
                           </tr>
                         </thead>
                         <tbody *ngIf="investigacao" >
                           <tr *ngFor="let row of investigacao.boletins" class="optionshover">
                             <td>{{row.id}}</td>
                             <td>{{row.bcg}}</td> 
-                            <td [innerHTML]="row.descricao"> </td>                             
+                            <td [innerHTML]="row.descricao"> </td>       
+                            <td>                                        
+                              <a
+                                class="options ml-2"
+                                (click)="deleteBoletim(row.id || 0)"                           
+                                title="Excluir"
+                              >
+                                <i
+                                  class="fas fa-trash text-danger point "
+                                  aria-hidden="true"
+                                ></i
+                              ></a>
+                          </td>                      
                           </tr>
                         </tbody>
                       </table>
@@ -262,6 +381,27 @@
 
                  <!--INICIO TAB cgd-->
                  <div class="tab-pane" id="cgd">
+                  <button *ngIf="user.perfil.investigacoes_sociais_edt" class="btn btn-outline-primary mb-2" data-bs-toggle="modal" data-bs-target="#modalcgds" title="Cadastrar"><i class="fa fa-plus"></i></button>
+                  <!-- INICIO MODAL cgds-->
+                  <div class="modal fade" id="modalcgds" style="display: none;" aria-hidden="true">
+                    <div class="modal-dialog modal-xl">
+                      <div class="modal-content">
+                        <div class="modal-header border-0">
+                          <h4 class="modal-title">
+                            Cadastrar CGD
+                          
+                          </h4>
+                          <button type="button" class="close" #fecharmodalcgds id="fecharmodal" data-bs-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">×</span>
+                          </button>
+                        </div>
+                        <div class="modal-body" >                            
+                            <formulario-investigacoes-sociais-cgds  [investigacao_social_id]="investigacao.id" (refresh)="sudmitCgds()" />
+                        </div>           
+                      </div>        
+                    </div>        
+                  </div>
+                  <!--FIM MODAL cgds-->
                     <!--INICIO TABLE-->
                     <table  class="table table-hover table-head-fixed  mt-2">
                       <thead>
@@ -272,7 +412,7 @@
                           <th>Tipo</th>   
                           <th>Situação</th> 
                           <th>Teor</th>                                        
-                          
+                          <th>Opções</th>
                         </tr>
                       </thead>
                       <tbody  >
@@ -283,6 +423,18 @@
                           <td>{{row.cgd_processo_tipo.nome}}</td> 
                           <td>{{row.cgd_situacao_tipo.nome}}</td> 
                           <td [innerHTML]="row.descricao"></td> 
+                          <td>                                        
+                            <a
+                              class="options ml-2"
+                              (click)="deleteCgd(row.id || 0)"                           
+                              title="Excluir"
+                            >
+                              <i
+                                class="fas fa-trash text-danger point "
+                                aria-hidden="true"
+                              ></i
+                            ></a>
+                        </td>
                           
                         </tr>
                       </tbody>
@@ -411,7 +563,7 @@
                           </button>
                         </div>
                         <div class="modal-body" >                            
-                            
+                            <formulario-investigacoes-sociais-arquivos [investigacao_social_id]="investigacao.id" (refresh)="sudmitArquivo()" />
                         </div>           
                       </div>        
                     </div>        
@@ -450,7 +602,7 @@
                       </tr>
                     </thead>
                     <tbody  >
-                      <tr *ngFor="let row of investigacao.pessoa.arquivos" class="optionshover">
+                      <tr *ngFor="let row of investigacao.arquivos" class="optionshover">
                         <td>{{row.id}}</td>
                         <td>{{row.arquivo_tipo.nome}}</td> 
                         <td>{{row.nome}}</td> 

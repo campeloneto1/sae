@@ -278,6 +278,16 @@
             </li>
             <li class="nav-item">
               <a
+                [routerLink]="['InvestigacoesSociais/Status']"
+                routerLinkActive="active"
+                class="nav-link"
+              >
+                <i class="far fa-circle nav-icon"></i>
+                <p>Status de IS</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a
                 [routerLink]="['Arquivos/Tipos']"
                 routerLinkActive="active"
                 class="nav-link"
@@ -419,7 +429,7 @@
             </li>
           </ul>
         </li>
-        <li class="nav-item" *ngIf="perfil.gestor">
+        <li class="nav-item" *ngIf="perfil.relatorios">
           <a href="#" class="nav-link">
             <i class="nav-icon fa fa-file"></i>
             <p>

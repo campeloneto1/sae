@@ -14,6 +14,7 @@ import { InvestigacoesSociaisService } from '../investigacoes-sociais.service';
 import { Pessoa } from '../../pessoas/pessoas';
 import { PessoaArquivo } from '../../pessoas/formulario-pessoas-arquivos/pessoas-arquivos';
 import { RedeSocial } from '../../redes-sociais/redes-sociais';
+import { InvestigacaoSocialArquivo } from '../formulario-investigacoes-sociais-arquivos/investigacoes-sociais-arquivos';
 
 @Component({
   selector: 'imprimir-investigacao-social',
@@ -68,6 +69,10 @@ export class ImprimirInvestigacaoSocialComponent implements OnInit, OnDestroy {
   }
  
   urlarq(data:PessoaArquivo):any{
+    return this.sanitizer.bypassSecurityTrustResourceUrl(`${this.IMG}/${data.arquivo}`);
+  }
+
+  urlarq2(data:InvestigacaoSocialArquivo):any{
     return this.sanitizer.bypassSecurityTrustResourceUrl(`${this.IMG}/${data.arquivo}`);
   }
 

@@ -6,6 +6,7 @@ import { Pessoa } from "../pessoas/pessoas";
 import { SituacaoFuncional } from "../situacoes-funcionais/situacoes-funcionais";
 import { SituacaoTipo } from "../situacoes-tipos/situacoes-tipos";
 import { Usuario } from "../usuarios/usuarios";
+import { InvestigacoesSociaisArquivos } from "./formulario-investigacoes-sociais-arquivos/investigacoes-sociais-arquivos";
 import { InvestigacoesSociaisBoletins } from "./formulario-investigacoes-sociais-boletins/investigacoes-sociais-boletins";
 import { InvestigacoesSociaisCgds } from "./formulario-investigacoes-sociais-cgds/investigacoes-sociais-cgds";
 import { InvestigacoesSociaisLotacoes } from "./formulario-investigacoes-sociais-lotacoes/investigacoes-sociais-lotacoes";
@@ -37,6 +38,7 @@ export interface InvestigacaoSocial{
     tjce?: string,
     fontes_abertas?: string,
     informacoes_adicionais?: string,
+    arquivos: InvestigacoesSociaisArquivos
 
     investigacao_social_status_id: number,
     investigacao_social_status: InvestigacaoSocialStatus,

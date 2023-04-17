@@ -1,6 +1,7 @@
 import { CommonModule } from "@angular/common";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
+import { DomSanitizer } from "@angular/platform-browser";
 import { RouterModule } from "@angular/router";
 import { DataTableDirective } from "angular-datatables";
 import { Observable, Subject, tap } from "rxjs";
@@ -20,6 +21,7 @@ import { PessoasVinculosService } from "../pessoas/formulario-pessoas-vinculos/p
 import { FormularioPessoasComponent } from "../pessoas/formulario/formulario-pessoas.component";
 import { Pessoa } from "../pessoas/pessoas";
 import { PessoasService } from "../pessoas/pessoas.service";
+import { RedeSocial } from "../redes-sociais/redes-sociais";
 import { Usuario } from "../usuarios/usuarios";
 import { FormularioVeiculosComponent } from "../veiculos/formulario/formulario-veiculos.component";
 import { FormularioInvestigacoesSociaisBoletinsComponent } from "./formulario-investigacoes-sociais-boletins/formulario-investigacoes-sociais-boletins.component";
@@ -94,8 +96,8 @@ export class InvestigacoesSociaisComponent implements OnInit, OnDestroy{
         private investigacoesSociaisStatussService: InvestigacoesSociaisStatusService,
         private pessoasRedesSociaisService: PessoasRedesSociaisService,
         private pessoasVeiculosService: PessoasVeiculosService,
-        private pessoasVinculosService: PessoasVinculosService
-        
+        private pessoasVinculosService: PessoasVinculosService,
+        private sanitizer: DomSanitizer
     ){
 
     }
@@ -226,6 +228,10 @@ export class InvestigacoesSociaisComponent implements OnInit, OnDestroy{
     showFoto(data: Pessoa){
         this.foto = data;
     }
+
+    urlfoto2(data:RedeSocial):any{
+        return this.sanitizer.bypassSecurityTrustResourceUrl(`${this.IMG}/${data.pivot.foto}`);
+      }
 
     fileEvent(e: any){
         var filedata = e.target.files[0];

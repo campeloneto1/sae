@@ -275,13 +275,13 @@
                     <tbody  >
                       <tr *ngFor="let row of analise.arquivos" class="optionshover">
                         <td>{{row.id}}</td>
-                        <td>{{row.arquivo_tipo.nome}}</td> 
+                        <td><span *ngIf="row.arquivo_tipo">{{row.arquivo_tipo.nome}}</span></td> 
                         <td>{{row.nome}}</td> 
                         <td>
-                          <a style="cursor: pointer;" *ngIf="row.arquivo_tipo.pdf || row.arquivo_tipo.texto || row.arquivo_tipo.link" (click)="showArquivo(row)" data-bs-toggle="modal" data-bs-target="#modalshowarquivos">
+                          <a style="cursor: pointer;" *ngIf="row.arquivo_tipo && (row.arquivo_tipo.pdf || row.arquivo_tipo.texto || row.arquivo_tipo.link)" (click)="showArquivo(row)" data-bs-toggle="modal" data-bs-target="#modalshowarquivos">
                             {{row.arquivo}}
                           </a>  
-                          <a style="cursor: pointer;" *ngIf="row.arquivo_tipo.foto" (click)="showArquivo(row)" data-bs-toggle="modal" data-bs-target="#modalshowarquivos">
+                          <a style="cursor: pointer;" *ngIf="row.arquivo_tipo && row.arquivo_tipo.foto" (click)="showArquivo(row)" data-bs-toggle="modal" data-bs-target="#modalshowarquivos">
                             <img  width="50px" [src]="urlarq(row)" /> 
                           </a>      
                           <!--<a (click)="showArquivo(row)" data-bs-toggle="modal" data-bs-target="#modalshowarquivos">{{row.nome}}</a>-->

@@ -166,7 +166,7 @@
                       <td>{{ rede.nome }}</td>
                       <td>{{ rede.pivot.nome }}</td>
                       <td>
-                        <img style="max-height: 350px;" *ngIf="rede.pivot.foto" [src]="urlfoto2(rede)" [alt]="rede.nome" class="img-circle img-fluid">
+                        <img style="max-height: 300px;" *ngIf="rede.pivot.foto" [src]="urlfoto2(rede)" [alt]="rede.nome" class="img-circle img-fluid">
                       </td>
                      </tr>
                   </tbody>
@@ -288,6 +288,34 @@
                 <div [innerHTML]="investigacao.informacoes_adicionais"></div>
               </div>
               <!--FIM informacoes adicionais-->
+
+              <!--INICIO ARQUIVOS-->
+              <div class="sessao" *ngIf="(investigacao.arquivos)!.length > 0">
+                <h4>Arquivos</h4>
+
+                <table class="table table-bordered table-sm">
+                  <thead class="thead">
+                    <tr>
+                        <th>#</th>
+                        <th>Tipo</th> 
+                        <th>Nome</th>   
+                        <th>Arquivo</th>   
+                    </tr>
+                  </thead>              
+                  <tbody>
+                    <tr  *ngFor="let arquivo of investigacao.arquivos">
+                      <td>{{arquivo.id}}</td>
+                      <td>{{arquivo.arquivo_tipo.nome}}</td> 
+                      <td>{{arquivo.nome}}</td> 
+                      <td>
+                        <span *ngIf="arquivo.arquivo_tipo.pdf || arquivo.arquivo_tipo.texto || arquivo.arquivo_tipo.link">  {{arquivo.arquivo}}</span>
+                        <img *ngIf="arquivo.arquivo_tipo.foto" height="300px" [src]="urlarq2(arquivo)" />                         
+                      </td> 
+                     </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!--FIM ARQUIVOS-->
               
             </div>
             <!--FIM PAGE 2-->

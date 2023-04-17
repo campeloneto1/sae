@@ -1,0 +1,50 @@
+<form  [formGroup]="form" (ngSubmit)="cadastrar()" >
+    <div class="row">
+        <app-input-text class="col-sm-4" formControlName="nome" label="Nome" id="nome" tipo="text" />
+           
+    </div>
+    <div class="row">
+        <div class="col-sm-2">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox"  id="andamento" formControlName="andamento">
+                <label class="form-check-label" for="andamento">Andamento</label>
+            </div>
+        </div> 
+        <div class="col-sm-2">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox"  id="concluido" formControlName="concluido">
+                <label class="form-check-label" for="concluido">Concluído</label>
+            </div>
+        </div> 
+        <div class="col-sm-2">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox"  id="aprovado" formControlName="aprovado">
+                <label class="form-check-label" for="aprovado">Aprovado</label>
+            </div>
+        </div> 
+        <div class="col-sm-2">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox"  id="recusado" formControlName="recusado">
+                <label class="form-check-label" for="recusado">Recusado</label>
+            </div>
+        </div> 
+        <div class="col-sm-2">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox"  id="aguardando" formControlName="aguardando">
+                <label class="form-check-label" for="aguardando">Aguardando</label>
+            </div>
+        </div> 
+        <div class="col-sm-2">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox"  id="transferido" formControlName="transferido">
+                <label class="form-check-label" for="transferido">Transferido</label>
+            </div>
+        </div> 
+    </div>
+    
+    <div class="d-flex justify-content-end">
+      
+        <a (click)="form.reset()" data-bs-dismiss="modal" class="btn btn-link text-danger">Cancelar</a>
+        <button [disabled]="form.invalid" data-bs-dismiss="modal" type="submit" class="btn btn-primary">Cadastrar</button>
+    </div>
+</form>

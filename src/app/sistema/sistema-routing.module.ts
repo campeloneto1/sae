@@ -115,6 +115,11 @@ const routes: Routes = [
                 canActivate: [AlowedGuard]
             },
             {
+                path: 'InvestigacoesSociais/Status',
+                loadComponent: () => import('./pages/investigacoes-sociais-status/investigacoes-sociais-status.component').then((c) => c.InvestigacoesSociaisStatusComponent),
+                canActivate: [AlowedGuard]
+            },
+            {
                 path: 'InvestigacoesSociais/:id',
                 loadComponent: () => import('./pages/investigacoes-sociais/investigacao-social/investigacao-social.component').then((c) => c.InvestigacaoSocialComponent),
                 canActivate: [AlowedGuard]
