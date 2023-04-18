@@ -1,9 +1,9 @@
 <form  [formGroup]="form" (ngSubmit)="cadastrar()" >
     <div class="row">
-        <app-input-select class="col-sm-3" (ngModelChange)="getStatus()" formControlName="investigacao_social_status_id" label="Status" id="investigacao_social_status_id" [data$]="investigacoessociaisstatus$" />  
+        <app-input-select class="col-sm-4" (ngModelChange)="getStatus()" formControlName="investigacao_social_status_id" label="Status" id="investigacao_social_status_id" [data$]="investigacoessociaisstatus$" />  
         
         <app-input-select *ngIf="selectedstatus?.encaminhado" class="col-sm-3"  formControlName="encaminhou_id" label="Encaminhou" id="encaminhou_id" [data$]="usuarios$" />  
-        <app-input-text *ngIf="selectedstatus?.transferido" class="col-sm-2" formControlName="bcg_transferencia" label="Boletim" id="bcg_transferencia" tipo="text" />
+        <app-input-text *ngIf="selectedstatus?.transferido" class="col-sm-4" formControlName="bcg_transferencia" label="Boletim" id="bcg_transferencia" tipo="text" />
         
 
     </div>

@@ -46,7 +46,6 @@
                 <td class="text-nowrap">                  
                   <i
                     (click)="showInformacoes(row)"
-                    *ngIf="user.perfil.veiculos_edt"
                     data-bs-toggle="modal"
                     data-bs-target="#modalanalises"
                     title="Análises"
@@ -55,7 +54,6 @@
                   ></i>
                   <i
                     (click)="showInformacoes(row)"
-                    *ngIf="user.perfil.veiculos_edt"
                     data-bs-toggle="modal"
                     data-bs-target="#modalorganizacoes"
                     title="Organizações"
@@ -64,7 +62,6 @@
                   ></i>
                   <i
                     (click)="showInformacoes(row)"
-                    *ngIf="user.perfil.veiculos_edt"
                     data-bs-toggle="modal"
                     data-bs-target="#modalpessoas"
                     title="Pessoas"
@@ -190,7 +187,7 @@
               </button>
             </div>
             <div class="modal-body" *ngIf="informacoes">
-                <formulario-veiculos-analises [veiculo_id]="informacoes.id" (refresh)="refresh2()" />
+                <formulario-veiculos-analises *ngIf="user.perfil.veiculos_cad" [veiculo_id]="informacoes.id" (refresh)="refresh2()" />
 
                 <!--INICIO TABLE-->
                 <table  class="table table-hover table-head-fixed  mt-2">
@@ -215,6 +212,7 @@
                       <td>{{row.hora}}</td> 
                       <td>                                        
                           <a
+                          *ngIf="user.perfil.veiculos_edt"
                             class="options ml-2"
                             (click)="deleteAnalise(row.pivot.id)"                           
                             title="Excluir"
@@ -248,7 +246,7 @@
               </button>
             </div>
             <div class="modal-body" *ngIf="informacoes">
-                <formulario-veiculos-organizacoes  [veiculo_id]="informacoes.id" (refresh)="refresh2()" />
+                <formulario-veiculos-organizacoes *ngIf="user.perfil.veiculos_cad" [veiculo_id]="informacoes.id" (refresh)="refresh2()" />
 
                 <!--INICIO TABLE-->
                 <table  class="table table-hover table-head-fixed  mt-2">
@@ -271,6 +269,7 @@
                       <td>{{row?.email}}</td> 
                       <td>                                        
                           <a
+                          *ngIf="user.perfil.veiculos_edt"
                             class="options ml-2"
                             (click)="deleteOrganizacao(row.pivot.id)"                           
                             title="Excluir"
@@ -304,7 +303,7 @@
               </button>
             </div>
             <div class="modal-body" *ngIf="informacoes">
-                <formulario-veiculos-pessoas  [veiculo_id]="informacoes.id" (refresh)="refresh2()" />
+                <formulario-veiculos-pessoas *ngIf="user.perfil.veiculos_cad" [veiculo_id]="informacoes.id" (refresh)="refresh2()" />
 
                 <!--INICIO TABLE-->
                 <table  class="table table-hover table-head-fixed  mt-2">
@@ -327,6 +326,7 @@
                       <td>{{row?.email}}</td> 
                       <td>                                        
                           <a
+                          *ngIf="user.perfil.veiculos_edt"
                             class="options ml-2"
                             (click)="deletePessoa(row.pivot.id)"                           
                             title="Excluir"

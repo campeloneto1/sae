@@ -44,7 +44,6 @@
                 <td>
                   <i
                     (click)="showInformacoes(row)"
-                    *ngIf="user.perfil.analises_edt"
                     data-bs-toggle="modal"
                     data-bs-target="#modalpessoas"
                     title="Pessoas"
@@ -53,7 +52,6 @@
                   ></i>
                   <i
                     (click)="showInformacoes(row)"
-                    *ngIf="user.perfil.analises_edt"
                     data-bs-toggle="modal"
                     data-bs-target="#modalveiculos"
                     title="Veículos"
@@ -185,7 +183,7 @@
               </button>
             </div>
             <div class="modal-body" *ngIf="informacoes">
-                <formulario-analises-pessoas  [analise_id]="informacoes.id" (refresh)="refresh2()" />
+                <formulario-analises-pessoas *ngIf="user.perfil.analises_cad"  [analise_id]="informacoes.id" (refresh)="refresh2()" />
 
                 <!--INICIO TABLE-->
                 <table  class="table table-hover table-head-fixed  mt-2">
@@ -211,6 +209,7 @@
                       <td><span *ngIf="row.pivot.lider">Sim</span></td>
                       <td>                                        
                           <a
+                          *ngIf="user.perfil.analises_edt"
                             class="options ml-2"
                             (click)="deletePessoa(row.pivot.id)"                           
                             title="Excluir"
@@ -238,15 +237,15 @@
             <div class="modal-header border-0">
               <h4 class="modal-title">
                 Cadastrar Veículo 
-                <button (click)="cadvei = true;" class="btn btn-outline-primary" title="Cadastrar"><i class="fa fa-plus"></i></button>
+                <button (click)="cadvei = true;" *ngIf="user.perfil.veiculos_cad" class="btn btn-outline-primary" title="Cadastrar"><i class="fa fa-plus"></i></button>
               </h4>
               <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
               </button>
             </div>
             <div class="modal-body" *ngIf="informacoes">
-                <formulario-veiculos *ngIf="cadvei" (refresh)="cadVeiculo()" (cancel)="cancelVeiculo()"/>
-                <formulario-analises-veiculos *ngIf="!cadvei" [analise_id]="informacoes.id" (refresh)="refresh2()" />
+                <formulario-veiculos *ngIf="cadvei && user.perfil.veiculos_cad" (refresh)="cadVeiculo()" (cancel)="cancelVeiculo()"/>
+                <formulario-analises-veiculos *ngIf="!cadvei && user.perfil.analises_cad" [analise_id]="informacoes.id" (refresh)="refresh2()" />
 
                 <!--INICIO TABLE-->
                 <table  class="table table-hover table-head-fixed  mt-2">
@@ -276,6 +275,7 @@
                       </td> 
                       <td>                                        
                           <a
+                          *ngIf="user.perfil.analises_edt"
                             class="options ml-2"
                             (click)="deleteVeiculo(row.pivot.id)"                           
                             title="Excluir"

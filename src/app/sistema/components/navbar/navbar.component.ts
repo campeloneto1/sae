@@ -58,7 +58,7 @@ export class NavbarComponent{
     }
 
     alterarSenha(){
-        /*this.usuariosService.changpass(this.form.value).subscribe({
+        this.usuariosService.changpass(this.form.value).subscribe({
             next: (data:any) => {
                 this.sharedService.toast('Sucesso!', data as string, 3);
                 this.form.reset();
@@ -66,7 +66,7 @@ export class NavbarComponent{
             error: (error:any)=> {
                 this.sharedService.toast('Error!', error.erro as string, 2);
             }
-        })*/
+        })
     }
     
 }

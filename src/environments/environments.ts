@@ -1,7 +1,7 @@
 export const environment = {
     production: false,
-    url: 'http://localhost/apisae/public/api',
-    image: 'http://localhost/apisae/public/storage/',
+    url: 'http://10.9.168.179/apisae/public/api',
+    image: 'http://10.9.168.179/apisae/public/storage/',
 };
   
 

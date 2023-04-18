@@ -148,6 +148,7 @@
                          <td>{{row.cpf | mask: '000.000.000-00'}}</td> 
                          <td>                                        
                              <a
+                             *ngIf="user.perfil.pessoas_edt"
                                class="options ml-2"
                                (click)="deleteVinculo(row.id || 0)"                           
                                title="Excluir"
@@ -341,6 +342,7 @@
                         </td>
                         <td>                                        
                             <a
+                            *ngIf="user.perfil.pessoas_edt"
                               class="options ml-2"
                               (click)="deleteRedeSocial(row.pivot.id)"                           
                               title="Excluir"
@@ -375,8 +377,8 @@
                           </button>
                         </div>
                         <div class="modal-body" >                            
-                            <formulario-veiculos *ngIf="cadveiculo" (refresh)="cadastroVeiculo()" (cancel)="cancelVeiculo()"/>
-                            <formulario-pessoas-veiculos *ngIf="!cadveiculo" [pessoa_id]="pessoa.id" (refresh)="sudmitVeiculo()" />
+                            <formulario-veiculos *ngIf="cadveiculo && user.perfil.veiculos_cad" (refresh)="cadastroVeiculo()" (cancel)="cancelVeiculo()"/>
+                            <formulario-pessoas-veiculos *ngIf="!cadveiculo && user.perfil.pessoas_edt" [pessoa_id]="pessoa.id" (refresh)="sudmitVeiculo()" />
                         </div>           
                       </div>        
                     </div>        

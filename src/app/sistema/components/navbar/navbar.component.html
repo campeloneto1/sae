@@ -81,7 +81,8 @@
         </div>
         <div class="modal-body ">
               <form [formGroup]="form" class="row">
-                
+                <app-input-text class="col-sm-6" formControlName="senha" label="Senha" id="senha" tipo="password" />
+                <app-input-text class="col-sm-6" formControlName="confirmsenha" label="Confirm Senha" id="confirmsenha" tipo="password" />
               </form>
         </div>
         <div class="modal-footer justify-right">

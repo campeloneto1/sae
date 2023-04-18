@@ -106,7 +106,7 @@ export class InvestigacoesSociaisComponent implements OnInit, OnDestroy{
     ngOnInit(): void {
         this.user = this.sessionService.retornaUser();
         this.dtOptions = this.sharedService.getDtOptions();
-        this.dtOptions = { ...this.dtOptions, order: [1, 'asc'] };        
+        this.dtOptions = { ...this.dtOptions, order: [0, 'desc'] };        
 
         this.investigacoessociaisstatus$ = this.investigacoesSociaisStatussService.index();
 

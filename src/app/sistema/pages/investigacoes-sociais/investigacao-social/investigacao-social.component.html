@@ -8,6 +8,15 @@
       <div class="col-sm-3">
         <div class="card ">
           <div class="card-body box-profile ">
+            <div style="position: absolute; top: 5px; left: 5px;">
+              <span *ngIf="investigacao.investigacao_social_status.andamento" class="badge badge-light">{{investigacao.investigacao_social_status.nome}}</span>
+              <span *ngIf="investigacao.investigacao_social_status.concluido" class="badge badge-secondary">{{investigacao.investigacao_social_status.nome}}</span>
+              <span *ngIf="investigacao.investigacao_social_status.aprovado" class="badge badge-info">{{investigacao.investigacao_social_status.nome}}</span>
+              <span *ngIf="investigacao.investigacao_social_status.encaminhado" class="badge badge-primary" title="Encaminhou: {{investigacao.encaminhou.nome}}">{{investigacao.investigacao_social_status.nome}}</span>
+              <span *ngIf="investigacao.investigacao_social_status.aguardando" class="badge badge-primary" title="Encaminhou: {{investigacao.encaminhou.nome}}">{{investigacao.investigacao_social_status.nome}}</span>
+              <span *ngIf="investigacao.investigacao_social_status.transferido" class="badge badge-success" title="{{investigacao.encaminhou ? 'Encaminhou: '+investigacao.encaminhou.nome : '' }} || {{investigacao.bcg_transferencia ? 'BCG Transf.: '+investigacao.bcg_transferencia : '' }}">{{investigacao.investigacao_social_status.nome}}</span>
+              <span *ngIf="investigacao.investigacao_social_status.recusado" class="badge badge-danger">{{investigacao.investigacao_social_status.nome}}</span>
+            </div>
             <div class="text-center">
              <img
               
@@ -18,6 +27,7 @@
                 alt="User profile picture"
               />
             </div>
+            
             
             <h3 class="profile-username text-center">{{investigacao.pessoa.nome}}</h3>
             <p *ngIf="investigacao.pessoa.alcunha" class="text-muted text-center">{{investigacao.pessoa.alcunha}}</p>
@@ -177,6 +187,7 @@
                             <td>{{row.cpf | mask: '000.000.000-00'}}</td> 
                             <td>                                        
                                 <a
+                                *ngIf="user.perfil.investigacoes_sociais_edt"
                                   class="options ml-2"
                                   (click)="deleteVinculo(row.id || 0)"                           
                                   title="Excluir"
@@ -244,6 +255,7 @@
                           </td>
                           <td>                                        
                               <a
+                              *ngIf="user.perfil.investigacoes_sociais_edt"
                                 class="options ml-2"
                                 (click)="deleteRedeSocial(row.pivot.id)"                           
                                 title="Excluir"
@@ -305,6 +317,7 @@
                         <td>{{row.companhia.abreviatura}}/{{row.companhia.batalhao.abreviatura}}</td> 
                         <td>                                        
                           <a
+                          *ngIf="user.perfil.investigacoes_sociais_edt"
                             class="options ml-2"
                             (click)="deleteLotacao(row.id || 0)"                           
                             title="Excluir"
@@ -362,6 +375,7 @@
                             <td [innerHTML]="row.descricao"> </td>       
                             <td>                                        
                               <a
+                              *ngIf="user.perfil.investigacoes_sociais_edt"
                                 class="options ml-2"
                                 (click)="deleteBoletim(row.id || 0)"                           
                                 title="Excluir"
@@ -425,6 +439,7 @@
                           <td [innerHTML]="row.descricao"></td> 
                           <td>                                        
                             <a
+                            *ngIf="user.perfil.investigacoes_sociais_edt"
                               class="options ml-2"
                               (click)="deleteCgd(row.id || 0)"                           
                               title="Excluir"
@@ -528,7 +543,7 @@
                         </td> 
                         <td>                                        
                             <a
-                            *ngIf="user.perfil.pessoas_edt"
+                            *ngIf="user.perfil.investigacoes_sociais_edt"
                               class="options ml-2"
                               (click)="deleteVeiculo(row.pivot.id)"            
                               title="Excluir"
@@ -549,7 +564,7 @@
                 
                 <!--INICIO TAB ARQUIVOS-->
                 <div class="tab-pane" id="arquivos">
-                  <button *ngIf="user.perfil.pessoas_edt" class="btn btn-outline-primary mb-2" data-bs-toggle="modal" data-bs-target="#modalarquivos" title="Cadastrar"><i class="fa fa-plus"></i></button>
+                  <button *ngIf="user.perfil.investigacoes_sociais_edt" class="btn btn-outline-primary mb-2" data-bs-toggle="modal" data-bs-target="#modalarquivos" title="Cadastrar"><i class="fa fa-plus"></i></button>
                   <!-- INICIO MODAL ARQUIVOS-->
                   <div class="modal fade" id="modalarquivos" style="display: none;" aria-hidden="true">
                     <div class="modal-dialog modal-xl">
@@ -617,7 +632,7 @@
                         </td> 
                         <td>                                        
                             <a
-                            *ngIf="user.perfil.pessoas_edt"
+                            *ngIf="user.perfil.investigacoes_sociais_edt"
                               class="options ml-2"
                               (click)="deleteArquivo(row.id)"                           
                               title="Excluir"

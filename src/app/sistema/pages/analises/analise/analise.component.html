@@ -83,7 +83,7 @@
                 <!--INICIO TAB PESSOAS-->
                 <div class="tab-pane" id="pessoas">
 
-                  <button  *ngIf="user.perfil.analises_edt" class="btn btn-outline-primary mb-2" data-bs-toggle="modal" data-bs-target="#modalpessoas" title="Cadastrar"><i class="fa fa-plus"></i></button>
+                  <button  *ngIf="user.perfil.analises_cad" class="btn btn-outline-primary mb-2" data-bs-toggle="modal" data-bs-target="#modalpessoas" title="Cadastrar"><i class="fa fa-plus"></i></button>
                   <!-- INICIO MODAL Pessoa-->
                   <div class="modal fade" id="modalpessoas" style="display: none;" aria-hidden="true">
                     <div class="modal-dialog modal-xl">
@@ -150,7 +150,7 @@
                 <!--INICIO TAB VEICULOS-->
                 <div class="tab-pane" id="veiculos">
 
-                    <button *ngIf="user.perfil.analises_edt" class="btn btn-outline-primary mb-2" data-bs-toggle="modal" data-bs-target="#modalveiculos" title="Cadastrar"><i class="fa fa-plus"></i></button>
+                    <button *ngIf="user.perfil.analises_cad" class="btn btn-outline-primary mb-2" data-bs-toggle="modal" data-bs-target="#modalveiculos" title="Cadastrar"><i class="fa fa-plus"></i></button>
                     <!-- INICIO MODAL VEICULOS-->
                     <div class="modal fade" id="modalveiculos" style="display: none;" aria-hidden="true">
                       <div class="modal-dialog modal-xl">
@@ -220,7 +220,7 @@
                
                 <!--INICIO TAB ARQUIVOS-->
                 <div class="tab-pane" id="arquivos">
-                  <button *ngIf="user.perfil.analises_edt" class="btn btn-outline-primary mb-2" data-bs-toggle="modal" data-bs-target="#modalarquivos" title="Cadastrar"><i class="fa fa-plus"></i></button>
+                  <button *ngIf="user.perfil.analises_cad" class="btn btn-outline-primary mb-2" data-bs-toggle="modal" data-bs-target="#modalarquivos" title="Cadastrar"><i class="fa fa-plus"></i></button>
                   <!-- INICIO MODAL ARQUIVOS-->
                   <div class="modal fade" id="modalarquivos" style="display: none;" aria-hidden="true">
                     <div class="modal-dialog modal-xl">

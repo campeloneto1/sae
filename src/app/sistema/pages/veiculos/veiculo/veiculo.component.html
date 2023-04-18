@@ -68,7 +68,7 @@
                 <!--FIM TAB OBSERVACAO-->
                 <!--INICIO TAB ANALISES-->
                 <div class="tab-pane" id="analises">
-                  <button *ngIf="user.perfil.veiculos_edt" class="btn btn-outline-primary mb-2" data-bs-toggle="modal" data-bs-target="#modalanalises" title="Cadastrar"><i class="fa fa-plus"></i></button>
+                  <button *ngIf="user.perfil.veiculos_cad" class="btn btn-outline-primary mb-2" data-bs-toggle="modal" data-bs-target="#modalanalises" title="Cadastrar"><i class="fa fa-plus"></i></button>
                   <!-- INICIO MODAL ANALISES-->
                   <div class="modal fade" id="modalanalises" style="display: none;" aria-hidden="true">
                     <div class="modal-dialog modal-xl">
@@ -132,7 +132,7 @@
                 <!--INICIO TAB PESSOAS-->
                 <div class="tab-pane" id="pessoas">
 
-                  <button *ngIf="user.perfil.veiculos_edt" class="btn btn-outline-primary mb-2" data-bs-toggle="modal" data-bs-target="#modalpessoas" title="Cadastrar"><i class="fa fa-plus"></i></button>
+                  <button *ngIf="user.perfil.veiculos_cad" class="btn btn-outline-primary mb-2" data-bs-toggle="modal" data-bs-target="#modalpessoas" title="Cadastrar"><i class="fa fa-plus"></i></button>
                   <!-- INICIO MODAL VEICULOS-->
                   <div class="modal fade" id="modalpessoas" style="display: none;" aria-hidden="true">
                     <div class="modal-dialog modal-xl">
@@ -194,7 +194,7 @@
                 
                 <!--INICIO TAB ORGANIZACOES-->
                 <div class="tab-pane" id="organizacoes">
-                  <button *ngIf="user.perfil.veiculos_edt" class="btn btn-outline-primary mb-2" data-bs-toggle="modal" data-bs-target="#modalorganizacoes" title="Cadastrar"><i class="fa fa-plus"></i></button>
+                  <button *ngIf="user.perfil.veiculos_cad" class="btn btn-outline-primary mb-2" data-bs-toggle="modal" data-bs-target="#modalorganizacoes" title="Cadastrar"><i class="fa fa-plus"></i></button>
                   <!-- INICIO MODAL ORGANIZACAO-->
                   <div class="modal fade" id="modalorganizacoes" style="display: none;" aria-hidden="true">
                     <div class="modal-dialog modal-xl">
@@ -254,7 +254,7 @@
                 <!--FIM TAB ORGANIZACOES-->
                 <!--INICIO TAB ARQUIVOS-->
                 <div class="tab-pane" id="arquivos">
-                  <button *ngIf="user.perfil.veiculos_edt" class="btn btn-outline-primary mb-2" data-bs-toggle="modal" data-bs-target="#modalarquivos" title="Cadastrar"><i class="fa fa-plus"></i></button>
+                  <button *ngIf="user.perfil.veiculos_cad" class="btn btn-outline-primary mb-2" data-bs-toggle="modal" data-bs-target="#modalarquivos" title="Cadastrar"><i class="fa fa-plus"></i></button>
                   <!-- INICIO MODAL ARQUIVOS-->
                   <div class="modal fade" id="modalarquivos" style="display: none;" aria-hidden="true">
                     <div class="modal-dialog modal-xl">

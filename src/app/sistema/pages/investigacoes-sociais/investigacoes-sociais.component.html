@@ -8,7 +8,7 @@
       <div class="card">
         <div class="card-header border-0">
           <div class="d-flex justify-content-between">
-            <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalcad" title="Cadastrar"><i class="fa fa-plus"></i></button>
+            <button *ngIf="user.perfil.investigacoes_sociais_cad" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalcad" title="Cadastrar"><i class="fa fa-plus"></i></button>
           </div>
         </div>
         <div class="card-body table-responsive">
@@ -49,7 +49,7 @@
                 <td class="text-nowrap">
                   <i
                     (click)="showInformacoes(row.pessoa)"
-                    *ngIf="user.perfil.pessoas_edt"
+                  
                     data-bs-toggle="modal"
                     data-bs-target="#modalvinculos"
                     title="Vínculos"
@@ -58,7 +58,6 @@
                   ></i>
                   <i
                     (click)="showInformacoes(row.pessoa)"
-                    *ngIf="user.perfil.pessoas_edt"
                     data-bs-toggle="modal"
                     data-bs-target="#modalredes"
                     title="Redes Sociais"
@@ -67,7 +66,6 @@
                   ></i>                
                   <i
                     (click)="showInformacoes(row.pessoa)"
-                    *ngIf="user.perfil.pessoas_edt"
                     data-bs-toggle="modal"
                     data-bs-target="#modalveiculos"
                     title="Veículos"
@@ -76,7 +74,6 @@
                   ></i>
                   <i
                     (click)="showInformacoes2(row)"
-                    *ngIf="user.perfil.investigacoes_sociais_edt"
                     data-bs-toggle="modal"
                     data-bs-target="#modalboletins"
                     title="Boletins"
@@ -85,7 +82,6 @@
                   ></i>
                   <i
                     (click)="showInformacoes2(row)"
-                    *ngIf="user.perfil.investigacoes_sociais_edt"
                     data-bs-toggle="modal"
                     data-bs-target="#modalcgds"
                     title="CGDs"
@@ -94,7 +90,6 @@
                   ></i>
                   <i
                     (click)="showInformacoes2(row)"
-                    *ngIf="user.perfil.investigacoes_sociais_edt"
                     data-bs-toggle="modal"
                     data-bs-target="#modallotacoes"
                     title="Lotações"
@@ -108,12 +103,12 @@
                   <span *ngIf="row.investigacao_social_status.aprovado" class="badge badge-info">{{row.investigacao_social_status.nome}}</span>
                   <span *ngIf="row.investigacao_social_status.encaminhado" class="badge badge-primary" title="Encaminhou: {{row.encaminhou.nome}}">{{row.investigacao_social_status.nome}}</span>
                   <span *ngIf="row.investigacao_social_status.aguardando" class="badge badge-primary" title="Encaminhou: {{row.encaminhou.nome}}">{{row.investigacao_social_status.nome}}</span>
-                  <span *ngIf="row.investigacao_social_status.transferido" class="badge badge-success" title="{{row.bcg_transferencia}}">{{row.investigacao_social_status.nome}}</span>
+                  <span *ngIf="row.investigacao_social_status.transferido" class="badge badge-success" title="{{row.encaminhou ? 'Encaminhou: '+row.encaminhou.nome : '' }} || {{row.bcg_transferencia ? 'BCG Transf.: '+row.bcg_transferencia : '' }}">{{row.investigacao_social_status.nome}}</span>
                   <span *ngIf="row.investigacao_social_status.recusado" class="badge badge-danger">{{row.investigacao_social_status.nome}}</span>
                 </td>
                 <td class="text-nowrap">    
                   <a     
-                    *ngIf="!row.investigacao_social_status.transferido && !row.investigacao_social_status.recusado"        
+                    *ngIf="!row.investigacao_social_status.transferido && !row.investigacao_social_status.recusado && user.perfil.investigacoes_sociais_edt"        
                     class="options ml-2"
                     title="Alterar Status"
                     (click)="changeStatus(row)"
@@ -138,6 +133,7 @@
                     ></i>
                   </a>         
                   <a             
+                    *ngIf="user.perfil.investigacoes_sociais_edt"
                       class="options ml-2"
                       (click)="edit(row)"
                       data-bs-toggle="modal"
@@ -150,6 +146,7 @@
                       ></i>
                     </a>
                     <a
+                      *ngIf="user.perfil.investigacoes_sociais_del"
                       class="options ml-2"
                       (click)="delete(row)"
                       data-bs-toggle="modal"
@@ -252,40 +249,40 @@
       <!--FIM MODAL STATUS-->
       
        <!-- /.INICIO MODAL foto -->
-    <div class="modal fade" id="modalfoto" style="display: none;" aria-hidden="true">
-      <div class="modal-dialog ">
-        <div class="modal-content" *ngIf="foto">
-          <div class="modal-header">
-            <h4 class="modal-title">Cadastrar foto do usuário <b>{{foto.nome}}</b></h4>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">×</span>
-            </button>
-          </div>
-          
-          <div class="modal-body text-center" >                
-            <h1 style="font-size: 90px;" *ngIf="!foto?.foto"><i class="fas fa-portrait" [ngClass]="foto.foto ? 'text-success' : 'text-danger'" ></i></h1>
-            <img [src]="IMG+foto.foto" *ngIf="foto?.foto" alt="user-avatar"  height="120px" class="img-circle img-fluid">
-            <form >
-              <div class="row">
-                <div class="col-sm-12">
-                  <div class="form-group">
-                    <label for="foto">Foto<span class="text-danger">*</span></label>
-                    <input type="file"  class="form-control form-control-border" accept="image/x-png,image/gif,image/jpeg" (change)="fileEvent($event)"  id="foto" required >                          
+      <div class="modal fade" id="modalfoto" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog ">
+          <div class="modal-content" *ngIf="foto">
+            <div class="modal-header">
+              <h4 class="modal-title">Cadastrar foto do usuário <b>{{foto.nome}}</b></h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            
+            <div class="modal-body text-center" >                
+              <h1 style="font-size: 90px;" *ngIf="!foto?.foto"><i class="fas fa-portrait" [ngClass]="foto.foto ? 'text-success' : 'text-danger'" ></i></h1>
+              <img [src]="IMG+foto.foto" *ngIf="foto?.foto" alt="user-avatar"  height="120px" class="img-circle img-fluid">
+              <form >
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group">
+                      <label for="foto">Foto<span class="text-danger">*</span></label>
+                      <input type="file"  class="form-control form-control-border" accept="image/x-png,image/gif,image/jpeg" (change)="fileEvent($event)"  id="foto" required >                          
+                    </div>
                   </div>
                 </div>
-              </div>
-            </form>  
+              </form>  
+            </div>
+            <div class="modal-footer ">
+            
+              <button type="button" class="btn btn-link" data-bs-dismiss="modal">Fechar</button>                  
+            </div>
           </div>
-          <div class="modal-footer ">
-          
-            <button type="button" class="btn btn-link" data-bs-dismiss="modal">Fechar</button>                  
-          </div>
+          <!-- /.modal-content -->
         </div>
-        <!-- /.modal-content -->
+        <!-- /.modal-dialog -->
       </div>
-      <!-- /.modal-dialog -->
-    </div>
-    <!-- /.FIM MODAL FOTO -->
+      <!-- /.FIM MODAL FOTO -->
 
       <!-- INICIO MODAL VINCULOS-->
     <div class="modal fade" id="modalvinculos" style="display: none;" aria-hidden="true">
@@ -298,7 +295,7 @@
             </button>
           </div>
           <div class="modal-body" *ngIf="informacoes">
-              <formulario-pessoas-vinculos [pessoa_id]="informacoes.id" (refresh)="refresh2()" />
+              <formulario-pessoas-vinculos   *ngIf="user.perfil.investigacoes_sociais_cad" [pessoa_id]="informacoes.id" (refresh)="refresh2()" />
 
               <!--INICIO TABLE-->
               <table  class="table table-hover table-head-fixed  ">
@@ -319,6 +316,7 @@
                     <td>{{row.cpf | mask: '000.000.000-00'}}</td> 
                     <td>                                        
                         <a
+                        *ngIf="user.perfil.investigacoes_sociais_edt"
                           class="options ml-2"
                           (click)="deleteVinculo(row.id || 0)"                           
                           title="Excluir"
@@ -350,7 +348,7 @@
               </button>
             </div>
             <div class="modal-body" *ngIf="informacoes">
-                <formulario-pessoas-redes-sociais [pessoa_id]="informacoes.id" (refresh)="refresh2()" />
+                <formulario-pessoas-redes-sociais *ngIf="user.perfil.investigacoes_sociais_cad" [pessoa_id]="informacoes.id" (refresh)="refresh2()" />
 
                 <!--INICIO TABLE-->
                 <table  class="table table-hover table-head-fixed  ">
@@ -379,6 +377,7 @@
                       </td>
                       <td>                                        
                           <a
+                          *ngIf="user.perfil.investigacoes_sociais_edt"
                             class="options ml-2"
                             (click)="deleteRedeSocial(row.pivot.id)"                           
                             title="Excluir"
@@ -406,15 +405,15 @@
             <div class="modal-header border-0">
               <h4 class="modal-title">
                 Cadastrar Veículo 
-                <button (click)="cadveiculo = true;" class="btn btn-outline-primary" title="Cadastrar"><i class="fa fa-plus"></i></button>
+                <button (click)="cadveiculo = true;" *ngIf="user.perfil.veiculos_cad" class="btn btn-outline-primary" title="Cadastrar"><i class="fa fa-plus"></i></button>
               </h4>
               <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
               </button>
             </div>
             <div class="modal-body" *ngIf="informacoes">
-                <formulario-veiculos *ngIf="cadveiculo" (refresh)="cadVeiculo()" (cancel)="cancelVeiculo()"/>
-                <formulario-pessoas-veiculos *ngIf="!cadveiculo" [pessoa_id]="informacoes.id" (refresh)="refresh2()" />
+                <formulario-veiculos *ngIf="cadveiculo && user.perfil.investigacoes_sociais_cad" (refresh)="cadVeiculo()" (cancel)="cancelVeiculo()"/>
+                <formulario-pessoas-veiculos *ngIf="!cadveiculo && user.perfil.investigacoes_sociais_cad" [pessoa_id]="informacoes.id" (refresh)="refresh2()" />
 
                 <!--INICIO TABLE-->
                 <table  class="table table-hover table-head-fixed  mt-2">
@@ -444,6 +443,7 @@
                       </td> 
                       <td>                                        
                           <a
+                          *ngIf="user.perfil.investigacoes_sociais_edt"
                             class="options ml-2"
                             (click)="deleteVeiculo(row.pivot.id)"                           
                             title="Excluir"
@@ -477,7 +477,7 @@
               </button>
             </div>
             <div class="modal-body" *ngIf="informacoes2">
-                <formulario-investigacoes-sociais-boletins [investigacao_social_id]="informacoes2.id" (refresh)="refresh3()" />
+                <formulario-investigacoes-sociais-boletins *ngIf="user.perfil.investigacoes_sociais_cad" [investigacao_social_id]="informacoes2.id" (refresh)="refresh3()" />
 
                 <!--INICIO TABLE-->
                 <table  class="table table-hover table-head-fixed  mt-2">
@@ -496,6 +496,7 @@
                       <td [innerHTML]="row.descricao"> </td> 
                       <td>                                        
                           <a
+                          *ngIf="user.perfil.investigacoes_sociais_edt"
                             class="options ml-2"
                             (click)="deleteBoletim(row.id || 0)"                           
                             title="Excluir"
@@ -529,7 +530,7 @@
               </button>
             </div>
             <div class="modal-body" *ngIf="informacoes2">
-                <formulario-investigacoes-sociais-cgds [investigacao_social_id]="informacoes2.id" (refresh)="refresh3()" />
+                <formulario-investigacoes-sociais-cgds *ngIf="user.perfil.investigacoes_sociais_cad" [investigacao_social_id]="informacoes2.id" (refresh)="refresh3()" />
 
                 <!--INICIO TABLE-->
                 <table  class="table table-hover table-head-fixed  mt-2">
@@ -554,6 +555,7 @@
                       <td [innerHTML]="row.descricao"></td> 
                       <td>                                        
                           <a
+                          *ngIf="user.perfil.investigacoes_sociais_edt"
                             class="options ml-2"
                             (click)="deleteCgd(row.id || 0)"                           
                             title="Excluir"
@@ -587,7 +589,7 @@
               </button>
             </div>
             <div class="modal-body" *ngIf="informacoes2">
-                <formulario-investigacoes-sociais-lotacoes [investigacao_social_id]="informacoes2.id" (refresh)="refresh3()" />
+                <formulario-investigacoes-sociais-lotacoes *ngIf="user.perfil.investigacoes_sociais_cad" [investigacao_social_id]="informacoes2.id" (refresh)="refresh3()" />
 
                 <!--INICIO TABLE-->
                 <table  class="table table-hover table-head-fixed  mt-2">
@@ -610,6 +612,7 @@
                       <td>{{row.companhia.abreviatura}}/{{row.companhia.batalhao.abreviatura}}</td> 
                       <td>                                        
                           <a
+                          *ngIf="user.perfil.investigacoes_sociais_edt"
                             class="options ml-2"
                             (click)="deleteLotacao(row.id || 0)"                           
                             title="Excluir"

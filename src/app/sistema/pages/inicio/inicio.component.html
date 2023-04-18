@@ -47,7 +47,7 @@
 
      <!--INICIO DIV ROW-->
      <div class="row">
-        <div class="col-sm-6">
+        <div class="col-sm-6" *ngIf="user.perfil.investigacoes_sociais">
 
           <div class="card">
             <div class="card-header border-0">
@@ -80,12 +80,12 @@
                       <td>{{row.matricula! | mask: '000.000-00'}}</td> 
                       <td>
                         <span *ngIf="row.investigacao_social_status.andamento" class="badge badge-light">{{row.investigacao_social_status.nome}}</span>
-                        <span *ngIf="row.investigacao_social_status.concluido" class="badge badge-secondary">{{row.investigacao_social_status.nome}}</span>
-                        <span *ngIf="row.investigacao_social_status.aprovado" class="badge badge-info">{{row.investigacao_social_status.nome}}</span>
-                        <span *ngIf="row.investigacao_social_status.encaminhado" class="badge badge-primary" title="Encaminhou: {{row.encaminhou.nome}}">{{row.investigacao_social_status.nome}}</span>
-                        <span *ngIf="row.investigacao_social_status.aguardando" class="badge badge-primary" title="Encaminhou: {{row.encaminhou.nome}}">{{row.investigacao_social_status.nome}}</span>
-                        <span *ngIf="row.investigacao_social_status.transferido" class="badge badge-success" title="{{row.bcg_transferencia}}">{{row.investigacao_social_status.nome}}</span>
-                        <span *ngIf="row.investigacao_social_status.recusado" class="badge badge-danger">{{row.investigacao_social_status.nome}}</span>
+                  <span *ngIf="row.investigacao_social_status.concluido" class="badge badge-secondary">{{row.investigacao_social_status.nome}}</span>
+                  <span *ngIf="row.investigacao_social_status.aprovado" class="badge badge-info">{{row.investigacao_social_status.nome}}</span>
+                  <span *ngIf="row.investigacao_social_status.encaminhado" class="badge badge-primary" title="Encaminhou: {{row.encaminhou.nome}}">{{row.investigacao_social_status.nome}}</span>
+                  <span *ngIf="row.investigacao_social_status.aguardando" class="badge badge-primary" title="Encaminhou: {{row.encaminhou.nome}}">{{row.investigacao_social_status.nome}}</span>
+                  <span *ngIf="row.investigacao_social_status.transferido" class="badge badge-success" title="{{row.encaminhou ? 'Encaminhou: '+row.encaminhou.nome : '' }} || {{row.bcg_transferencia ? 'BCG Transf.: '+row.bcg_transferencia : '' }}">{{row.investigacao_social_status.nome}}</span>
+                  <span *ngIf="row.investigacao_social_status.recusado" class="badge badge-danger">{{row.investigacao_social_status.nome}}</span>
                       </td>
                     </tr>
                   </tbody>
