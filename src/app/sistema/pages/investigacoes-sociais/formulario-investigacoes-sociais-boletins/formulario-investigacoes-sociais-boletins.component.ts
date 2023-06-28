@@ -42,7 +42,6 @@ export class FormularioInvestigacoesSociaisBoletinsComponent{
             'descricao': ['', Validators.compose([
                 Validators.required,
                 Validators.minLength(4),
-                Validators.maxLength(250)
             ])],
             'investigacao_social_id': [''],
             

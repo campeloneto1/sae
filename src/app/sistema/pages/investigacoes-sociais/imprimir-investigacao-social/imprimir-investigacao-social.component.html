@@ -1,16 +1,15 @@
 <div *ngIf="investigacaosocial$ | async as investigacao; else loading">
   <!-- <p id="marcadagua" class="marcadagua">Documento Sigiloso {{ cifra }}</p> -->
-  <div class="page-header" style="text-align: center;">
+  <div class="page-header" style="text-align: center">
     <!--<img src="assets/cabecalho.png" class="cabecalho" />-->
     <div class="text-center" style="position: relative">
-      <h1 style="margin-top: 30px;">
+      <h1 style="margin-top: 30px">
         {{ investigacao.pessoa.nome }}
       </h1>
-      
     </div>
   </div>
 
-  <div *ngIf="user" class="page-footer text-right">      
+  <div *ngIf="user" class="page-footer text-right">
     <span><b>Data:</b> {{ date | date : "dd/MM/yyyy HH:mm" }} </span>
     <!--<div style="border: 1px solid red; color: red; padding: 0.2rem; text-align: justify;">
       “O sigilo deste documento é protegido e controlado pela Lei Nº 12.527/2011. A divulgação, a revelação, o fornecimento, a utilização 
@@ -30,296 +29,453 @@
     </thead>
 
     <tbody>
-     
       <tr class="page">
         <td>
-          
           <!--*** CONTENT GOES HERE ***
             <div class="page">PAGE 1</div>
             <div class="page">PAGE 2</div>-->
-            <!--INICIO PAGE 1-->
-            <div class="main">
-              
-              <!--INICIO IDENTIFICACAO-->
-              <div class="row">
-                <!--INICIO FOTO-->
-                <div class="col-sm-3 border">
-                  <img
-                      style="
-                        height: 100%;
-                        width: 100%;
-                        padding: 10px;
-                       
-                      "
-                      *ngIf="investigacao.pessoa.foto"
-                      class=""
-                      [src]="urlfoto(investigacao.pessoa)"
-                      alt="User profile picture"
-                    />
-                </div>
-                 <!--FIM FOTO-->
-                 <!--INICIO DADOS-->
-                <div class="col-sm-9 border">
-                  <h1 class="noprint">
-                    {{ investigacao.pessoa.nome }}
-                  </h1>
-                  <span *ngIf="investigacao.pessoa.alcunha"><strong>Alcunha:</strong> {{ investigacao.pessoa.alcunha }}</span><br />
-                  <span *ngIf="investigacao.graduacao"><strong>Graduação:</strong> {{ investigacao.graduacao.abreviatura }} </span>
-                  <span *ngIf="investigacao.numeral"><strong>Nº:</strong> {{ investigacao.numeral }} </span>
-                  <span *ngIf="investigacao.matricula"><strong>Mat.:</strong> {{ investigacao.matricula | mask: '000.000-0A' }}</span><br />
-                  <span *ngIf="investigacao.companhia"><strong>Lotação:</strong> {{ investigacao.companhia.nome }} / {{ investigacao.companhia.batalhao.nome }}</span><br />
-                  <span *ngIf="investigacao.situacao_tipo"><strong>Tipo de Situação:</strong> {{ investigacao.situacao_tipo.nome }}</span><br />
-                  <span *ngIf="investigacao.comportamento"><strong>Comportamento:</strong> {{ investigacao.comportamento.nome }}</span><br />
-                  <span *ngIf="investigacao.situacao_funcional"><strong>Situação Funcional:</strong> {{ investigacao.situacao_funcional.nome }}</span><br />
-                  <span *ngIf="investigacao.data_ingresso"><strong>Ingresso na PMCE:</strong> {{ investigacao.data_ingresso | date: 'dd/MM/yyyy' }}</span><br />
-                  <span *ngIf="investigacao.data_ingresso"><strong>Tempo de Serviço:</strong> {{ investigacao.data_ingresso | date: 'dd/MM/yyyy' }}</span><br />
-
-                  <span *ngIf="investigacao.pessoa.data_nascimento"><strong>Data Nascimento:</strong> {{ investigacao.pessoa.data_nascimento | date: 'dd/MM/yyyy' }} </span>
-                  <span *ngIf="investigacao.pessoa.sexo_id"><strong>Sexo:</strong> {{ investigacao.pessoa.sexo?.nome }} </span>
-                  <span *ngIf="investigacao.pessoa.naturalidade"><strong>Naturalidade:</strong> {{ investigacao.pessoa.naturalidade.nome }} - {{ investigacao.pessoa.naturalidade.estado.uf }}</span><br />
-                  <span *ngIf="investigacao.pessoa.escolaridade"><strong>Escolaridade:</strong> {{ investigacao.pessoa.escolaridade.nome }}</span><br />
-                  <span *ngIf="investigacao.pessoa.cpf"><strong>CPF:</strong> {{ investigacao.pessoa.cpf | mask: '000.000.000-00'}}</span><br />
-                  <span *ngIf="investigacao.pessoa.cnh"><strong>CNH:</strong> {{ investigacao.pessoa.cnh }} </span>
-                  <span *ngIf="investigacao.pessoa.cnh_categoria"><strong>Categoria:</strong> {{ investigacao.pessoa.cnh_categoria.nome }}</span><br />
-                  <span *ngIf="investigacao.pessoa.telefone1"><strong>Telefone 1:</strong> {{ investigacao.pessoa.telefone1 | mask: '(00) 0 0000-0000' }} </span>
-                  <span *ngIf="investigacao.pessoa.telefone2"><strong>Telefone 2:</strong> {{ investigacao.pessoa.telefone2 | mask: '(00) 0 0000-0000'}} </span>
-                  <span *ngIf="investigacao.pessoa.email"><strong>E-mail:</strong> {{ investigacao.pessoa.email }}</span><br />
-                  <span *ngIf="investigacao.pessoa.influencia_id"><strong>Influência:</strong> {{ investigacao.pessoa.influencia?.nome }}</span><br />
-                  <span *ngIf="investigacao.pessoa.rua">
-                    <strong>Endereço:</strong> 
-                    {{ investigacao.pessoa.rua }}
-                    <span *ngIf="investigacao.pessoa.numero">, {{investigacao.pessoa.numero}}</span>
-                    <span *ngIf="investigacao.pessoa.bairro">, {{investigacao.pessoa.bairro}}</span>
-                    <span *ngIf="investigacao.pessoa.complemento">, {{investigacao.pessoa.complemento}}</span>
-                    <span *ngIf="investigacao.pessoa.cidade">, {{investigacao.pessoa.cidade.nome}} - {{investigacao.pessoa.cidade.estado.uf}}</span><br />
-                  </span>
-               
-                </div>
-                <!--FIM DADOS-->
+          <!--INICIO PAGE 1-->
+          <div class="main">
+            <!--INICIO IDENTIFICACAO-->
+            <div class="row">
+              <!--INICIO FOTO-->
+              <div class="col-sm-3 border">
+                <img
+                  style="height: 100%; width: 100%; padding: 10px"
+                  *ngIf="investigacao.pessoa.foto"
+                  class=""
+                  [src]="urlfoto(investigacao.pessoa)"
+                  alt="User profile picture"
+                />
               </div>
-              <!--FIM IDENTIFICACAO-->
+              <!--FIM FOTO-->
+              <!--INICIO DADOS-->
+              <div class="col-sm-9 border">
+                <h1 class="noprint">
+                  {{ investigacao.pessoa.nome }}
+                </h1>
+                <span *ngIf="investigacao.pessoa.alcunha"
+                  ><strong>Alcunha:</strong>
+                  {{ investigacao.pessoa.alcunha }}</span
+                ><br />
+                <span *ngIf="investigacao.graduacao"
+                  ><strong>Graduação:</strong>
+                  {{ investigacao.graduacao.abreviatura }}
+                </span>
+                <span *ngIf="investigacao.numeral"
+                  ><strong>Nº:</strong> {{ investigacao.numeral }}
+                </span>
+                <span *ngIf="investigacao.matricula"
+                  ><strong>Mat.:</strong>
+                  {{ investigacao.matricula | mask : "000.000-0-A" }}</span
+                ><br />
+                <span *ngIf="investigacao.companhia"
+                  ><strong>Lotação:</strong> {{ investigacao.companhia.nome }} /
+                  {{ investigacao.companhia.batalhao.nome }}</span
+                ><br />
+                <span *ngIf="investigacao.situacao_tipo"
+                  ><strong>Tipo de Situação:</strong>
+                  {{ investigacao.situacao_tipo.nome }}</span
+                ><br />
+                <span *ngIf="investigacao.comportamento"
+                  ><strong>Comportamento:</strong>
+                  {{ investigacao.comportamento.nome }}</span
+                ><br />
+                <span *ngIf="investigacao.situacao_funcional"
+                  ><strong>Situação Funcional:</strong>
+                  {{ investigacao.situacao_funcional.nome }}</span
+                ><br />
+                <span *ngIf="investigacao.data_ingresso"
+                  ><strong>Ingresso na PMCE:</strong>
+                  {{ investigacao.data_ingresso | date : "dd/MM/yyyy" }}</span
+                ><br />
+                <span *ngIf="investigacao.data_ingresso"
+                  ><strong>Tempo de Serviço:</strong>
+                  {{ investigacao.data_ingresso | date : "dd/MM/yyyy" }}</span
+                ><br />
 
-              <!--INICIO VINCULOS-->
-              <div class="sessao" *ngIf="(investigacao.pessoa.vinculos)!.length > 0">
-                <h4>Vínculos</h4>
-
-                <table class="table table-bordered table-sm">
-                  <thead class="thead">
-                    <tr>
-                      <th >Tipo</th>
-                      <th>Nome</th>
-                      <th>CPF</th>
-                    </tr>
-                  </thead>              
-                  <tbody>
-                    <tr  *ngFor="let vinculo of investigacao.pessoa.vinculos">
-                      <td>{{ vinculo.vinculo_tipo.nome }}</td>
-                      <td>{{ vinculo.nome }}</td>
-                      <td>{{ vinculo.cpf | mask: '000.000.000-00'}}</td>
-                     </tr>
-                  </tbody>
-                </table>
+                <span *ngIf="investigacao.pessoa.data_nascimento"
+                  ><strong>Data Nascimento:</strong>
+                  {{
+                    investigacao.pessoa.data_nascimento | date : "dd/MM/yyyy"
+                  }}
+                </span>
+                <span *ngIf="investigacao.pessoa.sexo_id"
+                  ><strong>Sexo:</strong> {{ investigacao.pessoa.sexo?.nome }}
+                </span>
+                <span *ngIf="investigacao.pessoa.naturalidade"
+                  ><strong>Naturalidade:</strong>
+                  {{ investigacao.pessoa.naturalidade.nome }} -
+                  {{ investigacao.pessoa.naturalidade.estado.uf }}</span
+                ><br />
+                <span *ngIf="investigacao.pessoa.escolaridade"
+                  ><strong>Escolaridade:</strong>
+                  {{ investigacao.pessoa.escolaridade.nome }}</span
+                ><br />
+                <span *ngIf="investigacao.pessoa.cpf"
+                  ><strong>CPF:</strong>
+                  {{ investigacao.pessoa.cpf | mask : "000.000.000-00" }}</span
+                ><br />
+                <span *ngIf="investigacao.pessoa.cnh"
+                  ><strong>CNH:</strong> {{ investigacao.pessoa.cnh }}
+                </span>
+                <span *ngIf="investigacao.pessoa.cnh_categoria"
+                  ><strong>Categoria:</strong>
+                  {{ investigacao.pessoa.cnh_categoria.nome }}</span
+                ><br />
+                <span *ngIf="investigacao.pessoa.telefone1"
+                  ><strong>Telefone 1:</strong>
+                  {{
+                    investigacao.pessoa.telefone1 | mask : "(00) 0 0000-0000"
+                  }}
+                </span>
+                <span *ngIf="investigacao.pessoa.telefone2"
+                  ><strong>Telefone 2:</strong>
+                  {{
+                    investigacao.pessoa.telefone2 | mask : "(00) 0 0000-0000"
+                  }}
+                </span>
+                <span *ngIf="investigacao.pessoa.email"
+                  ><strong>E-mail:</strong>
+                  {{ investigacao.pessoa.email }}</span
+                ><br />
+                <span *ngIf="investigacao.pessoa.influencia_id"
+                  ><strong>Influência:</strong>
+                  {{ investigacao.pessoa.influencia?.nome }}</span
+                ><br />
+                <span *ngIf="investigacao.pessoa.rua">
+                  <strong>Endereço:</strong>
+                  {{ investigacao.pessoa.rua }}
+                  <span *ngIf="investigacao.pessoa.numero"
+                    >, {{ investigacao.pessoa.numero }}</span
+                  >
+                  <span *ngIf="investigacao.pessoa.bairro"
+                    >, {{ investigacao.pessoa.bairro }}</span
+                  >
+                  <span *ngIf="investigacao.pessoa.complemento"
+                    >, {{ investigacao.pessoa.complemento }}</span
+                  >
+                  <span *ngIf="investigacao.pessoa.cidade"
+                    >, {{ investigacao.pessoa.cidade.nome }} -
+                    {{ investigacao.pessoa.cidade.estado.uf }}</span
+                  ><br />
+                </span>
               </div>
-              <!--FIM VINCULOS-->
-
-              <!--INICIO VEICULOS-->
-              <div class="sessao" *ngIf="(investigacao.pessoa.veiculos)!.length > 0">
-                <h4>Veículos</h4>
-
-                <table class="table table-bordered table-sm">
-                  <thead class="thead">
-                    <tr>
-                      <th>Placa</th>
-                      <th>Marca Modelo</th>
-                      <th>Ano</th>
-                      <th>Cor</th>
-                      <th>Alterações</th>
-                    </tr>
-                  </thead>              
-                  <tbody>
-                    <tr  *ngFor="let veiculo of investigacao.pessoa.veiculos">
-                      <td>{{ veiculo.placa }}</td>
-                      <td>{{ veiculo.modelo?.marca?.nome }} {{ veiculo.modelo?.nome }}</td>
-                      <td>{{ veiculo.ano }}</td>
-                      <td>{{ veiculo.cor?.nome }}</td>
-                      <td [innerHTML]="veiculo.observacao"></td>
-                     </tr>
-                  </tbody>
-                </table>
-              </div>
-              <!--FIM VEICULOS-->
-
-              <!--INICIO redes sociais-->
-              <div class="sessao" *ngIf="(investigacao.pessoa.redes_sociais)!.length > 0">
-                <h4>Redes Sociais</h4>
-
-                <table class="table table-bordered table-sm">
-                  <thead class="thead">
-                    <tr>
-                      <th>Nome</th>
-                      <th>Link</th>
-                      <th>Foto</th> 
-                    </tr>
-                  </thead>              
-                  <tbody>
-                    <tr  *ngFor="let rede of investigacao.pessoa.redes_sociais">
-                      <td>{{ rede.nome }}</td>
-                      <td>{{ rede.pivot.nome }}</td>
-                      <td>
-                        <img style="max-height: 300px;" *ngIf="rede.pivot.foto" [src]="urlfoto2(rede)" [alt]="rede.nome" class="img-circle img-fluid">
-                      </td>
-                     </tr>
-                  </tbody>
-                </table>
-              </div>
-              <!--FIM redes sociais-->
-
-              <!--INICIO LOTACOES-->
-              <div class="sessao" *ngIf="(investigacao.lotacoes)!.length > 0">
-                <h4>Lotações</h4>
-                <table class="table table-bordered table-sm">
-                  <thead class="thead">
-                    <tr>
-                      <th>#</th>
-                      <th>Boletim</th> 
-                      <th>Tipo</th> 
-                      <th>Data</th>   
-                      <th>Companhia/Batalhão</th>  
-                      
-                    </tr>
-                  </thead>              
-                  <tbody>
-                    <tr  *ngFor="let lotacao of investigacao.lotacoes">
-                      <td>{{lotacao.id}}</td>
-                      <td>{{lotacao.bcg}}</td> 
-                      <td>{{lotacao.lotacao_tipo.nome}}</td> 
-                      <td>{{lotacao.data | date: 'dd/MM/yyyy'}}</td> 
-                      <td>{{lotacao.companhia.abreviatura}}/{{lotacao.companhia.batalhao.abreviatura}}</td> 
-                     </tr>
-                  </tbody>
-                </table>
-              </div>
-              <!--FIM LOTACOES-->
-
-              <!--INICIO boletins-->
-              <div class="sessao" *ngIf="(investigacao.boletins)!.length > 0">
-                <h4>Boletins</h4>
-                <table class="table table-bordered table-sm">
-                  <thead class="thead">
-                    <tr>
-                      <th>#</th>
-                      <th>Boletim</th> 
-                      <th>Descrição</th>  
-                      
-                    </tr>
-                  </thead>              
-                  <tbody>
-                    <tr  *ngFor="let boletim of investigacao.boletins">
-                      <td>{{boletim.id}}</td>
-                      <td>{{boletim.bcg}}</td> 
-                      <td [innerHTML]="boletim.descricao"> </td> 
-                     </tr>
-                  </tbody>
-                </table>
-              </div>
-              <!--FIM boletins-->
-            
-               <!--INICIO cgd-->
-               <div class="sessao" *ngIf="(investigacao.cgds)!.length">
-                <h4>CGDs</h4>
-                <table class="table table-bordered table-sm">
-                  <thead class="thead">
-                    <tr>
-                      <th>#</th>
-                      <th>SPU</th> 
-                      <th>Envolvimento</th> 
-                      <th>Tipo</th>   
-                      <th>Situação</th> 
-                        
-                    </tr>
-                  </thead>              
-                  <tbody *ngFor="let cgd of investigacao.cgds">
-                      <tr>
-                        <td>{{cgd.id}}</td>
-                        <td>{{cgd.spu}}</td> 
-                        <td>{{cgd.cgd_envolvimento_tipo.nome}}</td> 
-                        <td>{{cgd.cgd_processo_tipo.nome}}</td> 
-                        <td>{{cgd.cgd_situacao_tipo.nome}}</td>
-                     </tr>
-                     <tr>
-                        <td colspan="5" [innerHTML]="cgd.descricao"></td> 
-                     </tr>
-                  </tbody>
-                </table>
-              </div>
-              <!--FIM cgd-->
-
-              <!--INICIO sip-->
-              <div class="sessao" *ngIf="investigacao.sip">
-                <h4>SIP</h4>
-                <div [innerHTML]="investigacao.sip"></div>
-              </div>
-              <!--FIM sip-->
-
-              <!--INICIO sinesp-->
-              <div class="sessao" *ngIf="investigacao.sinesp">
-                <h4>Sinesp</h4>
-                <div [innerHTML]="investigacao.sinesp"></div>
-              </div>
-              <!--FIM sinesp-->
-
-              <!--INICIO tjce-->
-              <div class="sessao" *ngIf="investigacao.tjce">
-                <h4>TJCE</h4>
-                <div [innerHTML]="investigacao.tjce"></div>
-              </div>
-              <!--FIM tjce-->
-
-              <!--INICIO fontes abertas-->
-              <div class="sessao" *ngIf="investigacao.fontes_abertas">
-                <h4>Fontes Abertas</h4>
-                <div [innerHTML]="investigacao.fontes_abertas"></div>
-              </div>
-              <!--FIM fontes abertas-->
-
-              <!--INICIO informacoes adicionais-->
-              <div class="sessao" *ngIf="investigacao.informacoes_adicionais">
-                <h4>Informações Adicionais</h4>
-                <div [innerHTML]="investigacao.informacoes_adicionais"></div>
-              </div>
-              <!--FIM informacoes adicionais-->
-
-              <!--INICIO ARQUIVOS-->
-              <div class="sessao" *ngIf="(investigacao.arquivos)!.length > 0">
-                <h4>Arquivos</h4>
-
-                <table class="table table-bordered table-sm">
-                  <thead class="thead">
-                    <tr>
-                        <th>#</th>
-                        <th>Tipo</th> 
-                        <th>Nome</th>   
-                        <th>Arquivo</th>   
-                    </tr>
-                  </thead>              
-                  <tbody>
-                    <tr  *ngFor="let arquivo of investigacao.arquivos">
-                      <td>{{arquivo.id}}</td>
-                      <td>{{arquivo.arquivo_tipo.nome}}</td> 
-                      <td>{{arquivo.nome}}</td> 
-                      <td>
-                        <span *ngIf="arquivo.arquivo_tipo.pdf || arquivo.arquivo_tipo.texto || arquivo.arquivo_tipo.link">  {{arquivo.arquivo}}</span>
-                        <img *ngIf="arquivo.arquivo_tipo.foto" height="300px" [src]="urlarq2(arquivo)" />                         
-                      </td> 
-                     </tr>
-                  </tbody>
-                </table>
-              </div>
-              <!--FIM ARQUIVOS-->
-              
+              <!--FIM DADOS-->
             </div>
-            <!--FIM PAGE 2-->
-           
+            <!--FIM IDENTIFICACAO-->
+
+            <!--INICIO VINCULOS-->
+            <div
+              class="sessao"
+              *ngIf="investigacao.pessoa.vinculos!.length > 0"
+            >
+              <h4>Vínculos</h4>
+
+              <table class="table table-bordered table-sm">
+                <thead class="thead">
+                  <tr>
+                    <th>Tipo</th>
+                    <th>Nome</th>
+                    <th>CPF</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let vinculo of investigacao.pessoa.vinculos">
+                    <td>{{ vinculo.vinculo_tipo.nome }}</td>
+                    <td>{{ vinculo.nome }}</td>
+                    <td>{{ vinculo.cpf | mask : "000.000.000-00" }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <!--FIM VINCULOS-->
+
+            <!--INICIO VEICULOS-->
+            <div class="sessao">
+              <h4>Veículos</h4>
+
+              <p *ngIf="investigacao.pessoa.veiculos!.length == 0">
+                - Não há veículos a serem informados
+              </p>
+              <table
+                class="table table-bordered table-sm"
+                *ngIf="investigacao.pessoa.veiculos!.length > 0"
+              >
+                <thead class="thead">
+                  <tr>
+                    <th>Placa</th>
+                    <th>Marca Modelo</th>
+                    <th>Ano</th>
+                    <th>Cor</th>
+                    <th>Alterações</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let veiculo of investigacao.pessoa.veiculos">
+                    <td>{{ veiculo.placa }}</td>
+                    <td>
+                      {{ veiculo.modelo?.marca?.nome }}
+                      {{ veiculo.modelo?.nome }}
+                    </td>
+                    <td>{{ veiculo.ano }}</td>
+                    <td>{{ veiculo.cor?.nome }}</td>
+                    <td [innerHTML]="veiculo.observacao"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <!--FIM VEICULOS-->
+
+            <!--INICIO redes sociais-->
+            <div class="sessao">
+              <h4>Redes Sociais</h4>
+              <p *ngIf="investigacao.pessoa.redes_sociais!.length == 0">
+                - Não há redes sociais a serem informadas
+              </p>
+              <table
+                class="table table-bordered table-sm"
+                *ngIf="investigacao.pessoa.redes_sociais!.length > 0"
+              >
+                <thead class="thead">
+                  <tr>
+                    <th>Nome</th>
+                    <th>Link</th>
+                    <th>Foto</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let rede of investigacao.pessoa.redes_sociais">
+                    <td>{{ rede.nome }}</td>
+                    <td>{{ rede.pivot.nome }}</td>
+                    <td>
+                      <img
+                        style="max-height: 300px"
+                        *ngIf="rede.pivot.foto"
+                        [src]="urlfoto2(rede)"
+                        [alt]="rede.nome"
+                        class="img-circle img-fluid"
+                      />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <!--FIM redes sociais-->
+
+            <!--INICIO LOTACOES-->
+            <div class="sessao">
+              <h4>Lotações</h4>
+              <p *ngIf="investigacao.lotacoes!.length == 0">
+                - Não há lotações a serem informadas
+              </p>
+              <table
+                class="table table-bordered table-sm"
+                *ngIf="investigacao.lotacoes!.length > 0"
+              >
+                <thead class="thead">
+                  <tr>
+                    <th>#</th>
+                    <th>Boletim</th>
+                    <th>Tipo</th>
+                    <th>Data</th>
+                    <th>Companhia/Batalhão</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let lotacao of investigacao.lotacoes">
+                    <td>{{ lotacao.id }}</td>
+                    <td>{{ lotacao.bcg }}</td>
+                    <td>{{ lotacao.lotacao_tipo.nome }}</td>
+                    <td>{{ lotacao.data | date : "dd/MM/yyyy" }}</td>
+                    <td>
+                      {{ lotacao.companhia.abreviatura }}/{{
+                        lotacao.companhia.batalhao.abreviatura
+                      }}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <!--FIM LOTACOES-->
+
+            <!--INICIO boletins-->
+            <div class="sessao">
+              <h4>Boletins</h4>
+              <p *ngIf="investigacao.boletins!.length == 0">
+                - Não há boletins a serem informados
+              </p>
+              <table
+                class="table table-bordered table-sm"
+                *ngIf="investigacao.boletins!.length > 0"
+              >
+                <thead class="thead">
+                  <tr>
+                    <th>#</th>
+                    <th>Boletim</th>
+                    <th>Descrição</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let boletim of investigacao.boletins">
+                    <td>{{ boletim.id }}</td>
+                    <td>{{ boletim.bcg }}</td>
+                    <td [innerHTML]="boletim.descricao"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <!--FIM boletins-->
+
+            <!--INICIO cgd-->
+            <div class="sessao">
+              <h4>CGDs</h4>
+              <p *ngIf="investigacao.cgds!.length == 0">
+                {{ investigacao.pessoa.nome | uppercase }},
+                {{ investigacao.graduacao?.nome | uppercase }},
+                <span *ngIf="investigacao.matricula"
+                  >matrícula funcional
+                  {{ investigacao.matricula | mask : "000.000-0-A" }},
+                </span>
+                CPF: {{ investigacao.pessoa.cpf | mask : "000.000-000-00" }}.
+                Não foram encontrados procedimentos administrativos em desfavor
+                do citado servidor.
+              </p>
+              <table
+                class="table table-bordered table-sm"
+                *ngIf="investigacao.cgds!.length > 0"
+              >
+                <thead class="thead">
+                  <tr>
+                    <th>#</th>
+                    <th>SPU</th>
+                    <th>Envolvimento</th>
+                    <th>Tipo</th>
+                    <th>Situação</th>
+                  </tr>
+                </thead>
+                <tbody *ngFor="let cgd of investigacao.cgds">
+                  <tr>
+                    <td>{{ cgd.id }}</td>
+                    <td>{{ cgd.spu }}</td>
+                    <td>{{ cgd.cgd_envolvimento_tipo.nome }}</td>
+                    <td>{{ cgd.cgd_processo_tipo.nome }}</td>
+                    <td>{{ cgd.cgd_situacao_tipo.nome }}</td>
+                  </tr>
+                  <tr>
+                    <td colspan="5" [innerHTML]="cgd.descricao"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <!--FIM cgd-->
+
+            <!--INICIO sip-->
+            <div class="sessao">
+              <h4>SIP</h4>
+              <p *ngIf="!investigacao.sip">
+                - Não há observações relevantes a serem informadas
+              </p>
+              <div
+                *ngIf="investigacao.sip"
+                [innerHTML]="investigacao.sip"
+              ></div>
+            </div>
+            <!--FIM sip-->
+
+            <!--INICIO sinesp-->
+            <div class="sessao">
+              <h4>Sinesp</h4>
+              <p *ngIf="!investigacao.sinesp">
+                - Não há observações relevantes a serem informadas
+              </p>
+              <div
+                *ngIf="investigacao.sinesp"
+                [innerHTML]="investigacao.sinesp"
+              ></div>
+            </div>
+            <!--FIM sinesp-->
+
+            <!--INICIO tjce-->
+            <div class="sessao">
+              <h4>TJCE</h4>
+              <p *ngIf="!investigacao.tjce">
+                - Não há processos judiciais a serem informados
+              </p>
+              <div
+                *ngIf="investigacao.tjce"
+                [innerHTML]="investigacao.tjce"
+              ></div>
+            </div>
+            <!--FIM tjce-->
+
+            <!--INICIO fontes abertas-->
+            <div class="sessao">
+              <h4>Fontes Abertas</h4>
+              <p *ngIf="!investigacao.fontes_abertas">
+                - Não há observações relevantes a serem informadas
+              </p>
+              <div
+                *ngIf="investigacao.fontes_abertas"
+                [innerHTML]="investigacao.fontes_abertas"
+              ></div>
+            </div>
+            <!--FIM fontes abertas-->
+
+            <!--INICIO informacoes adicionais-->
+            <div class="sessao">
+              <h4>Informações Adicionais</h4>
+              <p *ngIf="!investigacao.informacoes_adicionais">
+                - Não há observações relevantes a serem informadas
+              </p>
+              <div
+                *ngIf="investigacao.informacoes_adicionais"
+                [innerHTML]="investigacao.informacoes_adicionais"
+              ></div>
+            </div>
+            <!--FIM informacoes adicionais-->
+
+            <!--INICIO ARQUIVOS-->
+            <div class="sessao" *ngIf="investigacao.arquivos!.length > 0">
+              <h4>Arquivos</h4>
+
+              <table class="table table-bordered table-sm">
+                <thead class="thead">
+                  <tr>
+                    <th>#</th>
+                    <th>Tipo</th>
+                    <th>Nome</th>
+                    <th>Arquivo</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let arquivo of investigacao.arquivos">
+                    <td>{{ arquivo.id }}</td>
+                    <td>{{ arquivo.arquivo_tipo.nome }}</td>
+                    <td>{{ arquivo.nome }}</td>
+                    <td>
+                      <span
+                        *ngIf="
+                          arquivo.arquivo_tipo.pdf ||
+                          arquivo.arquivo_tipo.texto ||
+                          arquivo.arquivo_tipo.link
+                        "
+                      >
+                        {{ arquivo.arquivo }}</span
+                      >
+                      <img
+                        *ngIf="arquivo.arquivo_tipo.foto"
+                        height="300px"
+                        [src]="urlarq2(arquivo)"
+                      />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <!--FIM ARQUIVOS-->
+          </div>
+          <!--FIM PAGE 2-->
         </td>
       </tr>
     </tbody>
