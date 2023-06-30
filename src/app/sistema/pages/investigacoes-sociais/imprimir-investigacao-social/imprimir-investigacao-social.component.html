@@ -10,7 +10,10 @@
   </div>
 
   <div *ngIf="user" class="page-footer text-right">
-    <span><b>Data:</b> {{ date | date : "dd/MM/yyyy HH:mm" }} </span>
+    <span style="margin-right: 50px">
+      <div class="page-number"></div>
+      <b>Data:</b> {{ date | date : "dd/MM/yyyy HH:mm" }}
+    </span>
     <!--<div style="border: 1px solid red; color: red; padding: 0.2rem; text-align: justify;">
       “O sigilo deste documento é protegido e controlado pela Lei Nº 12.527/2011. A divulgação, a revelação, o fornecimento, a utilização 
       ou a reprodução desautorizada de seu conteúdo, a qualquer tempo, meio e modo, inclusive mediante acesso ou facilitação de acesso indevidos, 
@@ -170,11 +173,11 @@
               class="sessao"
               *ngIf="investigacao.pessoa.vinculos!.length > 0"
             >
-              <h4>Vínculos</h4>
+              <h4 class="backgroudgrey">Vínculos</h4>
 
               <table class="table table-bordered table-sm">
                 <thead class="thead">
-                  <tr>
+                  <tr class="backgroudlightgrey">
                     <th>Tipo</th>
                     <th>Nome</th>
                     <th>CPF</th>
@@ -184,7 +187,12 @@
                   <tr *ngFor="let vinculo of investigacao.pessoa.vinculos">
                     <td>{{ vinculo.vinculo_tipo.nome }}</td>
                     <td>{{ vinculo.nome }}</td>
-                    <td>{{ vinculo.cpf | mask : "000.000.000-00" }}</td>
+                    <td>
+                      <span *ngIf="vinculo.cpf">{{
+                        vinculo.cpf | mask : "000.000.000-00"
+                      }}</span>
+                      <span *ngIf="!vinculo.cpf">***********</span>
+                    </td>
                   </tr>
                 </tbody>
               </table>
@@ -193,7 +201,7 @@
 
             <!--INICIO VEICULOS-->
             <div class="sessao">
-              <h4>Veículos</h4>
+              <h4 class="backgroudgrey">Veículos</h4>
 
               <p *ngIf="investigacao.pessoa.veiculos!.length == 0">
                 - Não há veículos a serem informados
@@ -203,7 +211,7 @@
                 *ngIf="investigacao.pessoa.veiculos!.length > 0"
               >
                 <thead class="thead">
-                  <tr>
+                  <tr class="backgroudlightgrey">
                     <th>Placa</th>
                     <th>Marca Modelo</th>
                     <th>Ano</th>
@@ -229,7 +237,7 @@
 
             <!--INICIO redes sociais-->
             <div class="sessao">
-              <h4>Redes Sociais</h4>
+              <h4 class="backgroudgrey">Redes Sociais</h4>
               <p *ngIf="investigacao.pessoa.redes_sociais!.length == 0">
                 - Não há redes sociais a serem informadas
               </p>
@@ -238,7 +246,7 @@
                 *ngIf="investigacao.pessoa.redes_sociais!.length > 0"
               >
                 <thead class="thead">
-                  <tr>
+                  <tr class="backgroudlightgrey">
                     <th>Nome</th>
                     <th>Link</th>
                     <th>Foto</th>
@@ -265,7 +273,7 @@
 
             <!--INICIO LOTACOES-->
             <div class="sessao">
-              <h4>Lotações</h4>
+              <h4 class="backgroudgrey">Lotações</h4>
               <p *ngIf="investigacao.lotacoes!.length == 0">
                 - Não há lotações a serem informadas
               </p>
@@ -274,8 +282,8 @@
                 *ngIf="investigacao.lotacoes!.length > 0"
               >
                 <thead class="thead">
-                  <tr>
-                    <th>#</th>
+                  <tr class="backgroudlightgrey">
+                    <!-- <th>#</th> -->
                     <th>Boletim</th>
                     <th>Tipo</th>
                     <th>Data</th>
@@ -284,7 +292,7 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="let lotacao of investigacao.lotacoes">
-                    <td>{{ lotacao.id }}</td>
+                    <!-- <td>{{ lotacao.id }}</td> -->
                     <td>{{ lotacao.bcg }}</td>
                     <td>{{ lotacao.lotacao_tipo.nome }}</td>
                     <td>{{ lotacao.data | date : "dd/MM/yyyy" }}</td>
@@ -301,7 +309,7 @@
 
             <!--INICIO boletins-->
             <div class="sessao">
-              <h4>Boletins</h4>
+              <h4 class="backgroudgrey">Boletins da Polícia Militar</h4>
               <p *ngIf="investigacao.boletins!.length == 0">
                 - Não há boletins a serem informados
               </p>
@@ -310,16 +318,16 @@
                 *ngIf="investigacao.boletins!.length > 0"
               >
                 <thead class="thead">
-                  <tr>
-                    <th>#</th>
+                  <tr class="backgroudlightgrey">
+                    <!-- <th>#</th> -->
                     <th>Boletim</th>
                     <th>Descrição</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr *ngFor="let boletim of investigacao.boletins">
-                    <td>{{ boletim.id }}</td>
-                    <td>{{ boletim.bcg }}</td>
+                    <!-- <td style="min-width: 50px">{{ boletim.id }}</td> -->
+                    <td style="min-width: 250px">{{ boletim.bcg }}</td>
                     <td [innerHTML]="boletim.descricao"></td>
                   </tr>
                 </tbody>
@@ -329,9 +337,11 @@
 
             <!--INICIO cgd-->
             <div class="sessao">
-              <h4>CGDs</h4>
+              <h4 class="backgroudgrey">
+                Controladoria Geral de Disciplina (CGD)
+              </h4>
               <p *ngIf="investigacao.cgds!.length == 0">
-                {{ investigacao.pessoa.nome | uppercase }},
+                - {{ investigacao.pessoa.nome | uppercase }},
                 {{ investigacao.graduacao?.nome | uppercase }},
                 <span *ngIf="investigacao.matricula"
                   >matrícula funcional
@@ -346,8 +356,8 @@
                 *ngIf="investigacao.cgds!.length > 0"
               >
                 <thead class="thead">
-                  <tr>
-                    <th>#</th>
+                  <tr class="backgroudlightgrey">
+                    <!-- <th>#</th> -->
                     <th>SPU</th>
                     <th>Envolvimento</th>
                     <th>Tipo</th>
@@ -356,7 +366,7 @@
                 </thead>
                 <tbody *ngFor="let cgd of investigacao.cgds">
                   <tr>
-                    <td>{{ cgd.id }}</td>
+                    <!-- <td>{{ cgd.id }}</td> -->
                     <td>{{ cgd.spu }}</td>
                     <td>{{ cgd.cgd_envolvimento_tipo.nome }}</td>
                     <td>{{ cgd.cgd_processo_tipo.nome }}</td>
@@ -372,7 +382,9 @@
 
             <!--INICIO sip-->
             <div class="sessao">
-              <h4>SIP</h4>
+              <h4 class="backgroudgrey">
+                Sistema de Informações Policiais (SIP)
+              </h4>
               <p *ngIf="!investigacao.sip">
                 - Não há observações relevantes a serem informadas
               </p>
@@ -385,7 +397,9 @@
 
             <!--INICIO sinesp-->
             <div class="sessao">
-              <h4>Sinesp</h4>
+              <h4 class="backgroudgrey">
+                Sistema Nacional de Informações de Seguança Pública (Sinesp)
+              </h4>
               <p *ngIf="!investigacao.sinesp">
                 - Não há observações relevantes a serem informadas
               </p>
@@ -398,7 +412,7 @@
 
             <!--INICIO tjce-->
             <div class="sessao">
-              <h4>TJCE</h4>
+              <h4 class="backgroudgrey">Tribunal de Justiça do Ceará (TJCE)</h4>
               <p *ngIf="!investigacao.tjce">
                 - Não há processos judiciais a serem informados
               </p>
@@ -411,7 +425,7 @@
 
             <!--INICIO fontes abertas-->
             <div class="sessao">
-              <h4>Fontes Abertas</h4>
+              <h4 class="backgroudgrey">Fontes Abertas</h4>
               <p *ngIf="!investigacao.fontes_abertas">
                 - Não há observações relevantes a serem informadas
               </p>
@@ -424,7 +438,7 @@
 
             <!--INICIO informacoes adicionais-->
             <div class="sessao">
-              <h4>Informações Adicionais</h4>
+              <h4 class="backgroudgrey">Informações Adicionais</h4>
               <p *ngIf="!investigacao.informacoes_adicionais">
                 - Não há observações relevantes a serem informadas
               </p>
@@ -437,12 +451,12 @@
 
             <!--INICIO ARQUIVOS-->
             <div class="sessao" *ngIf="investigacao.arquivos!.length > 0">
-              <h4>Arquivos</h4>
+              <h4 class="backgroudgrey">Arquivos</h4>
 
               <table class="table table-bordered table-sm">
                 <thead class="thead">
-                  <tr>
-                    <th>#</th>
+                  <tr class="backgroudlightgrey">
+                    <!-- <th>#</th> -->
                     <th>Tipo</th>
                     <th>Nome</th>
                     <th>Arquivo</th>
@@ -450,7 +464,7 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="let arquivo of investigacao.arquivos">
-                    <td>{{ arquivo.id }}</td>
+                    <!-- <td>{{ arquivo.id }}</td> -->
                     <td>{{ arquivo.arquivo_tipo.nome }}</td>
                     <td>{{ arquivo.nome }}</td>
                     <td>

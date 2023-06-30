@@ -2,8 +2,9 @@
 
 @page {
   margin: 0;
+    
   -webkit-print-color-adjust: exact; 
-  counter-increment: page;  
+  print-color-adjust: exact;
 }
 
 img {
@@ -58,8 +59,46 @@ img {
   width: 100%;  
 }
 
+.page-number{
+  content: counter(page)
+}
+
+.backgroudgrey{
+  -webkit-print-color-adjust: exact; 
+  print-color-adjust: exact;
+  background-color: #cccccc;
+}
+
+.backgroudlightgrey{
+  -webkit-print-color-adjust: exact; 
+  print-color-adjust: exact;
+  background-color: #ffffff;
+}
+
 
 @media print {
+
+  table{
+    -webkit-print-color-adjust: exact; 
+    print-color-adjust: exact;
+  }
+
+  .backgroudgrey{
+    -webkit-print-color-adjust: exact; 
+    print-color-adjust: exact;
+    background-color: #cccccc;
+  }
+
+  .backgroudlightgrey{
+    -webkit-print-color-adjust: exact; 
+    print-color-adjust: exact;
+    background-color: #000000;
+  }
+
+  .page-number{
+    content: counter(page)
+  }
+
    .thead {display: table-header-group;} 
    .tfoot {display: table-footer-group; }
 
@@ -85,7 +124,6 @@ img {
     display: block;
     
   }
-
   /*
   .marcadagua{
     display: block;

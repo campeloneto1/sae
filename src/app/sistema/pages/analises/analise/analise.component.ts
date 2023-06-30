@@ -18,6 +18,7 @@ import { FormularioAnalisesPessoasComponent } from '../formulario-analises-pesso
 import { FormularioAnalisesVeiculosComponent } from '../formulario-analises-veiculos/formulario-analises-veiculos.component';
 import { Usuario } from '../../usuarios/usuarios';
 import { SessionService } from 'src/app/sistema/shared/session.service';
+import { Pessoa } from '../../pessoas/pessoas';
 
 
 
@@ -105,6 +106,11 @@ export class AnaliseComponent implements OnInit, OnDestroy {
   urlarq(data:AnaliseArquivo):any{
     return this.sanitizer.bypassSecurityTrustResourceUrl(`${this.IMG}/${data.arquivo}`);
   }
+
+  urlfoto(data:Pessoa):any{
+    return this.sanitizer.bypassSecurityTrustResourceUrl(`${this.IMG}/${data.foto}`);
+  }
+
 
   deletePessoa(data: number) {
     if (confirm("Tem certeza que deseja excluir a pessoa?")){
